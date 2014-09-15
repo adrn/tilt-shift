@@ -45,6 +45,8 @@ in the catalog, about its true inclination.
 
 \section{Introduction}
 
+...For specificity we will consider stellar rotation.
+
 \section{Method}
 
 ...Equation dump...
@@ -67,14 +69,24 @@ p(i_n\given\catalog) &=& \int p(i_n\given\pars)\,p(\pars\given\catalog)\,\dd\par
 \\
 p(i_n\given\pars) &=& \frac{1}{Z_n}\,\int p(Q_n\given v_n,i_n)\,f(v_n\given\pars)\,p(i_n)\,\dd v_n
 \\
-p(v_n\given\catalog) &=& \int p(i_n\given\pars)\,p(\pars\given\catalog)\,\dd\pars
+p(v_n\given\catalog) &=& \int p(v_n\given\pars)\,p(\pars\given\catalog)\,\dd\pars
 \\
 p(v_n\given\pars) &=& \frac{1}{Z_n}\,\int p(Q_n\given v_n,i_n)\,f(v_n\given\pars)\,p(i_n)\,\dd i_n
 \end{eqnarray}
 
 \section{Experiments}
 
+...To make an experiment, we need to generate fake data from some true
+distribution, and add some noise.
+We \emph{also} have to choose a form for the latent distribution
+$f(Q\given pars)$; that is, a parameterization $\theta$
+Once we have chosen both, we have an experiment.
+
 \section{Discussion}
+
+...Method generalizes to more complex situations; for example when the
+censoring depends on variables beyond $Q$, or when the direct
+observable is not precisely $Q$ but something intermediate.
 
 \acknowledgements
 It is a pleasure to thank...
