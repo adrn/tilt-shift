@@ -1,25 +1,33 @@
 \documentclass[12pt, preprint]{aastex}
+\usepackage{bm}
+\input{vc}
+
+\newcommand{\setof}[1]{\left\{{#1}\right\}}
+\newcommand{\given}{\,|\,}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\catalog}{\bm{Q}}
+\newcommand{\pars}{\bm{\theta}}
 
 \begin{document}
 
 \title{Removing inclination noise}
 \author{some combination of DWH, DFM, and others}
-\date{}
+\date{NOT READY / \texttt{\githash}}
 
 \begin{abstract}
-Many observations of dynamical systems---galactic black holes, stellar
-rotation, and exoplanets, for examples---suffer from an inclination
+Many observations of kinematic systems (such as galactic black holes,
+stellar rotation, and exoplanets) suffer from an inclination
 uncertainty.
-When the system is unresolved the observable contains a sine ($\sin
-i$) of the inclination ($i$).
+When the system is unresolved the observable contains a sine of the
+inclination ($\sin i$).
 Here we show that it is possible to infer the true distribution of
 rotation velocities $v$ from noisy, censored measurements of $v\,\sin
 i$ (or the true distribution of masses $M$ from measurements of
 $M\,\sin i$).
-This is a classic problem in non-blind ``deconvolution''.
+This is a classic problem in ``non-blind deconvolution''.
 We frame the problem as a hierarchical probabilistic inference; in
 this formulation, the whole distribution of the observable $v\,\sin i$
-is compared to that expected from a distribution of latent ``true''
+is compared to that expected from a distribution of latent true
 values $v$ and the expected inclination distribution and other noise
 sources and censoring.
 This permits us to write a likelihood function for the catalog of
@@ -38,6 +46,31 @@ in the catalog, about its true inclination.
 \section{Introduction}
 
 \section{Method}
+
+...Equation dump...
+\begin{eqnarray}
+Q &\equiv& v\,\sin i
+\\
+f(Q\given\pars) &=& \int P(Q)\,p(Q\given v,i)\,f(v\given\pars)\,p(i)\,\dd i\,\dd v
+\\
+\int p(x)\,\dd x &=& 1
+\\
+\int f(x)\,\dd x &=& E[N]
+\\
+\ln p(\catalog\given\pars) &=& \sum_{n=1}^N f(Q_n\given\pars) - \ln \int f(Q\given\pars)\,\dd Q
+\\
+\catalog &\equiv& \setof{Q_n}_{n=1}^N
+\\
+p(\pars\given\catalog) &=& \frac{1}{Z}\,p(\catalog\given\pars)\,p(\pars)
+\\
+p(i_n\given\catalog) &=& \int p(i_n\given\pars)\,p(\pars\given\catalog)\,\dd\pars
+\\
+p(i_n\given\pars) &=& \frac{1}{Z_n}\,\int p(Q_n\given v_n,i_n)\,f(v_n\given\pars)\,p(i_n)\,\dd v_n
+\\
+p(v_n\given\catalog) &=& \int p(i_n\given\pars)\,p(\pars\given\catalog)\,\dd\pars
+\\
+p(v_n\given\pars) &=& \frac{1}{Z_n}\,\int p(Q_n\given v_n,i_n)\,f(v_n\given\pars)\,p(i_n)\,\dd i_n
+\end{eqnarray}
 
 \section{Experiments}
 
