@@ -1,0 +1,51 @@
+\documentclass[12pt, preprint]{aastex}
+
+\begin{document}
+
+\title{Removing inclination noise}
+\author{some combination of DWH, DFM, and others}
+\date{}
+
+\begin{abstract}
+Many observations of dynamical systems---galactic black holes, stellar
+rotation, and exoplanets, for examples---suffer from an inclination
+uncertainty.
+When the system is unresolved the observable contains a sine ($\sin
+i$) of the inclination ($i$).
+Here we show that it is possible to infer the true distribution of
+rotation velocities $v$ from noisy, censored measurements of $v\,\sin
+i$ (or the true distribution of masses $M$ from measurements of
+$M\,\sin i$).
+This is a classic problem in non-blind ``deconvolution''.
+We frame the problem as a hierarchical probabilistic inference; in
+this formulation, the whole distribution of the observable $v\,\sin i$
+is compared to that expected from a distribution of latent ``true''
+values $v$ and the expected inclination distribution and other noise
+sources and censoring.
+This permits us to write a likelihood function for the catalog of
+observed values, given a parameterized or non-parametric model for the
+distribution of latent values.
+We show that for realistic simulated rotation velocity data, the
+method returns reliable inferences for the distribution of true
+rotation velocities, even when the velocity distribution model used in
+the inference does not include the model with which the velocities
+were originally drawn.
+One interesting consequence or application of the probabilistic model
+is that it provides informative posterior information, for each object
+in the catalog, about its true inclination.
+\end{abstract}
+
+\section{Introduction}
+
+\section{Method}
+
+\section{Experiments}
+
+\section{Discussion}
+
+\acknowledgements
+It is a pleasure to thank...
+Funding...
+Code...
+
+\end{document}
