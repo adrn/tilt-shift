@@ -9,9 +9,6 @@ import numpy as np
 import numexpr
 from astropy import log as logger
 
-# Project
-# ...
-
 __all__ = ['generate_data']
 
 def generate_data(N, v_func, v_func_kwargs=dict(), sigma=5., censor="Q > 5*sigma"):
