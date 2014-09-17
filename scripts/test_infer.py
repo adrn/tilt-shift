@@ -71,11 +71,11 @@ def main(pool, plot=False):
         raise ValueError("Dumby.")
 
     logger.debug("Running sampler to burn in...")
-    pos,prob,state = sampler.run_mcmc(p0, 100)
+    pos,prob,state = sampler.run_mcmc(p0, 1000)
 
     sampler.reset()
     logger.debug("Running sampler for main sampling...")
-    pos,prob,state = sampler.run_mcmc(pos, 100)
+    pos,prob,state = sampler.run_mcmc(pos, 5000)
     logger.debug("Done sampling!")
 
     pool.close()
