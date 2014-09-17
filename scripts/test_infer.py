@@ -30,7 +30,8 @@ def main(pool, plot=False):
     N = 100
     sigma = 5.  # km/s
     v_func = np.random.lognormal
-    v_func_args = dict(mean=5., sigma=0.01)
+    # v_func_args = dict(mean=5., sigma=0.01)  # tight v
+    v_func_args = dict(mean=5., sigma=0.25)  # wide v
     v,Q,sigma_Q = generate_data(N, v_func, v_func_kwargs=v_func_args,
                                 sigma=sigma, censor="Q > 5*sigma")
 
