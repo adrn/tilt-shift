@@ -19,7 +19,8 @@ from astropy import log as logger
 from streamteam.util import get_pool
 
 # Project
-from tiltshift.model import ln_likelihood_explicit, ln_likelihood_fast, ln_posterior
+from tiltshift.model import ln_posterior, ln_likelihood
+from tiltshift.explicitmodel import ln_likelihood as ln_likelihood_explicit
 from tiltshift.fakedata import generate_data
 
 # TODO: make plot of f(Q | {a_k}) for some choice of a_k's
@@ -36,7 +37,7 @@ def main(pool, plot=False):
     a_k = np.array([0.4, 0.5, 0.6])
     v_k = np.array([100, 150, 200.])
 
-    ll1 = ln_likelihood_fast(a_k, v_k, Q, sigma_Q)
+    ll1 = ln_likelihood(a_k, v_k, Q, sigma_Q)
     ll1 = ll1.sum()
 
     ll2 = ln_likelihood_explicit(a_k, v_k, Q, sigma_Q)
@@ -45,7 +46,7 @@ def main(pool, plot=False):
 
     QQs = np.linspace(50., 250., 100)
     sigma_QQs = np.ones_like(QQs)*sigma_Q[0]
-    lls = ln_likelihood_fast(a_k, v_k, QQs, sigma_QQs)
+    lls = ln_likelihood(a_k, v_k, QQs, sigma_QQs)
 
     if plot:
         plt.clf()
@@ -78,7 +79,6 @@ def main(pool, plot=False):
     logger.debug("Done sampling!")
 
     pool.close()
-    sys.exit(0)
 
     for j in range(ndim):
         plt.clf()
@@ -135,3 +135,4 @@ if __name__ == '__main__':
 
     pool = get_pool(mpi=args.mpi, threads=args.threads)
     main(pool, plot=args.plot)
+    sys.exit(0)
