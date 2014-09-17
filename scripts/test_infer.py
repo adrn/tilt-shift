@@ -23,12 +23,13 @@ from tiltshift.model import ln_posterior, ln_likelihood
 from tiltshift.explicitmodel import ln_likelihood as ln_likelihood_explicit
 from tiltshift.fakedata import generate_data
 
-# TODO: make plot of f(Q | {a_k}) for some choice of a_k's
+plot_path = "/vega/astro/users/amp2217/projects/tilt-shift"
+
 def main(pool, plot=False):
     np.random.seed(42)
 
-    N = 100
-    sigma = 5.  # km/s
+    N = 256
+    sigma = 1.  # km/s
     v_func = np.random.lognormal
     # v_func_args = dict(mean=5., sigma=0.01)  # tight v
     v_func_args = dict(mean=5., sigma=0.25)  # wide v
@@ -56,11 +57,11 @@ def main(pool, plot=False):
 
     # ------------------------------------------------------------------------
     # Now try actually sampling
-    K = 10
+    K = 32
     v_k = np.linspace(5., 200., K)
     logger.debug("v_ks: {}".format(v_k))
 
-    nwalkers = 64
+    nwalkers = 128
     ndim = K
     sampler = emcee.EnsembleSampler(nwalkers, dim=ndim,
                                     lnpostfn=ln_posterior,
@@ -87,7 +88,7 @@ def main(pool, plot=False):
             plt.plot(walker)
         plt.ylim(0,sampler.flatchain.max())
         plt.xlabel("Step number")
-        plt.savefig("{}.png".format(j))
+        plt.savefig(os.path.join(plot_path, "{}.png".format(j)))
 
     nbins = 25
     bins = np.linspace(0,200,nbins)
@@ -98,11 +99,11 @@ def main(pool, plot=False):
     axes[0].set_xlabel(r'True $v$ [km s$^{-1}$]')
 
     median_a = np.median(sampler.flatchain, axis=0)
-    vs = np.random.choice(v_k, p=median_a/np.sum(median_a), size=1000)
-    axes[1].hist(vs, bins=bins)
+    # vs = np.random.choice(v_k, p=median_a/np.sum(median_a), size=1000)
+    axes[1].plot(v_k, median_a, linestyle='none', marker='o') # hist(vs, bins=bins)
     axes[1].set_xlim(bins.min(), bins.max())
     axes[1].set_xlabel(r'Model')
-    fig.savefig("compare.png")
+    fig.savefig(os.path.join(plot_path, "compare.png"))
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
