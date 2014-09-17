@@ -7,21 +7,23 @@ from __future__ import division, print_function
 __author__ = "adrn <adrn@astro.columbia.edu>"
 
 # Standard library
-import os, sys
+import sys
 # HACK:
 sys.path.append("/Users/adrian/projects/tilt-shift/")
 
 # Third-party
+import emcee
 import matplotlib.pyplot as plt
 import numpy as np
 from astropy import log as logger
+from streamteam.util import get_pool
 
 # Project
-from tiltshift.model import ln_likelihood_explicit, ln_likelihood_fast
+from tiltshift.model import ln_likelihood_explicit, ln_likelihood_fast, ln_posterior
 from tiltshift.fakedata import generate_data
 
 # TODO: make plot of f(Q | {a_k}) for some choice of a_k's
-def main(plot=False):
+def main(pool, plot=False):
     np.random.seed(42)
 
     N = 100
@@ -50,6 +52,57 @@ def main(plot=False):
         plt.plot(QQs, np.exp(lls-lls.max()))
         plt.show()
 
+    # ------------------------------------------------------------------------
+    # Now try actually sampling
+    K = 10
+    v_k = np.linspace(5., 200., K)
+    logger.debug("v_ks: {}".format(v_k))
+
+    nwalkers = 64
+    ndim = K
+    sampler = emcee.EnsembleSampler(nwalkers, dim=ndim,
+                                    lnpostfn=ln_posterior,
+                                    args=(v_k,Q,sigma_Q),
+                                    pool=pool)
+    p0 = np.random.normal(0.5,0.05,size=(nwalkers,ndim))
+    p0 = p0 * N / p0.sum(axis=1)[:,np.newaxis]
+    if np.any(p0 <= 0.):
+        raise ValueError("Dumby.")
+
+    logger.debug("Running sampler to burn in...")
+    pos,prob,state = sampler.run_mcmc(p0, 100)
+
+    sampler.reset()
+    logger.debug("Running sampler for main sampling...")
+    pos,prob,state = sampler.run_mcmc(pos, 100)
+    logger.debug("Done sampling!")
+
+    pool.close()
+    sys.exit(0)
+
+    for j in range(ndim):
+        plt.clf()
+        for walker in sampler.chain[...,j]:
+            plt.plot(walker)
+        plt.ylim(0,sampler.flatchain.max())
+        plt.xlabel("Step number")
+        plt.savefig("{}.png".format(j))
+
+    nbins = 25
+    bins = np.linspace(0,200,nbins)
+
+    fig,axes = plt.subplots(1,2,figsize=(10,5),sharex=True)
+
+    axes[0].hist(v, bins=bins)
+    axes[0].set_xlabel(r'True $v$ [km s$^{-1}$]')
+
+    median_a = np.median(sampler.flatchain, axis=0)
+    vs = np.random.choice(v_k, p=median_a/np.sum(median_a), size=1000)
+    axes[1].hist(vs, bins=bins)
+    axes[1].set_xlim(bins.min(), bins.max())
+    axes[1].set_xlabel(r'Model')
+    fig.savefig("compare.png")
+
 if __name__ == '__main__':
     from argparse import ArgumentParser
     import logging
@@ -65,6 +118,10 @@ if __name__ == '__main__':
     #                     type=int, help="Field ID")
     parser.add_argument("-p", dest="plot", action="store_true", default=False,
                         help="Plot or not")
+    parser.add_argument("--mpi", dest="mpi", default=False, action="store_true",
+                        help="Run with MPI.")
+    parser.add_argument("--threads", dest="threads", default=None, type=int,
+                        help="Number of multiprocessing threads to run on.")
 
     args = parser.parse_args()
 
@@ -76,4 +133,5 @@ if __name__ == '__main__':
     else:
         logger.setLevel(logging.INFO)
 
-    main(plot=args.plot)
+    pool = get_pool(mpi=args.mpi, threads=args.threads)
+    main(pool, plot=args.plot)
