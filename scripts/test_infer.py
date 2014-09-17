@@ -21,7 +21,7 @@ from tiltshift.model import ln_likelihood_explicit, ln_likelihood_fast
 from tiltshift.fakedata import generate_data
 
 # TODO: make plot of f(Q | {a_k}) for some choice of a_k's
-def main():
+def main(plot=False):
     np.random.seed(42)
 
     N = 100
@@ -34,17 +34,21 @@ def main():
     a_k = np.array([0.4, 0.5, 0.6])
     v_k = np.array([100, 150, 200.])
 
-    ll = ln_likelihood_fast(a_k, v_k, Q, sigma_Q)
-    print(ll.sum())
-    ll = ln_likelihood_explicit(a_k, v_k, Q, sigma_Q)
-    print(ll)
+    ll1 = ln_likelihood_fast(a_k, v_k, Q, sigma_Q)
+    ll1 = ll1.sum()
+
+    ll2 = ln_likelihood_explicit(a_k, v_k, Q, sigma_Q)
+
+    assert np.allclose(ll1, ll2, rtol=1E-1)
 
     QQs = np.linspace(50., 250., 100)
     sigma_QQs = np.ones_like(QQs)*sigma_Q[0]
     lls = ln_likelihood_fast(a_k, v_k, QQs, sigma_QQs)
 
-    plt.plot(QQs, np.exp(lls-lls.max()))
-    plt.show()
+    if plot:
+        plt.clf()
+        plt.plot(QQs, np.exp(lls-lls.max()))
+        plt.show()
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
@@ -59,8 +63,8 @@ if __name__ == '__main__':
 
     # parser.add_argument("-f", dest="field_id", default=None, required=True,
     #                     type=int, help="Field ID")
-    # parser.add_argument("-p", dest="plot", action="store_true", default=False,
-    #                     help="Plot or not")
+    parser.add_argument("-p", dest="plot", action="store_true", default=False,
+                        help="Plot or not")
 
     args = parser.parse_args()
 
@@ -72,4 +76,4 @@ if __name__ == '__main__':
     else:
         logger.setLevel(logging.INFO)
 
-    main()
+    main(plot=args.plot)
