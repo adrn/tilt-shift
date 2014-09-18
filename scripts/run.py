@@ -68,12 +68,13 @@ def main(pool, path, plot=False):
         raise ValueError("Dumby.")
 
     logger.debug("Running sampler to burn in...")
-    pos,prob,state = sampler.run_mcmc(p0, 1000)
+    # pos,prob,state = sampler.run_mcmc(p0, 1000)
+    pos,prob,state = sampler.run_mcmc(p0, 100) # HACK
 
     bad_walkers = sampler.acceptance_fraction < 0.1
-    pos[bad_walkers] = np.random.normal(np.median(pos[~bad_walkers]),
-                                        median_absolute_deviation(pos[~bad_walkers]),
-                                        size=bad_walkers.sum())
+    pos[bad_walkers] = np.random.normal(np.median(pos[~bad_walkers],axis=0),
+                                        median_absolute_deviation(pos[~bad_walkers],axis=0),
+                                        size=(bad_walkers.sum(), ndim))
 
     sampler.reset()
 
