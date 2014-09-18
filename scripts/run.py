@@ -21,11 +21,10 @@ import numpy as np
 from astropy import log as logger
 from streamteam.util import get_pool
 
-# Project
-from tiltshift.model import ln_posterior
-from tiltshift.fakedata import generate_data
-
 def main(pool, path, plot=False):
+    # Project
+    from tiltshift.model import ln_posterior
+    from tiltshift.fakedata import generate_data
 
     N = 256  # Number of fake data points
     J = 128  # Number of steps to use when integrating over i
@@ -138,7 +137,8 @@ if __name__ == '__main__':
         base_path = "/Users/adrian/projects/tilt-shift"
     else:
         logger.info("Assuming we're on yeti...")
-        base_path = ""
+        base_path = "/vega/astro/users/amp2217/projects/tilt-shift"
 
+    sys.path.append(base_path)
     main(pool, path=base_path, plot=args.plot)
     sys.exit(0)
