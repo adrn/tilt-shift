@@ -28,7 +28,7 @@ def main(pool, path, plot=False):
 
     N = 256  # Number of fake data points
     J = 128  # Number of steps to use when integrating over i
-    K = 32  # Number of mixture components
+    K = 16  # Number of mixture components
 
     base_save_path = os.path.join(path, "cache")
     save_path = os.path.join(base_save_path, "N{}_J{}_K{}".format(N,J,K))
