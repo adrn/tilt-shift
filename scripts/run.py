@@ -18,6 +18,7 @@ import socket
 import emcee
 import matplotlib.pyplot as plt
 import numpy as np
+from astropy.stats import median_absolute_deviation
 from astropy import log as logger
 from streamteam.util import get_pool
 
@@ -69,7 +70,13 @@ def main(pool, path, plot=False):
     logger.debug("Running sampler to burn in...")
     pos,prob,state = sampler.run_mcmc(p0, 1000)
 
+    bad_walkers = sampler.acceptance_fraction < 0.1
+    pos[bad_walkers] = np.random.normal(np.median(pos[~bad_walkers]),
+                                        median_absolute_deviation(pos[~bad_walkers]),
+                                        size=bad_walkers.sum())
+
     sampler.reset()
+
     logger.debug("Running sampler for main sampling...")
     pos,prob,state = sampler.run_mcmc(pos, 5000)
     logger.debug("Done sampling!")
