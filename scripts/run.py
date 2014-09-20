@@ -30,6 +30,13 @@ def main(pool, path, plot=False):
     N = 256  # Number of fake data points
     J = 128  # Number of steps to use when integrating over i
     K = 16  # Number of mixture components
+    nsteps = 5000
+
+    # HACK
+    N = 128
+    J = 64
+    K = 4
+    nsteps = 100
 
     base_save_path = os.path.join(path, "cache")
     save_path = os.path.join(base_save_path, "N{}_J{}_K{}".format(N,J,K))
@@ -56,7 +63,7 @@ def main(pool, path, plot=False):
     v_k = np.linspace(5., 250., K)
     logger.debug("v_ks: {}".format(v_k))
 
-    nwalkers = K*4
+    nwalkers = K*8
     ndim = K
     sampler = emcee.EnsembleSampler(nwalkers, dim=ndim,
                                     lnpostfn=ln_posterior,
@@ -68,8 +75,7 @@ def main(pool, path, plot=False):
         raise ValueError("Dumby.")
 
     logger.debug("Running sampler to burn in...")
-    # pos,prob,state = sampler.run_mcmc(p0, 1000)
-    pos,prob,state = sampler.run_mcmc(p0, 100) # HACK
+    pos,prob,state = sampler.run_mcmc(p0, nsteps//10)
 
     bad_walkers = sampler.acceptance_fraction < 0.1
     pos[bad_walkers] = np.random.normal(np.median(pos[~bad_walkers],axis=0),
@@ -79,7 +85,7 @@ def main(pool, path, plot=False):
     sampler.reset()
 
     logger.debug("Running sampler for main sampling...")
-    pos,prob,state = sampler.run_mcmc(pos, 5000)
+    pos,prob,state = sampler.run_mcmc(pos, nsteps)
     logger.debug("Done sampling!")
 
     pool.close()
@@ -138,8 +144,6 @@ if __name__ == '__main__':
     else:
         logger.setLevel(logging.INFO)
 
-    pool = get_pool(mpi=args.mpi, threads=args.threads)
-
     if socket.gethostname() == "adrn":
         logger.info("Assuming we're on adrn (laptop)...")
         base_path = "/Users/adrian/projects/tilt-shift"
@@ -148,5 +152,6 @@ if __name__ == '__main__':
         base_path = "/vega/astro/users/amp2217/projects/tilt-shift"
 
     sys.path.append(base_path)
+    pool = get_pool(mpi=args.mpi, threads=args.threads)
     main(pool, path=base_path, plot=args.plot)
     sys.exit(0)
