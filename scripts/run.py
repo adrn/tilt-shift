@@ -22,21 +22,10 @@ from astropy.stats import median_absolute_deviation
 from astropy import log as logger
 from streamteam.util import get_pool
 
-def main(pool, path, plot=False):
+def main(pool, path, N, J, K, plot=False, nsteps=1000):
     # Project
     from tiltshift.model import ln_posterior
     from tiltshift.fakedata import generate_data
-
-    N = 256  # Number of fake data points
-    J = 128  # Number of steps to use when integrating over i
-    K = 16  # Number of mixture components
-    nsteps = 5000
-
-    # HACK
-    N = 128
-    J = 64
-    K = 4
-    nsteps = 100
 
     base_save_path = os.path.join(path, "cache")
     save_path = os.path.join(base_save_path, "N{}_J{}_K{}".format(N,J,K))
@@ -125,14 +114,21 @@ if __name__ == '__main__':
     parser.add_argument("-q", "--quiet", action="store_true", dest="quiet",
                         default=False, help="Be quiet! (default = False)")
 
-    # parser.add_argument("-f", dest="field_id", default=None, required=True,
-    #                     type=int, help="Field ID")
     parser.add_argument("-p", dest="plot", action="store_true", default=False,
                         help="Plot or not")
     parser.add_argument("--mpi", dest="mpi", default=False, action="store_true",
                         help="Run with MPI.")
     parser.add_argument("--threads", dest="threads", default=None, type=int,
                         help="Number of multiprocessing threads to run on.")
+
+    parser.add_argument("-N", "--ndata", dest="N", required=True,
+                        type=int, help="Number of fake data points.")
+    parser.add_argument("-J", "--nintegrate", dest="J", default=128,
+                        type=int, help="Number of steps to use to integrate over sin(i).")
+    parser.add_argument("-K", "--ncomponents", dest="K", required=True,
+                        type=int, help="Number of mixture components.")
+    parser.add_argument("--steps", dest="nsteps", default=1000,
+                        type=int, help="Number of MCMC steps.")
 
     args = parser.parse_args()
 
@@ -153,5 +149,6 @@ if __name__ == '__main__':
 
     sys.path.append(base_path)
     pool = get_pool(mpi=args.mpi, threads=args.threads)
-    main(pool, path=base_path, plot=args.plot)
+    main(pool, path=base_path, plot=args.plot,
+         N=args.N, J=args.J, K=args.K, nsteps=args.nsteps)
     sys.exit(0)
