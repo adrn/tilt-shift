@@ -79,6 +79,8 @@ def main(pool, path, N, J, K, plot=False, nsteps=1000):
 
     pool.close()
 
+    np.save(os.path.join(save_path,"chain.npy"), sampler.chain)
+
     for j in range(ndim):
         plt.clf()
         for walker in sampler.chain[...,j]:
