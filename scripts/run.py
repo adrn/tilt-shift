@@ -67,9 +67,13 @@ def main(pool, path, N, J, K, plot=False, nsteps=1000):
     pos,prob,state = sampler.run_mcmc(p0, nsteps//10)
 
     bad_walkers = sampler.acceptance_fraction < 0.1
-    pos[bad_walkers] = np.random.normal(np.median(pos[~bad_walkers],axis=0),
-                                        median_absolute_deviation(pos[~bad_walkers],axis=0),
-                                        size=(bad_walkers.sum(), ndim))
+    if sum(bad_walkers) > 0.:
+        logger.debug("Resampling positions for {} walkers...".format(sum(bad_walkers)))
+        pos[bad_walkers] = np.random.normal(np.median(pos[~bad_walkers],axis=0),
+                                            median_absolute_deviation(pos[~bad_walkers],axis=0),
+                                            size=(bad_walkers.sum(), ndim))
+        sampler.reset()
+        pos,prob,state = sampler.run_mcmc(pos, nsteps//10)
 
     sampler.reset()
 
