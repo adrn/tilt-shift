@@ -17,14 +17,14 @@ def ln_integrand(x, mu, sigma, i):
 def ln_prior(a_k):
     """ Using the prior
 
-            p(a_k) ∝ 1/a_k
-            ln(p) = -ln(a_k)
+            p(a_k) ∝ 1/a_k^2
+            ln(p) = -2*ln(a_k)
     """
 
     if np.any(a_k <= 0.):
         return -np.inf
 
-    return -np.sum(np.log(a_k))
+    return -2*np.sum(np.log(a_k))
 
 def ln_likelihood(a_k, v_k, Qs, sigma_Qs):
     """ """
@@ -55,7 +55,7 @@ def ln_posterior(a_k, v_k, Q, sigma_Q):
         return -np.inf
 
     ll = ln_likelihood(a_k, v_k, Q, sigma_Q).sum()
-    if np.any(np.isinf(ll)):
+    if np.any(~np.isfinite(ll)):
         return -np.inf
 
     return lp + ll
