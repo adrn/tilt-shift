@@ -45,8 +45,7 @@ def ln_likelihood(a_k, v_k, Qs, sigma_Qs):
     ln_int = ln_integrand(Qs,v_k,sigma_Qs,eyes).reshape(N, J*K)
     coeff = np.repeat(a_k*di/sigma_Qs/np.sqrt(2*np.pi), J, axis=2)
     coeff = coeff.reshape(ln_int.shape)
-    ll = logsumexp(ln_int,
-                   b=coeff, axis=1)
+    ll = logsumexp(ln_int, b=coeff, axis=1)
 
     return ll
 
