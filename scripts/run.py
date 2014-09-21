@@ -77,6 +77,8 @@ def main(pool, path, N, J, K, plot=False, nsteps=1000):
     pos,prob,state = sampler.run_mcmc(pos, nsteps)
     logger.debug("Done sampling!")
 
+    logger.debug("Acceptance fractions:\n{}".format("\n\t".join(sampler.acceptance_fraction)))
+
     pool.close()
 
     np.save(os.path.join(save_path,"chain.npy"), sampler.chain)
