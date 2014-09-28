@@ -1,0 +1,360 @@
+%\documentclass{emulateapj}
+\documentclass[letterpaper,12pt,preprint]{aastex}
+
+% packages
+\usepackage{amssymb,amsmath,amsbsy}
+
+% commands
+\newcommand{\given}{\,|\,}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
+\newcommand{\inverse}[1]{{#1}^{-1}}
+\newcommand{\Msun}{\mathrm{M}_\odot}
+
+\begin{document}
+
+\title{The Companion Mass Distribution to the ELM WD Sample}
+\author{Jeff Andrews\altaffilmark{\colum}, Adrian M. Price-Whelan\altaffilmark{\colum}, Marcel Ag\"ueros\altaffilmark{\colum}}
+
+% Affiliations
+\newcommand{\colum}{1}
+\altaffiltext{\colum}{Department of Astronomy, 
+		              Columbia University, 
+		              550 W 120th St., 
+		              New York, NY 10027, USA}
+% \altaffiltext{\adrn}{To whom correspondence should be addressed: adrn@astro.columbia.edu}
+
+\begin{abstract}
+Determining component masses of single-line spectroscopic binary stars
+is impossible because of the unknown inclination angle. Even when the
+mass of the bright star can be derived, only a lower limit can be placed
+on the mass of the unseen companion. However, since the probability of
+any inclination angle scales with sin $i$, for a large enough, unbiased
+population, the companion mass distribution can be deconvolved from the
+inclination angle. We develop a Bayesian technique to handle this
+deconvolution and place it within a Markov Chain Monte Carlo framework.
+We then apply our method to the sample of 55 extremely low mass (ELM)
+WDs with radial velocity variations. Modeling the companion mass
+distribution as a Gaussian with a variable neutron star component, we
+find the companion population is well modeled by a mean of 0.65 and a
+standard deviation of 0.3 . Our model indicates a neutron star (NS)
+fraction of 1.4$\substack{+7.0 \\ -1.4}$\%.
+\end{abstract}
+
+%\keywords{
+%  cosmology: dark matter
+%  ---
+%  Galaxy: structure
+%  ---
+%  Galaxy: halo
+%}
+
+%\begin{figure*}[!h]
+%\begin{center}
+%\includegraphics[width=\textwidth]{PATH}
+%\caption{ CAPTION }\label{fig:FIGNAME}
+%\end{center}
+%\end{figure*}
+
+\section{Introduction}
+
+The dramatic increase in the number of spectroscopically confirmed white dwarfs (WDs) is seen in the most recently compiled sample from the Data Release 7 (DR7) in the Sloan Digital Sky Survey (SDSS), containing some 20,000 confirmed WDs (Kleinman et al 2013). While the distribution of WD masses is strongly peaked at $0.6~\Msun$, a small but non-negligible number (6\%) of low mass WDs was observed, with $M<0.4~\Msun$. 
+
+These Low Mass WDs (LMWDs) comprise an astrophysically unique population. Except in special cases of extreme metallicity (Kilic et al 2007), the Galaxy is not old enough to produce WDs with mass $<0.5~\Msun$ through single star evolution. In their seminal work, Marsh, Dhillon, \& Duck (1995) discovered companions around five LMWDs, cementing the requirement that these objects be formed through binary evolution. In addition to SDSS, LMWDs have been observed in similar numbers in the Palomar Green Survey (Liebert et al 2005).
+
+Using a reduced proper motion selection criterion, the Extrememly Low Mass (ELM) WD Survey specifically searched for LMWDs in SDSS. After their initial investigation found 11 of 12 LMWDs had close binary companions (Brown et al. 2010), further radial velocity follow-up has now brought the sample of ELM WDs to 61 systems, 55 of which have measured radial velocity variations (Kilic et al 2011, 2012, Brown et al 2012, 2013).
+
+
+While the orbital periods and radial velocities indicated the companions were most likely WDs, it was realized that these LMWDs could have NS companions (van Leeuwen et al 2007). However this and other radio searches for pulsed emission were fruitless (Agueros et al 2009a, 2009b). X-ray observations provide more stringent limits on the presence of a NS, and searches using {\it XMM-Newton} and {\it Chandra} have all yielded non-detections. Yet, such systems must exist since LMWDs are observed as companions around millisecond pulsars. Because of the resources required for these targeted observations, selecting the most likely candidates for multiwavelength follow-up is crucial. We outline the standard technique below.
+
+
+For each WD in a single-line spectroscopic binary, spectroscopic observations provide the orbital period ($P_{\rm orb}$), WD mass ($M_1$), and projected orbital velocity ($K$). Using Kepler's third law, we can write the relation between these quantities and the unknown inclination angle as:
+
+\begin{equation}
+	\frac{M_2^3}{\left(M_1+M_2\right)^2} {\rm sin}^3 i = \frac{P_{\rm orb}}{2\pi G} K^3 \label{eq:massfunc}
+\end{equation}
+
+The righthand side of this equation is the well-known mass function. $M_2$ is minimized for an edge-on orbit, with $i = 90^{\circ}$. For any individual system, deriving the likelihood of a $M_2$ for that system ($P(M_2)$) involves solving Equation 1 for $M_2$ for different values for $i$, weighting the inclination angle by sin $i$. A basic calculation for the probability that the companion to any individual system is a NS can therefore be calculated:
+
+\begin{equation}
+P({\rm NS}) = \int_{0^{\circ}}^{i_{\rm NS}} {\rm sin}\ i\ {\rm d}i
+\end{equation}
+
+Where $i_{\rm NS}$ is the inclination angle from Equation 1 when $M_2$ is the mass of a NS, typically $\approx1.35~\Msun$. However, implicit in this calculation is that all companion masses are equally likely a priori. Clearly this is not the case as evidenced by e.g. SDSS (kleinman et al 2013) who show the WD mass distribution is strongly peaked around $0.6~\Msun$. Including this as a prior on the companion mass does not improve the situation since it is unlikely that the mass distribution of single WDs and WDs in binaries is the same. Equation 2 should therefore be used only as an approximation for the NS probability of a companion.
+
+
+With 55 systems with precise $M_1$, $P_{\rm orb}$, and $K$, the population is large enough to be modeled. Furthermore, since the population was selected based on characteristics determined by the primary mass alone, at least with regard to the inclination angle and companion mass, the population is unbiased. In this work we develop a model to determine the mass distribution of companions to ELM WDs in an attempt to answer several specific scientific questions: 1.\ Can the population as a whole be modeled using a simple description of the companion masses (i.e. one Gaussian)? 2.\ How many NSs are implied by the distribution of $M_{2,min}$'s? 3.\ Can we determine the likelihood of any individual system including a NS companion, based on the most likely models? 4.\ Are the six systems without detected radial velocity variations consistent with the population as a whole, or are these a fundamentally separate population (i.e. single ELM WDs)? 7.\ Can our model place limits on the space density of ELM WD binaries with NS companions? 
+
+
+In Section 2 we build the mathematical framework that we employ in our model described in Section 3. Section 4 shows the results of our model, while Section 5 gives a discussion. We conclude in Section 6.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{figures/Porb_M1/Porb_M1.jpg}
+\caption{The $P_{\rm orb}$ - $M_1$ distribution of the ELM WD sample. The three eclipsing systems, with known $M_2$ are shown by the filled circles. Arrows indicate the masses of ELM WDs without detected radial velocity variation. Triangles indicate the positions of the known WD-NS binaries. From $P_{\rm orb}$ and $M_1$ alone, the two populations are indistinguishable.}
+\end{center}
+\end{figure}
+
+\section{Methods (?)}
+
+We construct a statistical model to derive constraints on a parametric model --- parametrized by the vector $\bs{\theta}$ --- for the distribution of ELM WD companion masses, $M_2$.  For each system, we assume we are given $K$, $T$, and $M_1$ and therefore have a measurement of the mass function, $m_f$ (Eq.~\ref{eq:massfunc}). In this work, we neglect the uncertainties in the catalog parameters ($K$, $T$, $M_1$ and therefore $m_f$) because the relative uncertainties in these quantities are small, $\sigma_x / x \sim XXX$. We would therefore like to find posterior constraints on the parameters, $\boldsymbol{theta}$, given the ``observed'' mass functions, $m_f$. Using Bayes' rule,
+\begin{equation}
+    p(\bs{\theta} \given m_f, M_1) = \frac{1}{\mathcal{Z}}~p(m_f \given \bs{\theta})~p(\bs{\theta}).
+\end{equation}
+The likelihood, $p(m_f \given \bs{\theta})$, involves integrals over the unobserved inclination angle, $i$, and companion mass, $M_2$
+\begin{equation}
+    p(m_f \given \bs{\theta}) = \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2~p(m_f \given M_1, M_2, i)~p(M_2 \given \bs{\theta})~p(i).
+\end{equation}
+
+
+
+and can derive a distribution over possible $M_2$'s -- the 'true' $M_2$ (a $\delta$-function) convolved with the distribution over possible inclination angles, $i$ (Figure?). We would like to infer some parameters, $\boldsymbol{\theta}$, of a model for the true companion mass distribution, 
+\begin{equation}
+    p(\boldsymbol{\theta} \,|\, K, T, M_1) = \int p(\boldsymbol{\theta} \,|\, K, T, M_1, i)\,p(i)\,di.
+\end{equation}
+For this work, we neglect the uncertainties in the catalog parameters ($K$, $T$, $M_1$) because the relative uncertainties in these quantities are small, $\sigma_x / x \sim XXX$. 
+
+\begin{align}
+    p(D\,|\,M_2,i)\,p(M_2\,|\,\boldsymbol{\theta})\,p(i)
+\end{align}
+
+
+We are interested in determining the probability of any given model to have produced the observations, abstractly represented by the conditional probability, $P(M|D)$, where $M$ represents our model and $D$ represents our data. We first use Bayes's Theorem:
+
+\begin{equation}
+P(M|D) = \frac{P(D|M)P(M)}{P(D)}
+\end{equation}
+
+where $P(M)$ is the Bayesian prior on the model and $P(D)$ is the known as the "evidence". The conditional probability $P(D|M)$ requires a "generative model". We choose to represent our model, $M$, as $\mathbf{\Theta}$ and our combined data, $D$, as a set of individual systems, $\vec{D}$. Since each system is an independent data point, the combined probability can be represented as a product of the individual system likelihoods:
+
+\begin{equation}
+P(\vec{D}|\mathbf{\Theta}) = \prod^{\vec{D}}P(D | \mathbf{\Theta})
+\end{equation}
+
+
+
+We choose to model the log of the likelihood:
+
+\begin{equation}
+{\rm log}\ P(\vec{D}|\mathbf{\Theta}) = \sum^{\vec{D}} {\rm log}\ P(D | \mathbf{\Theta})
+\end{equation}
+
+To determine the individual system likelihoods, we first marginalize over $M_2$:
+
+\begin{equation}
+P(D|\mathbf{\Theta}) = \frac{1}{A} \int_0^{\infty} P(D |\mathbf{\Theta}, M_2) P(M_2|\mathbf{\Theta})\ dM_2 
+\end{equation}
+
+where $A$ is a normalization constant. We further marginalize over the inclination angle, $i$:
+
+\begin{equation}
+P(D|\mathbf{\Theta}) = \frac{1}{A} \int_0^{\pi/2} \int_{M_{2,min}}^{\infty} P(D | \mathbf{\Theta}, M_2, i) P(M_2|\mathbf{\Theta}, i) P(i | \mathbf{\Theta})\ {\rm d}M_2\ {\rm d}i
+\end{equation}
+
+Since only a single value for $M_{2,min}$ is allowed for a given $M_1$, $M_2$, and $i$, $P(D | \mathbf{\Theta}, M_2, i)$ reduces to a delta function:
+
+\begin{equation}
+P(D | \mathbf{\Theta}, M_2, i) = \delta \left(M_{2,min} - f(M_1,M_2,i) \right)
+\end{equation}
+
+where $f(M_1,M_2,i)$ is the root of equation {\bf XXXXX}. Furthermore, the inclination angle is independent of other parameters:
+
+\begin{eqnarray}
+P(i | \mathbf{\Theta}) &=& P(i) \\
+  &=& {\rm sin}\ i \\
+  &=& \left( \frac{M_1 + M_2}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_2}
+\end{eqnarray}
+
+where in the last equation, we used equation {\bf XXX}. Combining equations {\bf XXX}, {\bf XXX}, and {\bf XXX} and evaluating the integral over $i$ we produce the following result:
+
+\begin{equation}
+P(D|\mathbf{\Theta}) = \frac{1}{A} \int_{M_{2,min}}^{\infty}  P(M_2|\mathbf{\Theta},i_{M_2}) \left( \frac{M_1 + M_2}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_2} {\rm d}M_2
+\end{equation}
+
+where $i_{M_2}$ is a function of $M_2$, determined from Equation {\bf XXX}. The final parameter left to be determined is the normalization constant, $A$. This parameter requires an additional integral, over all $M_{2,min}$:
+
+\begin{equation}
+A = \int_0^{\infty} \int_{M_{2,min}}^{\infty} P(M_2|\mathbf{\Theta}, i_{M_2}) \left( \frac{M_1 + M_2}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_2} {\rm d}M_2\ {\rm d}M_{2,min}
+\end{equation}
+
+
+Finally, $P(M_2|\mathbf{\Theta},i_{M_2})$ is our model. We choose to model the masses of the WD companions as a Gaussian, with an additional NS component. This model is independent of the inclination angle and can be expressed in the following way:
+
+\begin{eqnarray}
+P(M_2|\mathbf{\Theta},i) &=& P(M_2 | \mathbf{\Theta}) \\
+  &=& \left( 1-\mathcal{f}_{NS} \right) \mathcal{N}(\mu , \sigma)|_{M_2} + \mathcal{f}_{NS} \delta \left( M_2 - M_{NS} \right)
+\end{eqnarray}
+
+where $\mathcal{f}_{NS}$ represents the NS fraction in the model, and $\mathcal{N}(\mu , \sigma)$ represents a Gaussian with mean, $\mu$, and standard deviation, $\sigma$. The NS component is modeled by a delta function around $M_{NS}$ which we take to be $1.35 ~\Msun$. Combining this with equation {\bf XXX}, we can separate the integrand into a WD and a NS component:
+
+\begin{equation}
+P(D|\mathbf{\Theta}) = P_{WD} + P_{NS}
+\end{equation}
+
+where the WD component is:
+
+\begin{equation}
+P_{WD} = \frac{1}{A} \int_{M_{2,min}}^{\infty} \left[ \left( 1-\mathcal{f}_{NS} \right) \mathcal{N}(\mu , \sigma)|_{M_2} \right]  \left( \frac{M_1 + M_2}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_2} {\rm d}M_2 
+\end{equation}
+
+and the NS component is:
+
+\begin{equation}
+P_{NS} = \frac{1}{A} \mathcal{f}_{NS}\left( \frac{M_1 + M_{NS}}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_{NS}}
+\end{equation}
+
+The normalization constant can likewise be reduced into a WD and a NS component, with the integral over d$M_{2,min}$ performed separately on both:
+
+\begin{equation}
+A = A_{WD} + A_{NS}
+\end{equation}
+
+where the WD component is:
+
+\begin{equation}
+A_{WD} = \int_0^{\infty} \int_{M_{2,min}}^{\infty} \left[ \left( 1-\mathcal{f}_{NS} \right) \mathcal{N}(\mu , \sigma)|_{M_2} \right]  \left( \frac{M_1 + M_2}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_2}\ {\rm d}M_2\ {\rm d}M_{2,min}
+\end{equation}
+
+and the NS component is:
+
+\begin{equation}
+A_{NS} = \int_0^{\infty} \mathcal{f}_{NS}\left( \frac{M_1 + M_{NS}}{M_1 + M_{2,min}} \right)^{2/3} \frac{M_{2,min}}{M_2} \delta \left( M_2 - M_{NS} \right) {\rm d}M_{2,min}
+\end{equation}
+
+which can be evaluated analytically, using integration by parts:
+
+\begin{equation}
+A_{NS} = 3 \left(M_1+M_{NS}\right)^{2/3} \left[  \frac{M_{2,min}}{M_{NS}} \left( M_1+M_{2,min} \right)^{1/3} - \frac{3}{4} \frac{ \left( M_1 + M_{2,min} \right)^{4/3} }{M_{NS}} \right] |_{M_{2,min}=0}^{M_{2,min}=M_{NS}}
+\end{equation}
+
+Using these equations, we can now calculate the likelihood of a given set of model parameters ($\mu$, $\sigma$, and $\mathcal{f}_{NS}$). In general, these integrals must be evaluated numerically. Furthermore, since each system has a different $M_1$ and $M_{2,min}$ and therefore must be calculated separately, these formulae become quite computationally expensive, particularly calculating the double integral in $A_{WD}$. 
+
+
+It is also straightforward to determine, for a particular $\Theta$, the probability of any individual system being composed of a NS:
+
+\begin{equation}
+P(NS) = \frac{P_{NS}}{P_{WD} + P_{NS}}
+\end{equation}
+
+where $P_{NS}$ and $P_{WD}$ are calculated from equation {\bf XXX} and {\bf XXX}, respectively.  
+
+In future work we will extend this analysis to incorporate uncertainties and non-detections. 
+
+
+
+\section{Our model}
+
+
+Maximizing the likelihood now requires a numerical technique to probe the parameter space. We have chosen to use a Markov Chain Monte Carlo (MCMC) technique. Because we only have three parameters, we can use a standard Metropolis-Hastings acceptance-rejection technique. Using this technique, we randomly generate new model parameters based on the old model parameters, using a proposal distribution, $K(\mathbf{\Theta '} | \mathbf{\Theta})$. So that the proposal distribution is symmetric ($K(\mathbf{\Theta '} | \mathbf{\Theta})$ = $K(\mathbf{\Theta} | \mathbf{\Theta '})$), we follow the standard prescription and adopt a Gaussian distribution for $K(\mathbf{\Theta '} | \mathbf{\Theta})$, centered on $\Theta$. After a "burn-in" of 500 steps, we use 10 separate chains to determine the posterior probability, $P(\mathbf{\Theta} | \vec{D})$.
+
+
+To test the performance of our model, we apply it to three separate sets of mock data, each with 100 systems. These data are generated by randomly drawing the companion mass, $M_2$, from a particular distribution then applying a randomly drawn inclination angle. We apply our model to the distribution of resulting $M_{2,min}$ and $M_1$ values, attempting to recover the initial model parameters.
+
+Our first set of mock data, shown in the top three panels of Figure 2 is composed of a Gaussian distribution centered at $0.7~\Msun$, with a standard deviation of $0.2~\Msun$. We give these binaries random inclination angles. The distribution of the mock observations for $M_{2,min}$ are shown by the histogram in the left panel. The red line shows the theoretical distribution, determined by numerically evaluating the integral in Equation {\bf XXX}, substituting $\mathcal{N}(0.7,0.2)$ for $P(M_2|\mathbf{\Theta})$. We apply our model to the data and obtain the posterior distribution shown in the middle panel. Contours indicate 1, 2, and 3-$\sigma$ confidence levels. The overplotted "X" shows the input mean and standard deviation for our randomly selected sample. The right panel shows that the one dimensional posterior distribution for the NS probability is strongly peaked at zero. For this simple data set, our model correctly identifies the population mean, standard deviation, and NS probability. 
+
+Our second set of mock data is drawn from the same distribution as the first (with $\mu = 0.7$ and $\sigma = 0.2$) except it includes 10 NS, each given a mass of $1.35~\Msun$. Comparing the analytic distribution in the top left panel with the middle left panel shows that adding a NS component most strongly affects the high end tail of the distribution. The sample of "observed" $M_{2,min}$ shows that only five of the ten NS have masses greater than $1.0~\Msun$; the other five NS companions have $M_{2,min}$ measurements indistinguishable from that of WD companions. The middle panel in Figure {\bf XXX} shows the posterior distribution for the mean and standard deviation of the sample. The NS component clearly skews the distribution toward larger distributions, however the true values (designated by the "X") are still within the 1-$\sigma$ confidence level. The ability of our model to correctly identify the NS fraction, shown in the right panel, is most interesting. The peak of the posterior distribution is centered at 10\%. {\bf Come up with confidence levels here.}
+
+The third set of mock data tests the ability of our model to match non-Gaussian distributions. Here, we generated a sample of WD companions from a flat mass distribution $M_{WD} = [0.3:1.1]~\Msun$, combined with a NS fraction of 10\%. The theoretical expectation for the distribution of $M_{2,min}$, shown by the red line in the bottom left panel, was produced by numerically integrating equation {\bf XXX}, where we substitute a flat distribution for $P(M_2 | \mathbf{\Theta},i)$:
+
+\begin{equation}
+P(M_2 | \mathbf{\Theta},i) = \left( 1 - \mathcal{f}_{NS} \right) \frac{1}{M_{WD,max} - M_{WD,min}} + \mathcal{f}_{NS} \delta(M_2 - M_{NS})
+\end{equation}
+
+where $M_{WD,min}=0.3~\Msun$ and $M_{WD,max} = 1.1~\Msun$. The histogram shows that this distribution results in a larger number of WDs with very low $M_{2,min}$. The resulting posterior distribution in $\mu$ and $\sigma$ is shown by the bottom middle panel. Since our model is attempting to derive a Gaussian mass distribution from an initially non-Gaussian distribution, the posterior is not as well formed as our previous two test cases. Furthermore, the resulting NS probability, shown in the bottom right panel of Figure {\bf XXX}, is not as well formed. This is because, on the one hand, the distribution of $M_{2,min}$ has a large component at very low masses, skewing the resulting $\mu$ distribution toward lower masses, with a larger NS fraction. On the other hand, the portion of the sample at large $M_{2,min}$ is pushing the distribution toward larger masses, with a smaller NS fraction. The competition between these two effects spreads the posterior distributions in all three of our model parameters.
+
+It is clear that our model can recover the initial distribution of companion masses and NS fraction with a fairly high degree of accuracy, when the population is well represented by a Gaussian. Our third test case shows that when our initial population significantly deviates from a Gaussian, our model is much more imprecise. However this uniform distribution, with a relatively low $M_{WD,min}$ of $0.3~\Msun$ and high $M_{WD,max}$ of $1.1~\Msun$ is a very difficult distribution to fit with a Gaussian because the high mass WDs can easily be confused with NSs and vice versa. Unfortunately, the posterior NS probability did not converge on a single value. Nevertheless, our model indicates that, despite the "wrong" choice of model, the NS fraction is non-negligible.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1\columnwidth]{figures/model_post1/model_post.jpg}
+\caption{Replace this text with your caption}
+\end{center}
+\end{figure}
+
+\section{Results}
+
+We apply our model to the ELM WD sample, however there are some slight differences worth mentioning in the population of ELM WDs and our test cases above. 
+
+First, there are 55 systems with radial velocity measurements in the ELM sample, while the test cases above were each produced with 100 systems. Second, the masses of the primaries in our test cases were all $0.25~\Msun$, while in the ELM sample, the masses vary between 0.16 and $0.49~\Msun$. Also, the orbital periods of the systems in our test case were all 12 hours, while in the ELM sample the orbital periods vary between 12 minutes and just over a day. Since our model does not depend on the $M_2$ or $P_{\rm orb}$, its accuracy will not be affected. 
+
+In the ELM sample three systems are eclipsing binaries, with known companion masses (J0345$1748: $M_2=0.72~\Msun$, J0651$2844: $M_2=0.50~\Msun$, and J0751$-$0141: $M_2=0.97~\Msun$). These are taken into account in our model through equation {\bf XXX}. Since the inclination angle cannot vary, these systems will strongly affect the likelihood of any particular model. 
+
+Finally, six systems in the ELM WD sample lack radial velocity variations down upper limits of $\sim$50 km s$^{-1}$. While some of these may be in binaries with radial velocities below the detection limit, they may also be single ELM WDs. In principle we could add to our model the possibility that each of these WDs is actually a single ELM WD. Because this requires an additional six free parameters, one for each ELM WD without radial velocity variations, including these in our model becomes too computationally expensive. The result is that we can run our model on the 55 ELM systems with orbital solutions.
+
+
+We apply our model to the ELM WD data set, using 10 indepedent Markov chains, each run for 100,000 steps. The acceptance fraction is {\bf XXX}. We determine an autocorrelation length of {\bf XXX} steps, and correspondingly, only include every {\bf XXX} samples for our posterior distributions. {\bf Is there anything else we need to say about the applying the method to the data set?}
+
+
+The results of our model are shown in Figure {\bf XXX}. The first panel shows the distribution of $M_{2,min}$ for the data set. It is fairly similar to the distribution of $M_{2,min}$ in the test cases above, with a small high mass component, and the majority of sample with $M_{2,min}$ below $0.8~\Msun$. The second panel shows the posterior distribution of $\mu$ and $\sigma$; contours indicate 1, 2, and 3-$\sigma$ confidence levels. The single high probability region indicates the models converged {\bf (Is this reasonable to say?)}. The best fit Gaussian model has a mean of 0.66 $\substack{+0.12 \\ -0.09}~\Msun$ and a standard deviation of 0.27$\substack{+0.09 \\ -0.07}~\Msun$. The third panel shows the NS fraction is strongly peaked toward low probabilities. Our model indicates a NS fraction of 1.4$\substack{+7.0 \\ -1.4}$\% at the 68\% confidence level, however there is a non-negligible tail toward higher NS probabilities. This is further indicated by the fourth panel in Figure {\bf XXX} which shows a histogram of NS probabilities for individual systems. These probabilities are obtained by taking the average of the posterior distribution of NS probabilities for each system. Although a few systems have high probabilities, the distribution is strongly clustered below 20\%.
+
+
+
+\section{Discussion}
+
+How does the companion mass distribution compare to the single WD mass distribution? Based on their population of $\sim$ 14,000 spectroscopically confirmed DA WDs in SDSS, Kleinman et al (2013) found that WDs are well approximated by a four component Gaussian mixture model. Their mixture model is dominated by two Gaussians with means $\sim0.6~\Msun$, containing over 75\% of all WDs. Figure {\bf XXX} shows that the best fit Gaussian to our distribution of WD companion masses is also centered around $\sim0.6!\Msun$. However, our distribution is significantly wider ($\sigma \approx 0.3~\Msun$ compared with $\sigma \approx 0.1~\Msun$). This could be due to our simplistic assumption of a single Gaussian mass distribution. A more complicated model would include multiple Gaussians with varying weights, however adding only one more Gaussian component doubles the number of free parameters from three to six. Finding the maximum likelihood in a three dimensional parameter space is computationally expensive, and moving to a six dimensional space may require more complex numerical routines. 
+
+
+There is no reason to expect the true companion mass distribution to ELM WDs follows a Gaussian curve. However, the posterior distribution in $\mu$ and $\sigma$ is well behaved, with a clear high probability region, similar to the posterior distributions for $\mu$ and $\sigma$ for our first two test cases shown in Figure {\bf XXX}. The part of the distribution with a low $\mu$ and high $\sigma$ is indicative of a low mass WD component. A low mass component is expected from binary evolution theory; recent population synthesis work predicts more than half of all He WDs in DWDs will have He WD companions (Toonen et al 2012). Our results here suggest that this is not the case, our posterior suggests a Gaussian distribution centered around $0.6~\Msun$, firmly in the mass range for CO WDs. This suggests that our results on the companion masses of the secondaries in these systems could constrain population synthesis models. We plan on exploring this in a future work.
+
+
+Systems with NS companions cannot be differentiated from those with WD companions through orbital period and ELM WD mass alone. Our model attempts to suggest a NS fraction for the population as a whole. This is an improvement over NS probabilities for individual companions calculated through equation {\bf XXX}. The third panel in Figure {\bf XXX} indicates a NS fraction of a few percent. For 55 systems with observed radial velocity variations, this corresponds to a 1-2 systems with NS companions. However, the top left panel in Figure {\bf XXX} shows that even a system with $M_{2,min}=1.0~\Msun$ can be a WD from the high mass tail of a Gaussian distribution. Furthermore, in their Gaussian mixture fit to the SDSS DA WD mass distribution, Kleinman et al (2013) found a high mass WD component extending above $1~\Msun$. Our single Gaussian model does not include this high mass component. It is not guaranteed that any ELM WDs have NS companions. Nevertheless, a quite firm result of our model is an upper limit on the fraction of ELM WDs with NS companions of {\bf XXXX}\%.
+
+
+If we combine our result of a NS fraction of {\bf XXX} with the ELM WD space density as determined from the Palomar Green Survey: $4\times10^{-14}$pc$^{-3}$yr$^{-1}$ (Liebert et al 2005) {\bf Is there a more recent estimate?} we can get a space density of ELM WD + NS binaries. This suggests that there are {\bf XXX} such binaries within a few kpc of us. Compare to the number of known MSP+LMWDs.
+
+
+The fourth panel in Figure {\bf XXX} shows  that only two systems have $P(NS)$ above 50\%: J0811$0225 (67\%) and J1741$6526 (53\%). These systems are ideal candidates for searches for NS companions in radio and X-ray. Radio observations of these objects are in progress, however because a NS companion may be radio quiet or beamed away from us, even if this system is a NS, it may not be detectable in radio. However, all NS give off blackbody radiation as X-rays, and therefore X-ray follow-up provides a more stringent test on the potential for a NS companion.
+
+
+Non-detections? What does that imply about the existence of single ELM WDs?
+
+
+
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1\columnwidth]{figures/ELM_post1/ELM_post1.jpg}
+\caption{Replace this text with your caption}
+\end{center}
+\end{figure}
+
+
+
+\subsection{Non-detections}
+
+Six systems in the ELM WD sample have non-detections of companions, down to an upper limit on the transverse velocity. We include these systems in our model, too, as in principle they could be binary systems at with low inclination angles or long period orbits or both. We can estimate the number of binaries with inclination angles too low to produce observable radial velocity variations:
+
+\begin{equation}
+P(K<K_{\rm max} | \mathbf{\Theta}) = \int_0^{\infty} \int_0^{i_{\rm max}} P(M_2|\mathbf{\Theta})\ {\rm sin}\ i\ {\rm d}i\ {\rm d}M_2
+\end{equation}
+
+which reduces to:
+
+\begin{equation}
+P(K<K_{\rm max} | \mathbf{\Theta}) = \int_0^{\infty} P(M_2|\mathbf{\Theta})\ \left( 1 - {\rm cos}\ i_{\rm max}\right)\ {\rm d}M_2
+\end{equation}
+
+where $i_{\rm max}$ is the smallest inclination angle that would still produce an unobservable binary, found by solving equation 1, using $K_{\rm max}$ for $K$. For an estimate of the expected fraction of unobserable binaries, we adopt $0.25~\Msun$ for $M_1$, an orbital period of 0.5 days, and a limiting velocity of 50 km s$^{-1}$. For our best fit model, with $\mu=0.6$, $\sigma=0.3$, and $\mathcal{f}=0.03$, we numerically calculate the integral above, and find that we would expect $\sim$2\% and $\sim$7\% of systems to have radial velocity variations below 25 km s$^{-1}$ and 50 km s$^{-1}$, respectively. If we increase the fiducial orbital period to 1.0 day, those numbers increases to 3\% and 10\%, respectively. For the ELM sample with 61 systems, this corresponds to 2 and 6 systems, consistent with the number of non-detections observed. Although we caution that this result is based on our imperfect model, it suggests that the number of non-detections observed is consistent with binaries at low inclination angles (albeit at slightly larger orbital periods than that of the observed population).
+
+
+\section{Conclusions}
+
+\begin{enumerate}
+\item We have created a mathematical description to describe the companion mass distribution of a set of single-lined spectoscopic binaries. \\
+\item We have used that mathematical framework to build a Markov Chain Monte Carlo model and applied it to the set of WDs from the ELM survey. \\
+\item Our model suggests that the majority of ELM WDs have CO-core WDs. {\bf We should check this.} \\
+\item Our model indicates that the fraction of ELM WDs with NS companions is of order a few percent. Specifically, J0811$+$0225 and J1741$+$6526 have probabilities of having NS companions greater than 50\%. \\
+\item This NS fraction implies an ELM+WD space density of {\bf XXX} which suggests there are {\bf XXX} systems withing a few kiloparsecs.
+\end{enumerate}
+
+\acknowledgements
+APW is supported by a National Science Foundation Graduate Research Fellowship under Grant No.\ 11-44155. 
+This research made use of Astropy, a community-developed core \texttt{Python} package for Astronomy \citep{astropy13}.
+This work additionally relied on Columbia University's \emph{Hotfoot} and \emph{Yeti} compute clusters, and we acknowledge the Columbia HPC support staff for assistance. \\
+
+\bibliographystyle{apj}
+\bibliography{refs}
+
+
+\end{document}
+
