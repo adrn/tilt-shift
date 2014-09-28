@@ -10,6 +10,7 @@
 \newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
 \newcommand{\inverse}[1]{{#1}^{-1}}
 \newcommand{\Msun}{\mathrm{M}_\odot}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
 
 \begin{document}
 
@@ -97,15 +98,24 @@ In Section 2 we build the mathematical framework that we employ in our model des
 
 \section{Methods (?)}
 
-We construct a statistical model to derive constraints on a parametric model --- parametrized by the vector $\bs{\theta}$ --- for the distribution of ELM WD companion masses, $M_2$.  For each system, we assume we are given $K$, $T$, and $M_1$ and therefore have a measurement of the mass function, $m_f$ (Eq.~\ref{eq:massfunc}). In this work, we neglect the uncertainties in the catalog parameters ($K$, $T$, $M_1$ and therefore $m_f$) because the relative uncertainties in these quantities are small, $\sigma_x / x \sim XXX$. We would therefore like to find posterior constraints on the parameters, $\boldsymbol{theta}$, given the ``observed'' mass functions, $m_f$. Using Bayes' rule,
+We construct a statistical model to derive constraints on a parametric model --- parametrized by the vector $\bs{\theta}$\footnote{In what follows, vectors or sets of parameters or quantites are represented by bold symbols.} --- for the distribution of ELM WD companion masses, $p(M_2 \given \bs{\theta}})$. For each system, we assume we are given $K$, $T$, and $M_1$ and therefore know the value of the mass function, $m_f$ (Eq.~\ref{eq:massfunc}).\footnote{In this work, we neglect the uncertainties in the catalog parameters ($K$, $T$, $M_1$ and therefore $m_f$) because the relative uncertainties in these quantities are small, $\sigma_x / x \sim XXX$.} We would like to find posterior constraints on the parameters, $\boldsymbol{\theta}$, given all of the known mass functions, $\bs{m}_f$, by deconvolving the distribution of mass functions from the unobserved inclination angle, $i$. Using Bayes' rule,
 \begin{equation}
     p(\bs{\theta} \given m_f, M_1) = \frac{1}{\mathcal{Z}}~p(m_f \given \bs{\theta})~p(\bs{\theta}).
 \end{equation}
-The likelihood, $p(m_f \given \bs{\theta})$, involves integrals over the unobserved inclination angle, $i$, and companion mass, $M_2$
+The marginal likelihood, $p(m_f \given \bs{\theta})$, involves integrals over the latent variables $i$ and companion mass, $M_2$,
 \begin{equation}
     p(m_f \given \bs{\theta}) = \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2~p(m_f \given M_1, M_2, i)~p(M_2 \given \bs{\theta})~p(i).
 \end{equation}
-
+where we, again, neglect observational uncertainties in the mass function, and assume the inclination angles, $i$, are isotropically distributed
+\begin{align}
+	p(m_f \given M_1, M_2, i) &= \delta(m_f - f(M_1, M_2, i))\\
+	f(M_1, M_2, i) &= \frac{(M_2 \sin i)^3}{(M_1 + M_2)^2}\\
+	p(i) &= \sin i.
+\end{align}
+For now, we keep this general by not yet specifying a parametric form for the companion mass distribution, $p(M_2 \given \bs{\theta})$. With the above assumptions, the marginal likelihood integral is reduced to 
+\begin{equation}
+    p(m_f \given \bs{\theta}) = \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2~\delta(m_f - f(M_1, M_2, i))~p(M_2 \given \bs{\theta})~p(i).
+\end{equation}
 
 
 and can derive a distribution over possible $M_2$'s -- the 'true' $M_2$ (a $\delta$-function) convolved with the distribution over possible inclination angles, $i$ (Figure?). We would like to infer some parameters, $\boldsymbol{\theta}$, of a model for the true companion mass distribution, 
