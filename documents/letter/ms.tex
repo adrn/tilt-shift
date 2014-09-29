@@ -132,12 +132,13 @@ where the sum is over the roots, $x^*_j$, of the function $G(x)$. The root, $i^*
 	g'(M_1,M_2,i) &= \frac{3M_2^3}{(M_1+M_2)^2}\sin^2 i \cos i\\
 	g'(M_1,M_2,i^*) &= \frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}
 \end{align}
-
-With this in mind,
+With this in mind, we may write the marginal likelihood as
 \begin{align}
 	p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\frac{\sin i^*}{g'(M_1,M_2,i^*)}\\
-	&= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\alpha\left[\frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}\right]^{-1} 
+	&= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\alpha\left[\frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}\right]^{-1}\\
+	&= \int_{M_{2,{\rm min}}}^\infty dM_2~p(M_2 \given \bs{\theta})~\frac{M_2(M_1+M_2)^{4/3}}{3m_f^{1/3}\sqrt{M_2^2 - (m_f(M_1+M_2)^2)^{2/3}}}\label{eq:fullm2}
 \end{align}
+where the bottom bound in the integral in Equation~\ref{eq:fullm2} is the minimum companion mass for which the integrand is real, $M_{2,{\rm min}}$.
 
 \vspace{2em}
 \hrule
