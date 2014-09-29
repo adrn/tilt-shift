@@ -98,7 +98,7 @@ In Section 2 we build the mathematical framework that we employ in our model des
 
 \section{Methods (?)}
 
-We construct a statistical model to derive constraints on a parametric model --- parametrized by the vector $\bs{\theta}$\footnote{In what follows, vectors or sets of parameters or quantites are represented by bold symbols.} --- for the distribution of ELM WD companion masses, $p(M_2 \given \bs{\theta}})$. For each system, we assume we are given $K$, $T$, and $M_1$ and therefore know the value of the mass function, $m_f$ (Eq.~\ref{eq:massfunc}).\footnote{In this work, we neglect the uncertainties in the catalog parameters ($K$, $T$, $M_1$ and therefore $m_f$) because the relative uncertainties in these quantities are small, $\sigma_x / x \sim XXX$.} We would like to find posterior constraints on the parameters, $\boldsymbol{\theta}$, given all of the known mass functions, $\bs{m}_f$, by deconvolving the distribution of mass functions from the unobserved inclination angle, $i$. Using Bayes' rule,
+We construct a statistical model to derive constraints on a parametric model --- parametrized by the vector $\bs{\theta}$\footnote{In what follows, vectors or sets of parameters or quantites are represented by bold symbols.} --- for the distribution of ELM WD companion masses, $p(M_2 \given \bs{\theta}})$. For each system, we assume we are given $K$, $T$, and $M_1$ and therefore know the value of the mass function, $m_f$ (Eq.~\ref{eq:massfunc}). We would like to find posterior constraints on the parameters, $\boldsymbol{\theta}$, given all of the observed mass functions, $\bs{m}_f$, by deconvolving the distribution of mass functions from the unobserved inclination angle, $i$. Using Bayes' rule,
 \begin{equation}
     p(\bs{\theta} \given m_f, M_1) = \frac{1}{\mathcal{Z}}~p(m_f \given \bs{\theta})~p(\bs{\theta}).
 \end{equation}
@@ -106,48 +106,41 @@ The marginal likelihood, $p(m_f \given \bs{\theta})$, involves integrals over th
 \begin{equation}
     p(m_f \given \bs{\theta}) = \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2~p(m_f \given M_1, M_2, i)~p(M_2 \given \bs{\theta})~p(i).
 \end{equation}
-where we, again, neglect observational uncertainties in the mass function, and assume the inclination angles, $i$, are isotropically distributed
+where we neglect observational uncertainties in the mass function,\footnote{This is justified because the relative uncertainties in these quantities are small, $\sigma_x / x \sim 0.1$, however in future work we will extend this methodology to include uncertainties in all measured quantities.} and assume the inclination angles, $i$, are isotropically distributed
 \begin{align}
 	p(m_f \given M_1, M_2, i) &= \delta(m_f - f(M_1, M_2, i))\\
 	f(M_1, M_2, i) &= \frac{(M_2 \sin i)^3}{(M_1 + M_2)^2}\\
 	p(i) &= \sin i.
 \end{align}
-For now, we keep this general by not yet specifying a parametric form for the companion mass distribution, $p(M_2 \given \bs{\theta})$. With the above assumptions, the marginal likelihood integral is reduced to 
-\begin{equation}
-    p(m_f \given \bs{\theta}) = \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2~\delta(m_f - f(M_1, M_2, i))~p(M_2 \given \bs{\theta})~p(i).
-\end{equation}
-
-
-and can derive a distribution over possible $M_2$'s -- the 'true' $M_2$ (a $\delta$-function) convolved with the distribution over possible inclination angles, $i$ (Figure?). We would like to infer some parameters, $\boldsymbol{\theta}$, of a model for the true companion mass distribution, 
-\begin{equation}
-    p(\boldsymbol{\theta} \,|\, K, T, M_1) = \int p(\boldsymbol{\theta} \,|\, K, T, M_1, i)\,p(i)\,di.
-\end{equation}
-For this work, we neglect the uncertainties in the catalog parameters ($K$, $T$, $M_1$) because the relative uncertainties in these quantities are small, $\sigma_x / x \sim XXX$. 
-
+For now, we keep this general by not yet specifying a parametric form for the companion mass distribution, $p(M_2 \given \bs{\theta})$. With the above assumptions, the marginal likelihood integral is
 \begin{align}
-    p(D\,|\,M_2,i)\,p(M_2\,|\,\boldsymbol{\theta})\,p(i)
+    p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta}) \int_0^{\pi/2} di ~ \delta(m_f - f(M_1, M_2, i))~\sin i\\
+    &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta}) \int_0^{\pi/2} di ~\sin i ~ \delta(g(M_1,M_2,i))\label{eq:delta}
+\end{align}
+where
+\begin{equation}
+	g(M_1,M_2,i) = \frac{M_2^3}{(M_1+M_2)^2}\sin^3 i - m_f.
+\end{equation}
+The inner integral (over $i$) has the form
+\begin{equation}
+    \int dx~F(x)~\delta{(G(x)}) = \sum_j \frac{F(x^*_j)}{|G'(x^*_j)|}
+\end{equation}
+where the sum is over the roots, $x^*_j$, of the function $G(x)$. The root, $i^*$, and derivative, $g'(M_1,M_2,i)$, of the argument of the delta function in Equation~\ref{eq:delta} are 
+\begin{align}
+	i^* &= \sin^{-1}\alpha\\
+	\alpha &= \frac{(m_f(M_1+M_2)^2)^{1/3}}{M_2}\\
+	g'(M_1,M_2,i) &= \frac{3M_2^3}{(M_1+M_2)^2}\sin^2 i \cos i\\
+	g'(M_1,M_2,i^*) &= \frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}
 \end{align}
 
+With this in mind,
+\begin{align}
+	p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\frac{\sin i^*}{g'(M_1,M_2,i^*)}\\
+	&= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\alpha\left[\frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}\right]^{-1} 
+\end{align}
 
-We are interested in determining the probability of any given model to have produced the observations, abstractly represented by the conditional probability, $P(M|D)$, where $M$ represents our model and $D$ represents our data. We first use Bayes's Theorem:
-
-\begin{equation}
-P(M|D) = \frac{P(D|M)P(M)}{P(D)}
-\end{equation}
-
-where $P(M)$ is the Bayesian prior on the model and $P(D)$ is the known as the "evidence". The conditional probability $P(D|M)$ requires a "generative model". We choose to represent our model, $M$, as $\mathbf{\Theta}$ and our combined data, $D$, as a set of individual systems, $\vec{D}$. Since each system is an independent data point, the combined probability can be represented as a product of the individual system likelihoods:
-
-\begin{equation}
-P(\vec{D}|\mathbf{\Theta}) = \prod^{\vec{D}}P(D | \mathbf{\Theta})
-\end{equation}
-
-
-
-We choose to model the log of the likelihood:
-
-\begin{equation}
-{\rm log}\ P(\vec{D}|\mathbf{\Theta}) = \sum^{\vec{D}} {\rm log}\ P(D | \mathbf{\Theta})
-\end{equation}
+\vspace{2em}
+\hrule
 
 To determine the individual system likelihoods, we first marginalize over $M_2$:
 
