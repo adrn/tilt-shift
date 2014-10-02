@@ -178,7 +178,7 @@ To test the performance of this Gaussian mixture model, we apply it to three sep
 
 In each experiment below, we use an ensemble Markov Chain Monte Carlo algorithm \citep{goodman10} to draw samples from the posterior distribution, $p(\mu_{\rm WD}, \sigma_{\rm WD}, f_{\rm NS} \given \bs{m}_f, \bs{M}_1)$. The algorithm is implemented in the \texttt{Python} programming language \citep{foremanmackey13} and uses an ensemble of individual ``walkers'' to naturally adapt to the geometry of the parameter-space being explored. We run the walkers for an initial, burn-in period of 1000 steps starting from randomly drawn initial conditions (sampled from the priors in Table~\ref{tbl:parameters}). We then re-initialized the walkers from their positions at the end of this run, throw out the burn-in samples, and run again for 1000 steps. We compute the autocorrelation time for each parameter to confirm they have converged.
 
-\subsection{Single Gaussian (white dwarf)}
+\subsection{Single Gaussian (white dwarf)} \label{sec:exp1}
 
 As a first test, we generate $M_2$'s by drawing from a single, truncated Gaussian with mean, variance, and bounds
 \begin{align}
@@ -186,27 +186,21 @@ As a first test, we generate $M_2$'s by drawing from a single, truncated Gaussia
 	\sigma^2_{\rm WD, true} &= (0.2~\Msun)^2\\
 	0.2 < M_2& < 1.4~\Msun.
 \end{align}
-The distribution of mock observations of the mass function, $m_f$, are shown by the top-left panel of Figure~\ref{}.
+This is equivalent to setting the neutron star fraction to $f_{\rm NS} = 0$. The distribution of mock observations of the mass function, $m_f$, are shown by the top-left panel of Figure~\ref{}. We use MCMC (see description above) to ... 
 
-\subsection{Two Gaussians (white dwarf + neutron star)}
+\subsection{Two Gaussians (white dwarf + neutron star)} \label{sec:exp2}
+For our next test, we use the same Gaussian distribution to generate companion masses for the white dwarf component as the previous example (Section~\ref{sec:exp1}), but we now add an additional neutron star component with parameters
+\begin{align}
+	\mu_{\rm NS, true} &= 1.4~\Msun\\
+	\sigma^2_{\rm NS, true} &= (0.1~\Msun)^2\\
+	1.4 < M_2& < 2.~\Msun.
+\end{align}
+We set the neutron star fraction to $f_{\rm NS} = 0.1$. The distribution of mock observations of the mass function, $m_f$, are shown by the middle-left panel of Figure~\ref{}. We use MCMC (see description above) to ...
 
-\subsection{Uniform (white dwarf) + Gaussian (neutron star)}
+[TODO: We have also tried changing the mean and variance of the true neutron star distribution while keeping the fitting parameters fixed and found ...]
 
-\hrule{4em}
-
-Our first set of mock data, shown in the top three panels of Figure 2 is composed of a Gaussian distribution centered at $0.7~\Msun$, with a standard deviation of $0.2~\Msun$. We give these binaries random inclination angles. The distribution of the mock observations for $M_{2,min}$ are shown by the histogram in the left panel. The red line shows the theoretical distribution, determined by numerically evaluating the integral in Equation {\bf XXX}, substituting $\mathcal{N}(0.7,0.2)$ for $P(M_2|\mathbf{\Theta})$. We apply our model to the data and obtain the posterior distribution shown in the middle panel. Contours indicate 1, 2, and 3-$\sigma$ confidence levels. The overplotted "X" shows the input mean and standard deviation for our randomly selected sample. The right panel shows that the one dimensional posterior distribution for the NS probability is strongly peaked at zero. For this simple data set, our model correctly identifies the population mean, standard deviation, and NS probability. 
-
-Our second set of mock data is drawn from the same distribution as the first (with $\mu = 0.7$ and $\sigma = 0.2$) except it includes 10 NS, each given a mass of $1.35~\Msun$. Comparing the analytic distribution in the top left panel with the middle left panel shows that adding a NS component most strongly affects the high end tail of the distribution. The sample of "observed" $M_{2,min}$ shows that only five of the ten NS have masses greater than $1.0~\Msun$; the other five NS companions have $M_{2,min}$ measurements indistinguishable from that of WD companions. The middle panel in Figure {\bf XXX} shows the posterior distribution for the mean and standard deviation of the sample. The NS component clearly skews the distribution toward larger distributions, however the true values (designated by the "X") are still within the 1-$\sigma$ confidence level. The ability of our model to correctly identify the NS fraction, shown in the right panel, is most interesting. The peak of the posterior distribution is centered at 10\%. {\bf Come up with confidence levels here.}
-
-The third set of mock data tests the ability of our model to match non-Gaussian distributions. Here, we generated a sample of WD companions from a flat mass distribution $M_{WD} = [0.3:1.1]~\Msun$, combined with a NS fraction of 10\%. The theoretical expectation for the distribution of $M_{2,min}$, shown by the red line in the bottom left panel, was produced by numerically integrating equation {\bf XXX}, where we substitute a flat distribution for $P(M_2 | \mathbf{\Theta},i)$:
-
-\begin{equation}
-P(M_2 | \mathbf{\Theta},i) = \left( 1 - \mathcal{f}_{NS} \right) \frac{1}{M_{WD,max} - M_{WD,min}} + \mathcal{f}_{NS} \delta(M_2 - M_{NS})
-\end{equation}
-
-where $M_{WD,min}=0.3~\Msun$ and $M_{WD,max} = 1.1~\Msun$. The histogram shows that this distribution results in a larger number of WDs with very low $M_{2,min}$. The resulting posterior distribution in $\mu$ and $\sigma$ is shown by the bottom middle panel. Since our model is attempting to derive a Gaussian mass distribution from an initially non-Gaussian distribution, the posterior is not as well formed as our previous two test cases. Furthermore, the resulting NS probability, shown in the bottom right panel of Figure {\bf XXX}, is not as well formed. This is because, on the one hand, the distribution of $M_{2,min}$ has a large component at very low masses, skewing the resulting $\mu$ distribution toward lower masses, with a larger NS fraction. On the other hand, the portion of the sample at large $M_{2,min}$ is pushing the distribution toward larger masses, with a smaller NS fraction. The competition between these two effects spreads the posterior distributions in all three of our model parameters.
-
-It is clear that our model can recover the initial distribution of companion masses and NS fraction with a fairly high degree of accuracy, when the population is well represented by a Gaussian. Our third test case shows that when our initial population significantly deviates from a Gaussian, our model is much more imprecise. However this uniform distribution, with a relatively low $M_{WD,min}$ of $0.3~\Msun$ and high $M_{WD,max}$ of $1.1~\Msun$ is a very difficult distribution to fit with a Gaussian because the high mass WDs can easily be confused with NSs and vice versa. Unfortunately, the posterior NS probability did not converge on a single value. Nevertheless, our model indicates that, despite the "wrong" choice of model, the NS fraction is non-negligible.
+\subsection{Uniform (white dwarf) + Gaussian (neutron star)} \label{sec:exp3}
+For a final test, we use the same neutron star component as in Section~\ref{sec:exp2}, but now generate companion masses for the white dwarf component by sampling from a uniform distribution over the range $(0.2,1.2)~\Msun$. We keep the neutron star fraction fixed to $f_{\rm NS}=0.1$. The distribution of mock observations of the mass function, $m_f$, are shown by the middle-left panel of Figure~\ref{}. We use MCMC (see description above) to ...
 
 \begin{figure}[h!]
 \begin{center}
