@@ -5,6 +5,8 @@
     components. Essentially a deconvolution of sin i.
 """
 
+# TODO: I think the model is wrong - need to fix P(Q) and check logsumexp
+
 from __future__ import division, print_function
 
 __author__ = "adrn <adrn@astro.columbia.edu>"
@@ -37,7 +39,7 @@ def main(pool, path, N, J, K, plot=False, nsteps=1000):
     #
 
     np.random.seed(42)
-    sigma = 1.  # km/s
+    sigma = 0.01  # km/s
     v_func = np.random.lognormal
     # v_func_args = dict(mean=5., sigma=0.01)  # tight v
     v_func_args = dict(mean=5., sigma=0.25)  # wide v
@@ -76,7 +78,7 @@ def main(pool, path, N, J, K, plot=False, nsteps=1000):
         pos,prob,state = sampler.run_mcmc(pos, nsteps//10)
 
     sampler.reset()
-
+    logger.debug("Pos: {}".format())
     logger.debug("Running sampler for main sampling...")
     pos,prob,state = sampler.run_mcmc(pos, nsteps)
     logger.debug("Done sampling!")
