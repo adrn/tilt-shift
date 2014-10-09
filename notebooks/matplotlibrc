@@ -6,7 +6,7 @@ lines.markeredgewidth  : 0.     # the line width around the marker symbol
 lines.markersize  : 5           # markersize, in points
 
 ### PATCHES
-patch.facecolor        : #666666
+patch.facecolor        : 666666
 patch.edgecolor        : none
 
 ### FONT
