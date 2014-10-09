@@ -1,0 +1,58 @@
+### LINES
+lines.linestyle   : -       # solid line
+lines.color       : k    # has no affect on plot(); see axes.color_cycle
+lines.marker      : .    # the default marker
+lines.markeredgewidth  : 0.     # the line width around the marker symbol
+lines.markersize  : 5           # markersize, in points
+
+### PATCHES
+patch.facecolor        : #666666
+patch.edgecolor        : none
+
+### FONT
+font.family          : Arial
+font.weight         : light
+font.size           : 22.0
+
+### AXES
+axes.facecolor      : ffffff   # axes background color
+axes.edgecolor      : 333333   # axes edge color
+axes.titlesize      : 32   # fontsize of the axes title
+axes.labelsize      : 24  # fontsize of the x any y labels
+axes.labelweight    : normal  # weight of the x and y labels
+axes.formatter.limits : -7, 10 # use scientific notation if log10
+                               # of the axis range is smaller than the
+                               # first or larger than the second
+axes.color_cycle : 1A1A1A, 2166AC, 006837, B2182B, 762A83, E08214, 80CDC1, C51B7D, FEE08B
+
+### TICKS
+xtick.major.size     : 8      # major tick size in points
+xtick.minor.size     : 4      # minor tick size in points
+xtick.major.width    : 1.    # major tick width in points
+#xtick.minor.width    : 0.5    # minor tick width in points
+#xtick.major.pad      : 4      # distance to major tick label in points
+#xtick.minor.pad      : 4      # distance to the minor tick label in points
+xtick.color          : 333333      # color of the tick labels
+xtick.labelsize      : 15 # fontsize of the tick labels
+xtick.direction      : in     # direction: in, out, or inout
+
+ytick.major.size     : 8      # major tick size in points
+ytick.minor.size     : 4      # minor tick size in points
+ytick.major.width    : 1.    # major tick width in points
+#ytick.minor.width    : 0.5    # minor tick width in points
+#ytick.major.pad      : 4      # distance to major tick label in points
+#ytick.minor.pad      : 4      # distance to the minor tick label in points
+ytick.color          : 333333      # color of the tick labels
+ytick.labelsize      : 15 # fontsize of the tick labels
+ytick.direction      : in     # direction: in, out, or inout
+
+
+### GRIDS
+grid.color       :   cccccc   # grid color
+grid.linestyle   :   -
+grid.linewidth   :   0.75     # in points
+
+### FIGURE
+figure.facecolor : white    # figure facecolor; 0.75 is scalar gray
+figure.edgecolor : white   # figure edgecolor
+pdf.fonttype       : 42         # Output Type 3 (Type3) or Type 42 (TrueType)
