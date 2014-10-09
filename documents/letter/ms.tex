@@ -35,47 +35,48 @@ any inclination angle scales with sin $i$, for a large enough, unbiased
 sample, the companion mass distribution can be deconvolved from the
 inclination angle distribution. We develop a Bayesian technique to handle this
 deconvolution and place it within a Markov Chain Monte Carlo framework.
-We then apply our method to the sample of 55 extremely low mass (ELM)
-WDs with radial velocity variations. Modeling the companion mass
+We then apply our method to the sample of 61 white dwarfs in the extremely low mass (ELM) white dwarf
+survey. Modeling the companion mass
 distribution as a Gaussian with a variable neutron star component, we
 find the companion population is well modeled by a mean of 0.74 \Msun\ and a
 standard deviation of 0.26 \Msun. Our model indicates a neutron star (NS)
-fraction of 1.4$\substack{+7.0 \\ -1.4}$\%.
+fraction of 1.4$\substack{+7.0 \\ -1.4}$\%. We make the posterior distribution from our simulations publicly available and provide a python script so that the probability of any future detected LMWD containing a NS can be determined.
 \end{abstract}
 
 
 \section{Introduction}
 
-The dramatic increase in the number of spectroscopically confirmed white dwarfs (WDs) is seen in the most recently compiled sample from the Data Release 7 (DR7) in the Sloan Digital Sky Survey (SDSS), containing some 20,000 confirmed WDs \citet{kleinman13}. While the distribution of WD masses is strongly peaked at $0.6~\Msun$, a small but non-negligible number (6\%) of low mass WDs (LMWD) was observed, with $M<0.4~\Msun$. In addition to SDSS, LMWDs have been observed in similar numbers elsewhere \citep[e.g. the Palomar Green Survey][]{liebert05}.
+The dramatic increase in the number of spectroscopically confirmed white dwarfs (WDs) is seen in the most recently compiled sample from the Data Release 7 (DR7) in the Sloan Digital Sky Survey (SDSS), containing some 20,000 confirmed WDs \citet{kleinman13}. While the distribution of WD masses is strongly peaked at $0.6~\Msun$, a small but non-negligible number ($\approx$6\%) of low mass WDs (LMWD) is observed, with $M<0.4~\Msun$. In addition to SDSS, LMWDs have been observed in similar numbers elsewhere \citep[e.g. the Palomar Green Survey][]{liebert05}.
 
 
-Except in special cases of extreme metallicity \citep{kilic07}, the Galaxy is not old enough to produce these LMWD through single star evolution. These objects are formed through dynamical interactions with another star, in which the primary overfills its Roche lobe in either an unstable, common envelope \citep{vdSluys06}, or a phase of stable but non-conservative mass transfer \citep{woods12}. After the primary has become a WD, the secondary overfills its Roche lobe, forming a common envelope prior to core helium ignition, leaving a helium core WD secondary in a tight orbit with either a He- or CO- core WD \citep{han98}.
-
-In their seminal work, \citet{marsh95} discovered companions around five LMWDs in their sample of seven objects, cementing LMWDs as fruitful targets for close binary searches. Using a reduced proper motion selection criterion, the Extremely Low Mass (ELM) WD Survey specifically searched for LMWDs in SDSS using a photometric constraint combined with a reduced proper motion constraint. After their initial investigation found 11 of 12 LMWDs had close binary companions \citep{ELMI}, further radial velocity follow-up has now brought the sample of ELM WDs to 61 systems, 55 of which have measured radial velocity variations \citep{ELMII, ELMIII, ELMIV, ELMV}.
+Except in special cases of extreme metallicity \citep{kilic07}, the Galaxy is not old enough to produce these LMWD through single star evolution. These objects are formed through dynamical interactions with another star, in which the primary overfills its Roche lobe in either an unstable, common envelope \citep{vdSluys06}, or a phase of stable but non-conservative mass transfer \citep{woods12}. After the primary has become a WD, the secondary overfills its Roche lobe, forming a common envelope prior to core helium ignition, leaving a He-core WD secondary in a tight orbit with either a He- or CO- core WD \citep{han98}.
 
 
-While the orbital periods and radial velocities indicated the companions were most likely WDs, it was realized that these LMWDs could have NS companions \citep{vLeeuwen07}. However this and other radio searches for pulsed emission, as well as searches for blackbody X-ray emission using {\it XMM-Newton} and {\it Chandra}, have all been fruitless \citep{agueros09a,agueros09b,kilic13}. Yet, such systems must exist since LMWDs are observed as companions around millisecond pulsars. Since the orbital solutions provided by the ELM survey combined with the precision of radio data would overconstrain the system, finding even one system would be extraordinarily interesting. The NS binaries with WD companions bright enough to detect spectroscopic radial velocity variations have precisely determined NS masses, allowing for an understanding of the binary evolution processes forming these systems \citep{vKerkwijk96,callanan98,bassa06,antoniadis12}. The resources required for these targeted observations, selecting the most likely candidates for multiwavelength follow-up is crucial. We outline the standard technique below.
+In their seminal work, \citet{marsh95} discovered companions around five LMWDs in their sample of seven objects, confirming these theoretical expectations and cementing LMWDs as fruitful targets for binary searches. The Extremely Low Mass (ELM) WD Survey identifies LMWDs in SDSS for spectroscopic follow-up using a photometric constraint combined with a reduced proper motion constraint \citep{ELMI}. After their initial investigation found 11 of 12 LMWDs had close binary companions, further radial velocity follow-up has now brought the sample of ELM WDs to 61 systems, 55 of which have measured radial velocity amplitudes and orbital periods \citep{ELMII, ELMIII, ELMIV, ELMV}.
 
 
-For each WD in a single-line spectroscopic binary, spectroscopic observations provide the orbital period ($P_{\rm orb}$), WD mass ($M_1$), and projected orbital velocity ($K$). Using Kepler's third law, we can write the relation between these quantities and the unknown inclination angle as:
+While the orbital periods and radial velocities indicated the companions were most likely WDs, due to the uncertain inclination angle, these LMWDs could have NS companions \citep{vLeeuwen07}. However this and other radio searches for pulsed emission, as well as searches for blackbody X-ray emission using {\it XMM-Newton} and {\it Chandra}, have all been unsuccessful \citep{agueros09a,agueros09b,kilic13}. Yet, such systems must exist since LMWDs are observed as companions around millisecond pulsars \citep{vKerkwijk96,callanan98,bassa06,antoniadis12}. Finding even one system would be extremely interesting; the NS binaries with WD companions bright enough to detect spectroscopic radial velocity variations have precisely determined NS masses, allowing for an understanding of the binary evolution processes forming these systems . 
+
+
+Selecting the most likely candidates for multiwavelength follow-up is crucial. For each WD in a single-line spectroscopic binary, spectroscopic observations provide the orbital period ($P_{\rm orb}$), WD mass ($M_1$), and projected orbital velocity ($K$). Using Kepler's third law, we can write the relation between these quantities and the unknown inclination angle as:
 
 \begin{equation}
 	\frac{M_2^3}{\left(M_1+M_2\right)^2} {\rm sin}^3 i = \frac{P_{\rm orb}}{2\pi G} K^3 = m_f \label{eq:massfunc}
 \end{equation}
 
-The righthand side of this equation is the well-known mass function ($M_f$). $M_2$ is minimized for an edge-on orbit, with $i = 90^{\circ}$. For any individual system, deriving the likelihood of a $M_2$ for that system ($P(M_2)$) involves solving Equation 1 for $M_2$ for different values for $i$, weighting the inclination angle by sin $i$. A basic calculation for the probability that the companion to any individual system is a NS can therefore be calculated:
+The righthand side of this equation is the well-known mass function ($M_f$). $M_2$ is minimized for an edge-on orbit, with $i = 90^{\circ}$. For any individual system, deriving the likelihood of a $M_2$ for that system ($P(M_2)$) involves solving Equation \ref{eq:massfunc} for $M_2$ for different values for $i$, weighting the inclination angle by sin $i$. A basic calculation for the probability that the companion to any individual system is a NS can therefore be calculated:
 
 \begin{equation}
 P({\rm NS}) = \int_{0^{\circ}}^{i_{\rm NS}} {\rm sin}\ i\ {\rm d}i \label{eq:P_NS_approx}
 \end{equation}
 
-Where $i_{\rm NS}$ is the inclination angle from Equation 1 when $M_2$ is the mass of a NS, typically $\approx1.35~\Msun$. However, implicit in this calculation is that all companion masses are equally likely a priori. Clearly this is not the case as evidenced by \citep{kleinman13} who show the WD mass distribution in SDSS is strongly peaked around $0.6~\Msun$. Including this as a prior on the companion mass does not improve the situation since it is unlikely that the mass distribution of single WDs and WDs in binaries is the same. Equation 2 should therefore be used only as an approximation for the NS probability of a companion.
+Where $i_{\rm NS}$ is the inclination angle from Equation \ref{eq:massfunc} when $M_2$ is the mass of a NS, typically $\approx1.35~\Msun$. However, implicit in this calculation is that all companion masses are equally likely a priori. Clearly this is not the case as evidenced by \citep{kleinman13} who show the WD mass distribution in SDSS is strongly peaked around $0.6~\Msun$. Including this as a prior on the companion mass does not improve the situation since it is unlikely that the mass distribution of single WDs and WDs in binaries is the same. Equation \ref{eq:P_NS_approx} should therefore be used only as an approximation for the NS probability of a companion.
 
 
-With 55 systems with precise $M_1$, $P_{\rm orb}$, and $K$, the ELM sample is large enough to be statistically modeled. Furthermore, since the population was selected based on characteristics determined by the primary mass alone, at least with regard to the inclination angle and companion mass, the population is unbiased. In this work we develop a model to determine the mass distribution of companions to ELM WDs in an attempt to answer several specific scientific questions: 1.\ Can the population as a whole be modeled using a simple description of the companion masses? 2.\ What is the rate of NS implied by our model? 3.\ Can we improve the likelihood of any individual system having a NS companion, taking into account the overall rate of NS's in the sample implied by our model?  
+With 55 of the 61 systems with precise $M_1$, $P_{\rm orb}$, and $K$, the ELM sample is large enough to be statistically modeled. Furthermore, since the population was selected based on characteristics determined by the primary mass alone, at least with regard to the inclination angle and companion mass, the population is unbiased. In this work we develop a model to determine the mass distribution of companions to ELM WDs in an attempt to answer several specific scientific questions: 1.\ Can the population as a whole be modeled using a simple description of the companion masses? 2.\ How does the companion mass distribution compare to predictions from population synthesis simulations?  3.\ What is the rate of NS implied by our model? 4.\ Can we improve the likelihood of any individual system having a NS companion, taking into account the overall rate of NS's in the sample implied by our model?  
 
 
-In Section 2 we build the mathematical framework that we employ in our model described in Section 3. Section 4 shows the results of our model, while Section 5 gives a discussion. We conclude in Section 6.
+Toward these goals, we build the mathematical framework in Section 2 that we employ in our model described in Section 3. Section 4 shows the results of our model, while Section 5 gives a discussion. We conclude in Section 6.
 
 \begin{figure}[h!]
 \begin{center}
@@ -84,17 +85,21 @@ In Section 2 we build the mathematical framework that we employ in our model des
 \end{center}
 \end{figure}
 
+
+
+
 \section{Methods}
 
 We construct a statistical model to derive constraints on a parametric model for the distribution of ELM WD companion masses, $p(M_2 \given \bs{\theta})$.\footnote{In what follows, vectors or sets of parameters or quantites are represented by bold symbols.} For each system, we assume we are given $K$, $T$, and $M_1$ and therefore know the value of the mass function, $m_f$ (Eq.~\ref{eq:massfunc}). We would like to find posterior constraints on the parameters, $\bs{\theta}$, that describe the distribution of companion masses, $p(M_2\given \bs{\theta})$, given all of the observed mass functions, $\bs{m}_f$, by deconvolving the distribution of mass functions from the unobserved inclination angle, $i$. Using Bayes' rule,
 \begin{equation}
     p(\bs{\theta} \given m_f) = \frac{1}{\mathcal{Z}}~p(m_f \given \bs{\theta})~p(\bs{\theta}).
 \end{equation}
-where $p(m_f \given \bs{\theta})$ is the likelihood, $p(\bs{\theta})$ is the prior on parameters $\bs{\theta}$, and the evidence integral, $\mathcal{Z}$, is a constant that depends only on the data. The marginal likelihood, $p(m_f \given \bs{\theta})$, involves integrals over the latent variables $i$ and companion mass, $M_2$,
-\begin{equation}
-    p(m_f \given \bs{\theta}) = \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2~p(m_f \given M_1, M_2, i)~p(M_2 \given \bs{\theta})~p(i).
-\end{equation}
-where we neglect observational uncertainties in the mass function,\footnote{This is justified because the relative uncertainties in these quantities are small, $\sigma_x / x \sim 0.1$, however in future work we will extend this methodology to include uncertainties in all measured quantities.} and assume the inclination angles, $i$, are isotropically distributed
+where $p(m_f \given \bs{\theta})$ is the likelihood, $p(\bs{\theta})$ is the prior on parameters $\bs{\theta}$, and the evidence integral, $\mathcal{Z}$, is a constant that depends only on the data. The marginal likelihood, $p(m_f \given \bs{\theta})$, involves integrals over the latent variables $i$ and $M_2$,
+\begin{align}
+    p(m_f \given \bs{\theta}) &= \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2  \nonumber \\
+      & \qquad {} \times p(m_f \given M_1, M_2, i)~p(M_2 \given \bs{\theta})~p(i).
+\end{align}
+We neglect observational uncertainties in the mass function,\footnote{This is justified because the relative uncertainties in these quantities are small, $\sigma_x / x \sim 0.1$, however in future work we will extend this methodology to include uncertainties in all measured quantities.} and assume the inclination angles are isotropically distributed
 \begin{align}
 	p(m_f \given M_1, M_2, i) &= \delta \left[m_f - f(M_1, M_2, i) \right]\\
 	f(M_1, M_2, i) &= \frac{(M_2 \sin i)^3}{(M_1 + M_2)^2}\\
@@ -102,8 +107,10 @@ where we neglect observational uncertainties in the mass function,\footnote{This
 \end{align}
 For now, we keep this general by not yet specifying a parametric form for the companion mass distribution, $p(M_2 \given \bs{\theta})$. With the above assumptions, the marginal likelihood integral is
 \begin{align}
-    p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta}) \int_0^{\pi/2} di ~ \delta \left[m_f - f(M_1, M_2, i)\right]~\sin i\\
-    &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta}) \int_0^{\pi/2} di ~\sin i ~ \delta \left[g(M_1,M_2,i) \right]\label{eq:delta}
+%    p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta}) \int_0^{\pi/2} di \nonumber \\
+%    & \qquad {} \times \delta \left[m_f - f(M_1, M_2, i)\right]~\sin i\\
+    p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2 ~p(M_2 \given \bs{\theta}) \int_0^{\pi/2} di  \nonumber \\
+    & \qquad {} \times ~\sin i ~ \delta \left[g(M_1,M_2,i) \right]\label{eq:delta}
 \end{align}
 where
 \begin{equation}
@@ -111,61 +118,87 @@ where
 \end{equation}
 The inner integral (over $i$) has the form
 \begin{equation}
-    \int dx~F(x)~\delta{(G(x)}) = \sum_j \frac{F(x^*_j)}{|G'(x^*_j)|}
+    \int dx~F(x)~\delta \left[ G(x) \right] = \sum_j \frac{F(x^*_j)}{|G'(x^*_j)|}
 \end{equation}
 where the sum is over the roots, $x^*_j$, of the function $G(x)$. The root, $i^*$, and derivative of the argument of the delta function in Equation~\ref{eq:delta} are 
 \begin{align}
-	i^* &= \sin^{-1}\alpha\\
-	\alpha &= \frac{(m_f(M_1+M_2)^2)^{1/3}}{M_2}\\
-	\frac{\partial g}{\partial i} &= \frac{3M_2^3}{(M_1+M_2)^2}\sin^2 i \cos i\\
-	\frac{\partial g}{\partial i}\bigg\rvert_{i^*} &= \frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}
+%	\sin i^* &= \alpha\\
+%	\alpha &= \frac{(m_f(M_1+M_2)^2)^{1/3}}{M_2}\\
+	\sin i^* &= \frac{(m_f(M_1+M_2)^2)^{1/3}}{M_2}\\
+%	\frac{\partial g}{\partial i} &= \frac{3M_2^3}{(M_1+M_2)^2}\sin^2 i \cos i\\
+%	\frac{\partial g}{\partial i}\bigg\rvert_{i^*} &= \frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}
+	\frac{\partial g}{\partial i}\bigg\rvert_{i^*} &= \frac{3M_2^3}{(M_1+M_2)^2} \sin^2 i^* \sqrt{1 - \sin^2 i^*}
 \end{align}
 With this in mind, we may write the marginal likelihood as
 \begin{align}
 	p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\frac{\sin i^*}{g'(M_1,M_2,i^*)}\\
-	&= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\alpha\left[\frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}\right]^{-1}\\
-	&= \int_{M_{2,{\rm min}}}^\infty dM_2~p(M_2 \given \bs{\theta})~\frac{(M_1+M_2)^{4/3}}{3m_f^{1/3}M_2\sqrt{M_2^2 - \left[ m_f(M_1+M_2)^2 \right]^{2/3}}}\label{eq:fullm2}
+%	&= \int_{0}^\infty dM_2~p(M_2 \given \bs{\theta})~\alpha\left[\frac{3M_2^3}{(M_1+M_2)^2} \alpha^2 \sqrt{1 - \alpha^2}\right]^{-1}\\
+	&= \int_{M_{2,{\rm min}}}^\infty dM_2~p(M_2 \given \bs{\theta}) h(M_2, m_f, M_1) \label{eq:fullm2}
 \end{align}
-where the bottom bound in the integral in Equation~\ref{eq:fullm2} is set by the minimum companion mass for which the integrand is real, $M_{2,{\rm min}}$.
+
+where the bottom bound in the integral in Equation~\ref{eq:fullm2} is set by the minimum companion mass for which the integrand is real, $M_{2,{\rm min}}$ (determined by setting $i=90$ in Equation~\ref{eq:massfunc} and solving for $M_2$), and
+
+\begin{equation}
+h(M_2, m_f, M_1) = \frac{(M_1+M_2)^{4/3}}{3\ m_f^{1/3}M_2\sqrt{M_2^2 - \left[ m_f(M_1+M_2)^2 \right]^{2/3}}}
+\end{equation}
+
+
 
 \section{Experiments} \label{sec:experiments}
 
 We must now choose a functional form for the companion mass distribution,  $p(M_2\given \bs{\theta})$. For all experiments -- including that with the real data -- we use a two component Gaussian mixture model to fit the data. However, in tests below, we generate test data with a variety of mixture component forms. We truncate the distributions using physically motivated bounds so that the white dwarf component is restricted to the range $M_2\in (0.2,1.4)~\Msun$ and the neutron star component is restricted to the range $M_2\in (1,2)~\Msun$. The likelihood with a Gaussian mixture model is
 \begin{align}
-	h(M_2, m_f, M_1) &= \frac{(M_1+M_2)^{4/3}}{3m_f^{1/3}M_2\sqrt{M_2^2 - \left[ m_f(M_1+M_2)^2 \right]^{2/3}}}\\
-	p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~\left[ (1-f_{\rm NS})p_{\rm WD} + f_{\rm NS}p_{\rm NS} \right]~h(M_2, m_f, M_1)\\
-	p_{\rm WD} &= \mathcal{N}(M_2 \given \mu_{\rm WD}, \sigma^2_{\rm WD});\,(0.2 < M_2 < 1.4~\Msun) \\
-	p_{\rm NS} &= \mathcal{N}(M_2 \given \mu_{\rm NS}, \sigma^2_{\rm NS});\,(1.4 < M_2 < 2~\Msun)
+%	h(M_2, m_f, M_1) &= \frac{(M_1+M_2)^{4/3}}{3m_f^{1/3}M_2\sqrt{M_2^2 - \left[ m_f(M_1+M_2)^2 \right]^{2/3}}}\\
+%	p(m_f \given \bs{\theta}) &= \int_{0}^\infty dM_2~\left[ (1-f_{\rm NS})p_{\rm WD} + f_{\rm NS}p_{\rm NS} \right]~h(M_2, m_f, M_1)\\
+	p(M_2 \given \bs{\theta}) &= \left[ (1-f_{\rm NS})p_{\rm WD} + f_{\rm NS}p_{\rm NS} \right] 
 \end{align}
-where $\mathcal{N}$ is the (truncated, but properly normalized) normal distribution with mean $\mu$ and variance $\sigma^2$ and the distributions are limited to the ranges specified. In this work, we fix the mean and variance of the neutron star distribution to
+
+where 
+
+\begin{equation}
+	p_{\rm WD} = \mathcal{N}(M_2 \given \mu_{\rm WD}, \sigma^2_{\rm WD});\,\left[ 0.2 < \frac{M_2}{\Msun} < 1.4 \right] 
+\end{equation}
+
+and
+
+\begin{equation}
+	p_{\rm NS} = \mathcal{N}(M_2 \given \mu_{\rm NS}, \sigma^2_{\rm NS});\, \left[1.4 < \frac{M_2}{\Msun} < 2 \right].
+\end{equation}
+
+$\mathcal{N}$ is the (truncated, but properly normalized) normal distribution with mean $\mu$ and variance $\sigma^2$ and the distributions are limited to the ranges specified. In this work, we fix the mean and variance of the neutron star distribution to
 \begin{align}
 	\mu_{\rm NS} &= 1.4~\Msun\\
 	\sigma^2_{\rm NS} &= (0.1~\Msun)^2
 \end{align}
-given the uncertainties in neutron star mass, birth channels, and mass accretion scenarios \citep{refs} [TODO: Jeff, references]. 
+based on indications that NSs with WD companions may be somewhat more massive than the canonical NS mass of 1.35 \Msun \citep{smedley14}. 
 
-The probability of any particular system having a NS companion $P({\rm NS})$ is then:
+%The probability of any particular system having a NS companion $P({\rm NS})$ is then:
 
-\begin{equation}
-P({\rm NS}) = \int_{0}^\infty dM_2~ f_{\rm NS}~ \mathcal{N}(M_2 \given \mu_{\rm NS}, \sigma^2_{\rm NS})~ h(M_2, m_f, M_1) \label{eq:P_NS_full}
-\end{equation}
+%\begin{equation}
+%P({\rm NS}) = \int_{0}^\infty dM_2~ f_{\rm NS}~ \mathcal{N}(M_2 \given \mu_{\rm NS}, \sigma^2_{\rm NS})~ h(M_2, m_f, M_1) \label{eq:P_NS_full}
+%\end{equation}
 
 Our companion mass model parameters are then $\bs{\theta} = (\mu_{\rm WD}, \sigma_{\rm WD}, f_{\rm NS})$. We choose standard priors on these parameters. For the mean of the white dwarf component, we use a uniform distribution from $0.2-1.4~\Msun$. We use a (scale-invariant) logarithmic prior for the variance of the white dwarf component over the range $0.05-2.~\Msun$. We use a uniform distribution over the dimensionless neutron star fraction from $0-1$. The model parameters are summarized in Table~\ref{tbl:parameters}.
 
-\begin{table}[ht]
-\begin{center}
-	\begin{tabular}{l c c l} \toprule
-		Parameter & Prior \\\toprule
+\begin{deluxetable}{cc}
+	\tablecaption{Model Parameters \label{tbl:parameters}}
+
+	\tablehead{
+		\colhead{Parameter} &
+		\colhead{Prior}
+	}
+
+	\startdata
 		$f_{\rm NS}$ & $\mathcal{U}(0, 1)$ \\ 
 		$\mu_{\rm WD}$ & $\mathcal{U}(0.2, 1.4)$ \\ 
 		$\sigma_{\rm WD}$ & $\frac{1}{\ln(40)\sigma}$ $(0.05 < \sigma < 2~\Msun)$ \\ 
 		$\mu_{\rm NS}$ & 1.4~$\Msun$ (fixed) \\ 
-		$\sigma_{\rm NS}$ &  0.1~$\Msun$ (fixed) \\
-		\bottomrule
-		\end{tabular}
-	\caption{Parameter information for the form of the companion mass distribution used in the experiments of Section~\ref{sec:experiments}. $\mathcal{U}$ is the uniform distribution. There are 3 free parameters. \label{tbl:parameters}}
-\end{center}
-\end{table}
+		$\sigma_{\rm NS}$ &  0.1~$\Msun$ (fixed) 
+	\enddata
+
+	\tablecomments{Parameter information for the form of the companion mass distribution used in the experiments of Section~\ref{sec:experiments}. $\mathcal{U}$ is the uniform distribution. There are 3 free parameters. }\
+
+\end{deluxetable}
 
 To test the performance of this Gaussian mixture model, we apply it to three separate sets of mock data (described in detail below), each with 100 ``observed'' systems. These data are generated by randomly drawing the companion mass, $M_2$, from a particular distribution, then using a randomly drawn inclination angle and primary mass, $M_1$, to compute the mass function, $m_f$. We draw primary masses from a uniform distribution, $M_1 \sim \mathcal{U}(0.2,0.4)~\Msun$. We apply the same Gaussian mixture model to all test datasets to infer the parameters of the white dwarf mixture component and neutron star fraction.
 
@@ -173,7 +206,7 @@ In each experiment below, we use an ensemble Markov Chain Monte Carlo algorithm 
 
 \begin{figure*}[h!]
 \begin{center}
-\includegraphics[angle=90,width=0.95\textwidth]{model_post.eps}
+\includegraphics[width=0.95\textwidth]{many-panel.pdf}
 \caption{Replace this text with your caption}
 \label{fig:tests}
 \end{center}
@@ -186,23 +219,23 @@ As a first test, we generate $M_2$'s by drawing from a single, truncated Gaussia
 \begin{align}
 	\mu_{\rm WD, true} &= 0.7~\Msun\\
 	\sigma^2_{\rm WD, true} &= (0.2~\Msun)^2\\
-	0.2 < M_2& < 1.4~\Msun.
+	0.2 < &\frac{M_2}{\Msun} < 1.4.
 \end{align}
-This is equivalent to setting the neutron star fraction to $f_{\rm NS} = 0$. The distribution of mock observations of the mass function, $m_f$, are shown by the top-left panel of Figure~\ref{}. We use MCMC (see description above) to ... 
+This is equivalent to setting the neutron star fraction to $f_{\rm NS} = 0$. The distribution of mock observations of the mass function, $m_f$, are shown by the top-left panel of Figure~\ref{fig:tests}. We use MCMC (see description above) to ... 
 
 \subsection{Two Gaussians (white dwarf + neutron star)} \label{sec:exp2}
 For our next test, we use the same Gaussian distribution to generate companion masses for the white dwarf component as the previous example (Section~\ref{sec:exp1}), but we now add an additional neutron star component with parameters
 \begin{align}
 	\mu_{\rm NS, true} &= 1.4~\Msun\\
 	\sigma^2_{\rm NS, true} &= (0.1~\Msun)^2\\
-	1.4 < M_2& < 2.~\Msun.
+	1.4 < & \frac{M_2}{\Msun} < 2.
 \end{align}
-We set the neutron star fraction to $f_{\rm NS} = 0.1$. The distribution of mock observations of the mass function, $m_f$, are shown by the middle-left panel of Figure~\ref{}. We use MCMC (see description above) to ...
+We set the neutron star fraction to $f_{\rm NS} = 0.1$. The distribution of mock observations of the mass function, $m_f$, are shown by the middle-left panel of Figure~\ref{fig:tests}. We use MCMC (see description above) to ...
 
 [TODO: We have also tried changing the mean and variance of the true neutron star distribution while keeping the fitting parameters fixed and found ...]
 
 \subsection{Uniform (white dwarf) + Gaussian (neutron star)} \label{sec:exp3}
-For a final test, we use the same neutron star component as in Section~\ref{sec:exp2}, but now generate companion masses for the white dwarf component by sampling from a uniform distribution over the range $(0.2,1.2)~\Msun$. We keep the neutron star fraction fixed to $f_{\rm NS}=0.1$. The distribution of mock observations of the mass function, $m_f$, are shown by the middle-left panel of Figure~\ref{}. We use MCMC (see description above) to ...
+For a final test, we use the same neutron star component as in Section~\ref{sec:exp2}, but now generate companion masses for the white dwarf component by sampling from a uniform distribution over the range $(0.2,1.2)~\Msun$. We keep the neutron star fraction fixed to $f_{\rm NS}=0.1$. The distribution of mock observations of the mass function, $m_f$, are shown by the middle-left panel of Figure~\ref{fig:tests}. We use MCMC (see description above) to ...
 
 
 \section{Results}
@@ -227,7 +260,7 @@ While we were writing this work, we became aware of recent high-speed photometri
 
 \begin{figure*}[h!]
 \begin{center}
-\includegraphics[angle=90,width=0.95\textwidth]{ELM_post.eps}
+\includegraphics[width=0.95\textwidth]{real-data.pdf}
 \caption{Replace this text with your caption}
 \label{fig:ELM_post}
 \end{center}
