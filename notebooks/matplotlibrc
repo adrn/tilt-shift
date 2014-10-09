@@ -10,16 +10,17 @@ patch.facecolor        : 666666
 patch.edgecolor        : none
 
 ### FONT
-font.family          : Arial
+font.family          : Open Sans
 font.weight         : light
-font.size           : 22.0
+font.size           : 24.0
 
 ### AXES
 axes.facecolor      : ffffff   # axes background color
 axes.edgecolor      : 333333   # axes edge color
-axes.titlesize      : 32   # fontsize of the axes title
-axes.labelsize      : 24  # fontsize of the x any y labels
-axes.labelweight    : normal  # weight of the x and y labels
+axes.titlesize      : 30   # fontsize of the axes title
+axes.titleweight    : normal
+axes.labelsize      : 22  # fontsize of the x any y labels
+axes.labelweight    : light  # weight of the x and y labels
 axes.formatter.limits : -7, 10 # use scientific notation if log10
                                # of the axis range is smaller than the
                                # first or larger than the second
