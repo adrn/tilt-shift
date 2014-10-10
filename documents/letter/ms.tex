@@ -12,6 +12,7 @@
 \newcommand{\inverse}[1]{{#1}^{-1}}
 \newcommand{\Msun}{\ifmmode {{\rm M}_{\odot}}\else M$_{\odot}$\fi}
 \newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\degree}{^{\circ}}
 
 \begin{document}
 
@@ -64,19 +65,19 @@ Selecting the most likely candidates for multiwavelength follow-up is crucial. F
 	\frac{M_2^3}{\left(M_1+M_2\right)^2} {\rm sin}^3 i = \frac{P_{\rm orb}}{2\pi G} K^3 = m_f \label{eq:massfunc}
 \end{equation}
 
-The righthand side of this equation is the well-known mass function ($M_f$). $M_2$ is minimized for an edge-on orbit, with $i = 90^{\circ}$. For any individual system, deriving the likelihood of a $M_2$ for that system ($P(M_2)$) involves solving Equation \ref{eq:massfunc} for $M_2$ for different values for $i$, weighting the inclination angle by sin $i$. A basic calculation for the probability that the companion to any individual system is a NS can therefore be calculated:
+The righthand side of this equation is the well-known mass function ($M_f$). $M_2$ is minimized for an edge-on orbit, with $i = 90\degree$. For any individual system, deriving the likelihood of a $M_2$ for that system ($P(M_2)$) involves solving Equation \ref{eq:massfunc} for $M_2$ for different values for $i$, weighting the inclination angle by sin $i$. A basic calculation for the probability that the companion to any individual system is a NS can therefore be calculated:
 
 \begin{equation}
 P({\rm NS}) = \int_{0^{\circ}}^{i_{\rm NS}} {\rm sin}\ i\ {\rm d}i \label{eq:P_NS_approx}
 \end{equation}
 
-Where $i_{\rm NS}$ is the inclination angle from Equation \ref{eq:massfunc} when $M_2$ is the mass of a NS, typically $\approx1.35~\Msun$. However, implicit in this calculation is that all companion masses are equally likely a priori. Clearly this is not the case as evidenced by \citep{kleinman13} who show the WD mass distribution in SDSS is strongly peaked around $0.6~\Msun$. Including this as a prior on the companion mass does not improve the situation since it is unlikely that the mass distribution of single WDs and WDs in binaries is the same. Equation \ref{eq:P_NS_approx} should therefore be used only as an approximation for the NS probability of a companion.
+Where $i_{\rm NS}$ is the inclination angle from Equation \ref{eq:massfunc} when $M_2$ is the mass of a NS, typically $\approx1.35~\Msun$ \citep{thorsett99}. However, implicit in this calculation is that all companion masses are equally likely a priori. Clearly this is not the case as evidenced by \citep{kleinman13} who show the WD mass distribution in SDSS is strongly peaked around $0.6~\Msun$. Including this as a prior on the companion mass does not improve the situation since it is unlikely that the mass distribution of single WDs and WDs in binaries is the same. Equation \ref{eq:P_NS_approx} should therefore be used only as an approximation for the NS probability of a companion.
 
 
-With 55 of the 61 systems with precise $M_1$, $P_{\rm orb}$, and $K$, the ELM sample is large enough to be statistically modeled. Furthermore, since the population was selected based on characteristics determined by the primary mass alone, at least with regard to the inclination angle and companion mass, the population is unbiased. In this work we develop a model to determine the mass distribution of companions to ELM WDs in an attempt to answer several specific scientific questions: 1.\ Can the population as a whole be modeled using a simple description of the companion masses? 2.\ How does the companion mass distribution compare to predictions from population synthesis simulations?  3.\ What is the rate of NS implied by our model? 4.\ Can we improve the likelihood of any individual system having a NS companion, taking into account the overall rate of NS's in the sample implied by our model?  
+With 55 of the 61 systems with precise $M_1$, $P_{\rm orb}$, and $K$, the ELM sample is large enough to be statistically modeled. Furthermore, since the population was selected based on characteristics determined by the primary mass alone, at least with regard to the inclination angle and companion mass, the population is unbiased. In this work we develop a Bayesian model to determine the mass distribution of companions to ELM WDs. Our method is similar to that employed by \citet{ozel12} and \citet{kiziltan13} to describe the mass distribution of NSs in binaries. We focus on several specific scientific questions: 1.\ Can the population as a whole be modeled using a simple description of the companion masses? 2.\ How does the companion mass distribution compare to predictions from population synthesis simulations?  3.\ What is the rate of NS implied by our model? 4.\ Can we improve the likelihood of any individual system having a NS companion, taking into account the overall rate of NS's in the sample implied by our model? 
 
 
-Toward these goals, we build the mathematical framework in Section 2 that we employ in our model described in Section 3. We give the results and discussion in Section 4, and conclude in Section 5.
+To answer these questions, we build the mathematical framework in Section 2 that we employ in our model described in Section 3. We give the results and discussion in Section 4, and conclude in Section 5.
 
 \begin{figure}[h!]
 \begin{center}
@@ -136,7 +137,7 @@ With this in mind, we may write the marginal likelihood as
 	&= \int_{M_{2,{\rm min}}}^\infty dM_2~p(M_2 \given \bs{\theta}) h(M_2, m_f, M_1) \label{eq:fullm2}
 \end{align}
 
-where the bottom bound in the integral in Equation~\ref{eq:fullm2} is set by the minimum companion mass for which the integrand is real, $M_{2,{\rm min}}$ (determined by setting $i=90$ in Equation~\ref{eq:massfunc} and solving for $M_2$), and
+where the bottom bound in the integral in Equation~\ref{eq:fullm2} is set by the minimum companion mass for which the integrand is real, $M_{2,{\rm min}}$ (determined by setting $i=90\degree$ in Equation~\ref{eq:massfunc} and solving for $M_2$), and
 
 \begin{equation}
 h(M_2, m_f, M_1) = \frac{(M_1+M_2)^{4/3}}{3\ m_f^{1/3}M_2\sqrt{M_2^2 - \left[ m_f(M_1+M_2)^2 \right]^{2/3}}}
@@ -173,7 +174,7 @@ $\mathcal{N}$ is the (truncated, but properly normalized) normal distribution wi
 	\mu_{\rm NS} &= 1.4~\Msun\\
 	\sigma^2_{\rm NS} &= (0.1~\Msun)^2
 \end{align}
-based on indications that NSs with WD companions may be somewhat more massive than the canonical NS mass of 1.35 \Msun \citep{smedley14}. 
+based on indications that NSs in certain binaries may be somewhat more massive than the canonical NS mass of 1.35 \Msun \citep{kiziltan13,smedley14}. 
 
 %The probability of any particular system having a NS companion $P({\rm NS})$ is then:
 
@@ -207,14 +208,14 @@ Our companion mass model parameters are then $\bs{\theta} = (\mu_{\rm WD}, \sigm
 In our model, we use an ensemble Markov Chain Monte Carlo algorithm \citep{goodman10} to draw samples from the posterior distribution, $p(\mu_{\rm WD}, \sigma_{\rm WD}, f_{\rm NS} \given \bs{m}_f, \bs{M}_1)$. The algorithm is implemented in the \texttt{Python} programming language \citep{foremanmackey13} and uses an ensemble of individual ``walkers'' to naturally adapt to the geometry of the parameter-space being explored. We run the walkers for an initial, burn-in period of 1000 steps starting from randomly drawn initial conditions (sampled from the priors in Table~\ref{tbl:parameters}). We then re-initialized the walkers from their positions at the end of this run, throw out the burn-in samples, and run again for 1000 steps. We compute the autocorrelation time for each parameter to confirm they have converged.
 
 
-\subsection{Test Cases}
+\subsection{Test Cases} \label{sec:tests}
 To test the performance of this Gaussian mixture model, we apply it to three separate sets of mock data (described in detail below), each with 100 ``observed'' systems. These data are generated by randomly drawing the companion mass, $M_2$, from a particular distribution, then using a randomly drawn inclination angle and primary mass, $M_1$, to compute the mass function, $m_f$. We draw primary masses from a uniform distribution, $M_1 \sim \mathcal{U}(0.2,0.4)~\Msun$. We apply the same Gaussian mixture model to all test datasets to infer the parameters of the white dwarf mixture component and neutron star fraction.
 
 
 \begin{figure*}[h!]
 \begin{center}
 \includegraphics[width=0.95\textwidth]{many-panel.pdf}
-\caption{Replace this text with your caption}
+\caption{The model results of our three tests described in Section~\ref{sec:tests}. The left-most panel shows a histogram of the $M_2$ drawn from each of our test distributions. Overplotted as a solid line is posterior distribution using the maximum a posteriori parameter values, resulting from our model. The second panel shows the posterior distributions for $\mu_{\rm WD}$ and $\sigma_{\rm WD}$. The dashed lines in the top two panels show the true values that the sample systems were drawn from. Since the third model was not drawn from a Gaussian distribution, there is no true parameter set. The third panel shows the convolved posterior histogram for $f_{\rm NS}$, with the dashed lines in the bottom two panels showing the true value of 10\%. Finally, the rightmost panels show the NS probability for individual systems as a function of $m_f$. The error bars in $P_{\rm NS}$ enclose the interquartile range.}
 \label{fig:tests}
 \end{center}
 \end{figure*}
@@ -356,10 +357,11 @@ This work additionally relied on Columbia University's \emph{Hotfoot} and \emph{
 
 \bibliographystyle{apj}
 \bibliography{refs}
-
+  
 \bibitem[Goodman~\&\ Weare(2010)]{goodman10}
 Goodman,~J. \& Weare,\ J.,
 2010, Comm.\ App.\ Math.\ Comp.\ Sci., 5, 65
+
 
 
 
