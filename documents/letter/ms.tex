@@ -1,5 +1,5 @@
-%\documentclass[apjl]{emulateapj}
-\documentclass[letterpaper,12pt,preprint]{aastex}
+\documentclass[apjl]{emulateapj}
+%\documentclass[letterpaper,12pt,preprint]{aastex}
 
 % packages
 \usepackage{amssymb,amsmath,amsbsy}
@@ -17,8 +17,8 @@
 \newcommand{\eqn}{Equation~}
 
 % Symbols
-\newcommand{\period}{T_{\rm orb}}
-\newcommand{\mf}{M_f}
+\newcommand{\period}{T}
+\newcommand{\mf}{m_f}
 \newcommand{\wdupper}{1.44}
 
 \begin{document}
@@ -175,8 +175,10 @@ based on indications that NSs in certain binaries may be somewhat more massive t
 
 Our companion mass model parameters are then $\bs{\theta} = (\mu_{\rm WD}, \sigma_{\rm WD}, f_{\rm NS})$. We choose standard priors on these parameters: for the mean of the white dwarf component, we use a uniform distribution from $0.2-1.4~\Msun$; we use a (scale-invariant) logarithmic prior for the variance of the white dwarf component over the range $0.05-2~\Msun$; finally, we use a uniform prior over the dimensionless neutron star fraction from $0-1$. The model parameters are summarized in Table~\ref{tbl:parameters}.
 
+%\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.405}
 \begin{deluxetable}{ccccc}
-	\tablecaption{Model Parameters \label{tbl:parameters}}
+	\tablecaption{Model Results \label{tbl:parameters}}
 
 	\tablehead{
 		\multicolumn{2}{c}{} &
@@ -191,7 +193,8 @@ Our companion mass model parameters are then $\bs{\theta} = (\mu_{\rm WD}, \sigm
 	}
 
 	\startdata
-		\multicolumn{2}{c}{Priors} & $\mathcal{U}(0.2, 1.4)$ & $\left[\ln(40)\sigma\right]^{-1}$ $(0.05 < \sigma/\Msun < 2)$ & $\mathcal{U}(0, 1)$ \\
+		\multicolumn{2}{c}{\multirow{2}{*}{Priors}} & $\mathcal{U}(0.2, 1.4)$ & $\left[\ln(40)\sigma\right]^{-1}$  & $\mathcal{U}(0, 1)$ \\
+		\multicolumn{2}{c}{} & & $(0.05 < \sigma/\Msun < 2)$ & \\
 		\cutinhead{Test Cases}
 		\multirow{2}{*}{Test 1} & True & 0.7 & 0.2 & 0.0 \\
 		 & MAP & {\bf XXX} & {\bf XXX} & {\bf XXX} \\
