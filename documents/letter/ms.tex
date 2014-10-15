@@ -95,11 +95,17 @@ To answer these questions, we build the mathematical framework in Section 2 that
 
 \section{Methods}
 
-We construct a statistical model to derive constraints on a parametric model for the distribution of ELM WD companion masses, $p(M_2 \given \bs{\theta})$.\footnote{In what follows, vectors or sets of parameters or quantites are represented by bold symbols.} For each system, we assume we are given $K$, $T$, and $M_1$ and therefore know the value of the mass function, $\mf$ (\eqn~\ref{eq:massfunc}). We would like to derive posterior constraints on the parameters, $\bs{\theta}$, that describe the distribution of companion masses, $p(M_2\given \bs{\theta})$, given all of the observed mass functions, $\bs{m}_f$, by deconvolving the distribution of mass functions from the unobserved inclination angle, $i$. Using Bayes' rule,
+We construct a statistical model to derive constraints on a parametric model for the distribution of ELM WD companion masses, $p(M_2 \given \bs{\theta})$.\footnote{In what follows, vectors or sets of parameters or quantities are represented by bold symbols.} For each system, we assume we are given $K$, $T$, and $M_1$ and therefore know the value of the mass function, $\mf$ (\eqn~\ref{eq:massfunc}). We would like to derive posterior constraints on the parameters, $\bs{\theta}$, that describe the distribution of companion masses, $p(M_2\given \bs{\theta})$, given all of the observed mass functions, $\bs{m}_f$, by deconvolving the distribution of mass functions from the unobserved inclination angle, $i$. Using Bayes' rule,
 \begin{equation}
-    p(\bs{\theta} \given \mf) = \frac{1}{\mathcal{Z}}~p(\mf \given \bs{\theta})~p(\bs{\theta}).
+    p(\bs{\theta} \given \bs{\mf}) = \frac{1}{\mathcal{Z}}~p(\bs{\mf} \given \bs{\theta})~p(\bs{\theta}).
 \end{equation}
-where $p(\mf \given \bs{\theta})$ is the likelihood, $p(\bs{\theta})$ is the prior on parameters $\bs{\theta}$, and the evidence integral, $\mathcal{Z}$, is a constant that depends only on the data. The marginal likelihood, $p(\mf \given \bs{\theta})$, involves integrals over the latent variables $i$ and $M_2$,
+where $p(\bs{\mf} \given \bs{\theta})$ is the likelihood, $p(\bs{\theta})$ is the prior on parameters $\bs{\theta}$, and the evidence integral, $\mathcal{Z}$, is a constant that depends only on the data. The likelihood, $p(\bs{\mf} \given \bs{\theta})$, can be split into a product over the likelihoods of individual systems:
+
+\begin{equation}
+p(\bs{\mf} \given \bs{\theta}) = \prod_j p(\mf \given \bs{\theta})
+\end{equation}
+
+where the product is over all each of the $j$ systems.  The marginal likelihood involves integrals over the latent variables $i$ and $M_2$,
 \begin{align}
     p(\mf \given \bs{\theta}) &= \int_0^{\pi/2} di \int_{-\infty}^\infty dM_2  \nonumber \\
       & \qquad {} \times p(\mf \given M_1, M_2, i)~p(M_2 \given \bs{\theta})~p(i).
