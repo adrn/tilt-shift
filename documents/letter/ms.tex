@@ -57,16 +57,17 @@ script for computing the probability that a ... in the context of our model.
 
 \section{Introduction}
 
-The dramatic increase in the number of spectroscopically confirmed white dwarfs (WDs) is seen in the most recently compiled sample from Data Release 7 (DR7) of the Sloan Digital Sky Survey (SDSS), which contains $\sim$20,000 confirmed WDs \citep{kleinman13}. While the distribution of hydrogen atmosphere (DA) WD masses is strongly peaked at $0.6~\Msun$, a small but non-negligible number ($\approx$6\%) are seen as low mass WDs (LMWD) with $M<0.4~\Msun$ both in SDSS and elsewhere \citep[e.g., the Palomar Green Survey;][]{liebert05}.
+%The dramatic increase in the number of spectroscopically confirmed white dwarfs (WDs) is seen in the most recently compiled sample from Data Release 7 (DR7) of the Sloan Digital Sky Survey (SDSS), which contains $\sim$20,000 confirmed WDs \citep{kleinman13}. While the distribution of hydrogen atmosphere (DA) WD masses is strongly peaked at $0.6~\Msun$, a small but non-negligible number ($\approx$6\%) are seen as low mass WDs (LMWD) with $M<0.4~\Msun$ both in SDSS and elsewhere \citep[e.g., the Palomar Green Survey;][]{liebert05}.
 
 
-Except in special cases of extreme metallicity \citep{kilic07}, the Galaxy is not old enough to produce WDs with $M<0.5 \Msun$ through single star evolution. These objects are formed through dynamical interactions with another star, in which the primary overfills its Roche lobe in either an unstable, common envelope \citep{vdSluys06}, or a phase of stable but non-conservative mass transfer \citep{woods12}. After the primary has become a WD, the secondary overfills its Roche lobe, forming a common envelope prior to core helium ignition, leaving a He-core WD secondary in a tight orbit with either a He- or CO- core WD \citep{han98,nelemans00,nelemans01}.
+Except in special cases of extreme metallicity \citep{kilic07}, the Galaxy is not old enough to produce WDs with $M\lesssim0.45~ \Msun$ through single star evolution. These objects are formed through dynamical interactions with another star, and are therefore expected to be found in binary systems. \citep{han98,nelemans00,nelemans01,vdSluys06,woods12}.
+%which the primary overfills its Roche lobe in either an unstable, common envelope \citep{vdSluys06}, or a phase of stable but non-conservative mass transfer \citep{woods12}. After the primary has become a WD, the secondary overfills its Roche lobe, forming a common envelope prior to core helium ignition, leaving a He-core WD secondary in a tight orbit with either a He- or CO- core WD \citep{han98,nelemans00,nelemans01}.
+In their seminal work, \citet{marsh95} discovered companions around five LMWDs in their sample of seven objects, confirming these theoretical expectations and cementing LMWDs as fruitful targets for binary searches. The Extremely Low Mass (ELM) WD Survey identifies LMWDs in SDSS for spectroscopic follow-up
+% using combined constraints on photometry and reduced proper motions 
+\citep{ELMI}. After their initial investigation found 11 of 12 LMWDs had close binary companions, further radial velocity follow-up has now brought the sample of ELM WDs to 61 systems, 55 of which have measured radial velocity amplitudes and orbital periods \citep{ELMII, ELMIII, ELMIV, ELMV}.
 
 
-In their seminal work, \citet{marsh95} discovered companions around five LMWDs in their sample of seven objects, confirming these theoretical expectations and cementing LMWDs as fruitful targets for binary searches. The Extremely Low Mass (ELM) WD Survey identifies LMWDs in SDSS for spectroscopic follow-up using combined constraints on photometry and reduced proper motions \citep{ELMI}. After their initial investigation found 11 of 12 LMWDs had close binary companions, further radial velocity follow-up has now brought the sample of ELM WDs to 61 systems, 55 of which have measured radial velocity amplitudes and orbital periods \citep{ELMII, ELMIII, ELMIV, ELMV}.
-
-
-While the orbital periods and radial velocities indicated the companions were most likely WDs, due to the unmeasured inclination angle, these LMWDs could have NS companions \citep{vLeeuwen07}. However, all radio searches for pulsed emission, as well as searches for blackbody X-ray emission from a NS surface have been unsuccessful \citep{agueros09a,agueros09b,kilic13}. Yet, such systems must exist since LMWDs are observed as companions around millisecond pulsars \citep{vKerkwijk96,callanan98,bassa06,antoniadis12}. Finding even one system would be extremely interesting: the NS binaries with WD companions bright enough to detect spectroscopic radial velocity variations have precisely determined NS masses which provide useful insights into the binary evolution processes that form these systems \citep{benvenuto05,smedley14,jia14}
+While the orbital periods and radial velocities indicated the companions were most likely WDs, due to the unmeasured inclination angle, these LMWDs could host NS companions \citep{vLeeuwen07}. However, all radio searches for pulsed emission, as well as searches for blackbody X-ray emission from a NS surface have been unsuccessful \citep{agueros09a,agueros09b,kilic13}. Yet, such systems must exist since LMWDs are observed as companions around millisecond pulsars \citep{vKerkwijk96,callanan98,bassa06,antoniadis12}. Finding even one system would be extremely interesting: the NS binaries with WD companions bright enough to detect spectroscopic radial velocity variations have precisely determined NS masses which provide useful insights into the binary evolution processes that form these systems \citep{benvenuto05,smedley14,jia14}
 
 
 Selecting the most likely candidates for multiwavelength follow-up is crucial. For each WD in a single-line spectroscopic binary, spectroscopic observations provide the orbital period ($\period$), WD mass ($M_1$), and projected orbital velocity ($K=v \sin i$). Using Kepler's third law, we can write the relation between these quantities and the unknown inclination angle as:
@@ -223,7 +224,7 @@ To test the performance of this Gaussian mixture model, we apply it to three sep
 \begin{figure*}[h!]
 \begin{center}
 \includegraphics[width=0.95\textwidth]{many-panel.pdf}
-\caption{The model results of our three tests described in Section~\ref{sec:tests}. The left-most panel shows a histogram of the $M_2$ drawn from each of our test distributions. Overplotted as a solid line is posterior distribution using the maximum a posteriori parameter values, resulting from our model. The second panel shows the posterior distributions for $\mu_{\rm WD}$ and $\sigma_{\rm WD}$. The dashed lines in the top two panels show the true values that the sample systems were drawn from. Since the third model was not drawn from a Gaussian distribution, there is no true parameter set. The third panel shows the convolved posterior histogram for $f_{\rm NS}$, with the dashed lines in the bottom two panels showing the true value of 10\%. Finally, the rightmost panels show the NS probability for individual systems as a function of $\mf$. The error bars in $P_{\rm NS}$ enclose the interquartile range.}
+\caption{The model results of our three tests described in Section~\ref{sec:tests}. The left-most panel shows a histogram of the $M_2$ drawn from each of our test distributions. Overplotted as a solid line is MAP distribution. The second panel shows the posterior distributions for $\mu_{\rm WD}$ and $\sigma_{\rm WD}$. The dashed lines in the top two panels show the true values that the sample systems were drawn from. Since the third model was not drawn from a Gaussian distribution, there is no true parameter set. The third panel shows the posterior distribution for $f_{\rm NS}$ and $\sigma_{\rm WD}$, again with the dashed lines showing the true values. Finally, the rightmost panels list the individual systems and show each of their corresponding NS probabilities. The systems are ordered by increasing $\mf$. }
 \label{fig:tests}
 \end{center}
 \end{figure*}
@@ -231,30 +232,19 @@ To test the performance of this Gaussian mixture model, we apply it to three sep
 
 \subsection{Test 1: Single Gaussian (white dwarf)} \label{sec:exp1}
 
-As a first test, we generate $M_2$'s by drawing from a single, truncated Gaussian with mean, variance, and bounds
-\begin{align}
-	\mu_{\rm WD, true} &= 0.7~\Msun\\
-	\sigma^2_{\rm WD, true} &= (0.2~\Msun)^2\\
-	0.2 < &\frac{M_2}{\Msun} < \wdupper.
-\end{align}
-This is equivalent to setting the neutron star fraction to $f_{\rm NS} = 0$. 
+As a first test, we generate $M_2$'s by drawing from a single, truncated Gaussian with parameters given in \ref{tbl:parameters}. This test sample contains no NSs. The leftmost panel in Figure~\ref{fig:ELM_post} shows that the MAP $M_2$ distribution qualitatively matches the input distribution, while the second panel shows the posterior distribution quantitatively matches the input values shown as dashed lines. The third panel shows that although the posterior $f_{\rm NS}$ distribution is consistent with 0\%, there is a tail up to $\approx 10$\%. Nevertheless, our model closely recovers the input parameters. The fourth panel lists individual systems, ordered by $\mf$, and provides the distribution of $P_{\rm NS}$ values for each. Few systems have $P_{\rm NS}$ values higher than $\approx$5\%, consistent with our input distribution of $f_{\rm NS}=$0\%.
+
+
 
 \subsection{Test 2: Two Gaussians (white dwarf + neutron star)} \label{sec:exp2}
-For our next test, we use the same Gaussian distribution to generate companion masses for the white dwarf component as the previous example (Section~\ref{sec:exp1}), but we now add an additional neutron star component with parameters
-\begin{align}
-	\mu_{\rm NS, true} &= 1.4~\Msun\\
-	\sigma^2_{\rm NS, true} &= (0.05~\Msun)^2\\
-	1.3 < & \frac{M_2}{\Msun} < 2.
-\end{align}
-We set the neutron star fraction to $f_{\rm NS} = 0.1$. 
+For our next test, we use the same Gaussian distribution to generate companion masses for the white dwarf component as the previous example (Section~\ref{sec:exp1}), but we now add an additional neutron star component with parameters, setting $f_{\rm NS} =$ 10\%. The panels are the same as in Test 1 described above. Again, our model recovers the input values for $\mu{\rm WD}$ and $\sigma_{\rm WD}$. Importantly, the third panel shows that it also recovers $f_{\rm NS}$, however the posterior again shows a tail toward higher probabilities. The fourth panel indicates that some systems have near unity $P_{\rm NS}$ values; our model correctly identifies these as true NS. However, this accounts for only roughly half of the systems with NSs in the sample, and the other half may found with low $\mf$ due to a low inclination angle. Although our model can correctly identify the $f_{\rm NS}$ within a factor of $\approx2$, it can only identify some LMWDs as having NS companions.
+
 
 % [TODO: We have also tried changing the mean and variance of the true neutron star distribution while keeping the fitting parameters fixed and found ...]
 
 \subsection{Test 3: Uniform (white dwarf) + Gaussian (neutron star)} \label{sec:exp3}
-For a final test, we use the same neutron star component as in Section~\ref{sec:exp2}, but now generate companion masses for the white dwarf component by sampling from a uniform distribution over the range $(0.2,1.2)~\Msun$. We keep the neutron star fraction fixed to $f_{\rm NS}=0.1$. 
+For a final test, we generate companion masses for the white dwarf component by sampling from a uniform distribution over the range $(0.2,1.2)~\Msun$, while keeping $f_{\rm NS}=$10\%. Again, the panels are the same as in Test 1 described above. The posterior distribution in the second panel shows that the systems have difficulty converging on any one solution for $\mu_{\rm WD}$ and $\sigma_{\rm sigma}$. Interestingly, the third panel shows that despite having a non-Gaussian input distribution for $M_2$, our model still recovers $f_{\rm NS}$, approximately as accurately as in Test 2. %The rightmost panel shows that despite accurately finding $f_{\rm NS}$, our model is not as good at identifying exactly which WDs are NSs.
 
-\subsection{Test results}
-The test results are summarized by Figure~\ref{fig:tests}. Each row corresponds to one of the three tests described above. The left-most column shows the true distribution of $M_2$'s, over-plotted with the maximum a posteriori (MAP) model from our posterior samples, inferred from mock observations of the mass functions, $\mf$, and primary masses, $M_1$, of the mock data. The middle panels show samples from the posterior in two projections (grey points), along with contours that contain 68\% and 95\% of the samples. The final column shows the probability that any given test object is a neutron star, as computed for 512 samples from the posterior.
 
 \section{The ELM Sample}
 
@@ -268,11 +258,10 @@ The other six systems in the ELM WD sample show no evidence of orbital motion, w
 
 
 
-
 \begin{figure*}[h!]
 \begin{center}
 \includegraphics[width=0.95\textwidth]{real-data.pdf}
-\caption{The posteriors for our model applied to the ELM WDs. The first panel shows the distribution of $M_2$ for the data set. The black line gives the maximum a posteriori value, while the fainter lines show a set of randomly selected realizations from our model. The second panel shows the posterior distribution of $\mu$ and $\sigma$; The maximum a posteriori Gaussian model has $\mu_{\rm WD}= 0.74~\Msun$ and $\sigma_{\rm WD}= 0.26~\Msun$. The third panel shows a NS fraction consistent with zero, however with a non-negligible tail toward higher NS probabilities. This is further indicated by the fourth panel in Figure \ref{fig:ELM_post} which shows the relation between $\mf$ and $P_{\rm NS}$ for individual systems. }
+\caption{The posteriors for our model applied to the ELM WDs. The first panel shows the MAP $M_2$ distribution (solid black) and random samples from the posterior (grey lines). The second panel shows the posterior distribution of $\mu$ and $\sigma$; The maximum a posteriori Gaussian model has $\mu_{\rm WD}= {\bf 0.74}~\Msun$ and $\sigma_{\rm WD}= {\bf 0.26}~\Msun$. The third panel the posterior distribution of $\mu$ and $f_{\rm NS}$. The last panel lists individual LMWDs in the ELM sample and shows each of their corresponding NS probabilities. The systems are ordered by increasing $\mf$. The three systems with $P_{\rm NS}=$0\% are the three eclipsing systems.}
 \label{fig:ELM_post}
 \end{center}
 \end{figure*}
@@ -293,7 +282,7 @@ The third panel in Figure~\ref{fig:ELM_post} shows a NS fraction strongly peaked
 Since our results are still consistent with a 0\% NS fraction, it is not guaranteed that any of the LMWDs in the ELM WD sample have NS companions. However the fourth panel in Figure \ref{fig:ELM_post} indicates which ELM WDs have the highest probability of hosting NS companions. Here, we show the relation between $\mf$ and $P_{\rm NS}$ for individual systems. This panel shows that $P_{\rm NS}$ only starts to significantly deviate from zero for {\bf $\mf\approx0.6 \Msun$} Although a few systems have high probabilities, the distribution is strongly clustered near 0\%.
 
 
-The two systems with $P_{\rm NS}$ above {\bf 10\%} are J0811$+$0225 ({\bf XXX}\%) and J1741$+$6526 ({\bf XXX}\%). These systems are ideal candidates for searches for NS companions in radio and X-ray. Radio observations of these objects are in progress, however because a NS companion may be radio quiet or beamed away from us, a NS companion to these LMWDs may not be detectable in radio \citep{vLeeuwen07}. All NS give off blackbody radiation peaked in X-ray wavelengths, therefore X-ray follow-up provides a more stringent test on the potential for a NS companion \citep{agueros09a}. Previous searches for LMWDs with X-ray counterparts have all been non-detections, however we show here that all those sources have a low probability of hosting a NS companion. If J0811$+$0225 and J1741$+$6526 also lack X-ray counterparts, then even more stringent constraints can be placed on $f_{\rm NS}$. In future work, we plan to combine these results with radio and x-ray non-detections to further constrain $P_{\rm NS}$ for each system. 
+The two systems with the highest $P_{\rm NS}$ are J0811$+$0225 and J1741$+$6526. These systems are ideal candidates for searches for NS companions in radio and X-ray. Radio observations of these objects are in progress, however because a NS companion may be radio quiet or beamed away from us, a NS companion to these LMWDs may not be detectable in radio \citep{vLeeuwen07}. All NS give off blackbody radiation peaked in X-ray wavelengths, therefore X-ray follow-up provides a more stringent test on the potential for a NS companion \citep{agueros09a}. Previous searches for LMWDs with X-ray counterparts have all been non-detections, however we show here that all those sources have a low probability of hosting a NS companion. If J0811$+$0225 and J1741$+$6526 also lack X-ray counterparts, then even more stringent constraints can be placed on $f_{\rm NS}$. In future work, we plan to combine these results with radio and x-ray non-detections to further constrain $P_{\rm NS}$ for each system. 
 
 
 It is worth noting that the fourth panels in our test cases in Figure~\ref{fig:tests} shows that our model is fairly good at identifying those systems most likely to host NS's. However it also shows that roughly half of the LMWDs with NS companions may appear with a deceptively low $f_{\rm NS}$ due to the inclination angle. Systems with NS companions cannot all be differentiated from those with WD companions through the mass function and LMWD mass alone. Therefore there is a non-negligible probability that {\it any} LMWD could host a NS companion.
@@ -302,53 +291,20 @@ It is worth noting that the fourth panels in our test cases in Figure~\ref{fig:t
 The probability of any particular ELM WD having a NS companion will vary depending on the NS fraction of the sample. This is not taken into account in \eqn\ref{eq:P_NS_approx}. {\bf TEXT ON USING PYTHON SCRIPT FOR DETERMINING P-NS FOR FUTURE DISCOVERED LMWDs.}
 
 
-Recently, \citet{hermes14} made high-speed photometric observations of 20 LMWDs in the ELM sample to search for eclipses. They placed limits on the maximum inclination angle of these 20 systems based on the non-detection of eclipses. For eight objects they determined the companion mass based on models fitting the observed photometric variability, primarily due on ellipsoidal variation and doppler beaming. We have not included these observations in our model, but we plan to explore this in future work.
 
+Recently, \citet{hermes14} made high-speed photometric observations of 20 LMWDs in the ELM sample to search for eclipses. They placed limits on the maximum inclination angle of these 20 systems based on the non-detection of eclipses. For eight objects they determined the companion mass based on models fitting the observed photometric variability, primarily due on ellipsoidal variation and doppler beaming. We have not included these observations in our model, but we plan to explore this in a future work.
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% If we do this calculation, we need to think more about it
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Combining our resulting NS fraction of {\bf 5\%} with the ELM WD space density of 40 kpc$^{-3}$ as determined by \citet{brown11a}, we can find a space density of ELM WD + NS binaries of 2 kpc$^{-3}$. If we assume an exponential disk with a scale height of 250 pc, this suggests that there are $\approx$  such binaries within a two kpc of us. Compare to the number of known MSP+LMWDs.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  If we say anything about non-detections, we need to fix up the
-% math below. I suggest we wait and discuss these in a future work
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\subsection{Non-detections}
-
-%Six systems in the ELM WD sample have non-detections of companions, down to an upper limit on the transverse velocity. We include these systems in our model, too, as in principle they could be binary systems at with low inclination angles or long period orbits or both. We can estimate the number of binaries with inclination angles too low to produce observable radial velocity variations:
-
-%\begin{equation}
-%P(K<K_{\rm max} | \mathbf{\Theta}) = \int_0^{\infty} \int_0^{i_{\rm max}} P(M_2|\mathbf{\Theta})\ {\rm sin}\ i\ {\rm d}i\ {\rm d}M_2
-%\end{equation}
-
-%which reduces to:
-
-%\begin{equation}
-%P(K<K_{\rm max} | \mathbf{\Theta}) = \int_0^{\infty} P(M_2|\mathbf{\Theta})\ \left( 1 - {\rm cos}\ i_{\rm max}\right)\ {\rm d}M_2
-%\end{equation}
-
-%where $i_{\rm max}$ is the smallest inclination angle that would still produce an unobservable binary, found by solving equation 1, using $K_{\rm max}$ for $K$. For an estimate of the expected fraction of unobserable binaries, we adopt $0.25~\Msun$ for $M_1$, an orbital period of 0.5 days, and a limiting velocity of 50 km s$^{-1}$. For our best fit model, with $\mu=0.6$, $\sigma=0.3$, and $\mathcal{f}=0.03$, we numerically calculate the integral above, and find that we would expect $\sim$2\% and $\sim$7\% of systems to have radial velocity variations below 25 km s$^{-1}$ and 50 km s$^{-1}$, respectively. If we increase the fiducial orbital period to 1.0 day, those numbers increases to 3\% and 10\%, respectively. For the ELM sample with 61 systems, this corresponds to 2 and 6 systems, consistent with the number of non-detections observed. Although we caution that this result is based on our imperfect model, it suggests that the number of non-detections observed is consistent with binaries at low inclination angles (albeit at slightly larger orbital periods than that of the observed population).
 
 
 \section{Conclusions}
 
-\begin{enumerate}
-\item We have created a mathematical description to describe the companion mass distribution of a set of unbiased single-lined spectroscopic binaries. \\
-\item We have used that mathematical framework to build a Markov Chain Monte Carlo model and applied it to the set of WDs from the ELM WD survey. \\
-\item Our model suggests that the majority of ELM WDs have CO-core WDs. This is in contrast to predictions from population synthesis models. In a future work, we plan to quantify the ratio of He+He core WDs to He+CO core WDs. \\
-\item Our model indicates that the fraction of ELM WDs with NS companions is of order a few percent. We provide an updated formula for determining the probability of any particular LMWD having a NS companion. We further identify J0811$+$0225 and J1741$+$6526 as having the highest probabilities of hosting a NS companion with {\bf XXX\%} and {\bf XXX\%}, respectively. \\
-\end{enumerate}
+We have created a mathematical description using a Bayesian framework to describe the companion mass distribution of a set of unbiased single-lined spectroscopic binaries. We have used that mathematical framework to build a Markov Chain Monte Carlo model. Our model recovers the input parameters for three separate test cases with WD and NS companion masses drawn from different distributions. In particular, even if the companion mass distribution is not drawn from a Gaussian distribution, our model can still determine the NS fraction within a factor of $\approx2$.
+
+We then applied our model to the set of WDs from the ELM WD survey. Our model indicates that the fraction of ELM WDs with NS companions is of order a few percent. We identify J0811$+$0225 and J1741$+$6526 as having the highest probabilities of hosting a NS companion, and suggest the multi-wavelength follow-up is warranted. Our model further suggests that the majority of ELM WDs have CO-core WD companions. This is in contrast to predictions from population synthesis models which predict the dominant companion population should be He-core WDs. 
+
+There are several ways in which this model can be expanded. First, our model is applicable to any arbitrary set of single-lined spectroscopic binaries. Applying this method to various populations can help to constrain the formation of particularly classes of binaries. In particular, we plan to develop our method to quantitatively compare our model to the results of population synthesis codes, potentially constraining the formation of LMWDs.
+
+
 
 \acknowledgements
 The authors wish to acknowledge David Hogg (NYU) for useful discussions, and the organizers of the \emph{AstroData Hack Week} (2014). 
@@ -356,12 +312,184 @@ APW is supported by a National Science Foundation Graduate Research Fellowship u
 This research made use of Astropy, a community-developed core \texttt{Python} package for Astronomy \citep{astropy13}. \\
 
 \bibliographystyle{apj}
-\bibliography{refs}
+
+
+\begin{thebibliography}{35}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Ag{\"u}eros} {et~al.}(2009{\natexlab{a}}){Ag{\"u}eros}, {Camilo},
+  {Silvestri}, {Kleinman}, {Anderson}, \& {Liebert}}]{agueros09b}
+{Ag{\"u}eros}, M.~A., {Camilo}, F., {Silvestri}, N.~M., {Kleinman}, S.~J.,
+  {Anderson}, S.~F., \& {Liebert}, J.~W. 2009{\natexlab{a}}, \apj, 697, 283
+
+\bibitem[{{Ag{\"u}eros} {et~al.}(2009{\natexlab{b}}){Ag{\"u}eros}, {Heinke},
+  {Camilo}, {Kilic}, {Anderson}, {Freire}, {Kleinman}, {Liebert}, \&
+  {Silvestri}}]{agueros09a}
+{Ag{\"u}eros}, M.~A. {et~al.} 2009{\natexlab{b}}, \apjl, 700, L123
+
+\bibitem[{{Antoniadis} {et~al.}(2012){Antoniadis}, {van Kerkwijk}, {Koester},
+  {Freire}, {Wex}, {Tauris}, {Kramer}, \& {Bassa}}]{antoniadis12}
+{Antoniadis}, J., {van Kerkwijk}, M.~H., {Koester}, D., {Freire}, P.~C.~C.,
+  {Wex}, N., {Tauris}, T.~M., {Kramer}, M., \& {Bassa}, C.~G. 2012, \mnras,
+  423, 3316
+
+\bibitem[{{Astropy Collaboration} {et~al.}(2013){Astropy Collaboration},
+  {Robitaille}, {Tollerud}, {Greenfield}, {Droettboom}, {Bray}, {Aldcroft},
+  {Davis}, {Ginsburg}, {Price-Whelan}, {Kerzendorf}, {Conley}, {Crighton},
+  {Barbary}, {Muna}, {Ferguson}, {Grollier}, {Parikh}, {Nair}, {Unther},
+  {Deil}, {Woillez}, {Conseil}, {Kramer}, {Turner}, {Singer}, {Fox}, {Weaver},
+  {Zabalza}, {Edwards}, {Azalee Bostroem}, {Burke}, {Casey}, {Crawford},
+  {Dencheva}, {Ely}, {Jenness}, {Labrie}, {Lim}, {Pierfederici}, {Pontzen},
+  {Ptak}, {Refsdal}, {Servillat}, \& {Streicher}}]{astropy13}
+{Astropy Collaboration} {et~al.} 2013, \aap, 558, A33
+
+\bibitem[{{Bassa} {et~al.}(2006){Bassa}, {van Kerkwijk}, {Koester}, \&
+  {Verbunt}}]{bassa06}
+{Bassa}, C.~G., {van Kerkwijk}, M.~H., {Koester}, D., \& {Verbunt}, F. 2006,
+  \aap, 456, 295
+
+\bibitem[{{Benvenuto} \& {De Vito}(2005)}]{benvenuto05}
+{Benvenuto}, O.~G., \& {De Vito}, M.~A. 2005, \mnras, 362, 891
+
+\bibitem[{{Brown} {et~al.}(2013){Brown}, {Kilic}, {Allende Prieto},
+  {Gianninas}, \& {Kenyon}}]{ELMV}
+{Brown}, W.~R., {Kilic}, M., {Allende Prieto}, C., {Gianninas}, A., \&
+  {Kenyon}, S.~J. 2013, \apj, 769, 66
+
+\bibitem[{{Brown} {et~al.}(2010){Brown}, {Kilic}, {Allende Prieto}, \&
+  {Kenyon}}]{ELMI}
+{Brown}, W.~R., {Kilic}, M., {Allende Prieto}, C., \& {Kenyon}, S.~J. 2010,
+  \apj, 723, 1072
+
+\bibitem[{{Brown} {et~al.}(2012){Brown}, {Kilic}, {Allende Prieto}, \&
+  {Kenyon}}]{ELMIII}
+---. 2012, \apj, 744, 142
+
+\bibitem[{{Brown} {et~al.}(2011){Brown}, {Kilic}, {Hermes}, {Allende Prieto},
+  {Kenyon}, \& {Winget}}]{brown11b}
+{Brown}, W.~R., {Kilic}, M., {Hermes}, J.~J., {Allende Prieto}, C., {Kenyon},
+  S.~J., \& {Winget}, D.~E. 2011, \apjl, 737, L23
+
+\bibitem[{{Callanan} {et~al.}(1998){Callanan}, {Garnavich}, \&
+  {Koester}}]{callanan98}
+{Callanan}, P.~J., {Garnavich}, P.~M., \& {Koester}, D. 1998, \mnras, 298, 207
+
+\bibitem[{{Foreman-Mackey} {et~al.}(2013){Foreman-Mackey}, {Hogg}, {Lang}, \&
+  {Goodman}}]{foremanmackey13}
+{Foreman-Mackey}, D., {Hogg}, D.~W., {Lang}, D., \& {Goodman}, J. 2013, \pasp,
+  125, 306
+
+\bibitem[{{Gianninas} {et~al.}(2014){Gianninas}, {Dufour}, {Kilic}, {Brown},
+  {Bergeron}, \& {Hermes}}]{gianninas14}
+{Gianninas}, A., {Dufour}, P., {Kilic}, M., {Brown}, W.~R., {Bergeron}, P., \&
+  {Hermes}, J.~J. 2014, \apj, 794, 35
+
+\bibitem[{{Han}(1998)}]{han98}
+{Han}, Z. 1998, \mnras, 296, 1019
+
+\bibitem[{{Hermes} {et~al.}(2014){Hermes}, {Brown}, {Kilic}, {Gianninas},
+  {Chote}, {Sullivan}, {Winget}, {Bell}, {Falcon}, {Winget}, {Mason},
+  {Harrold}, \& {Montgomery}}]{hermes14}
+{Hermes}, J.~J. {et~al.} 2014, \apj, 792, 39
+
+\bibitem[{{Jia} \& {Li}(2014)}]{jia14}
+{Jia}, K., \& {Li}, X.-D. 2014, \apj, 791, 127
+
+\bibitem[{{Kaplan} {et~al.}(2014){Kaplan}, {Marsh}, {Walker}, {Bildsten},
+  {Bours}, {Breedt}, {Copperwheat}, {Dhillon}, {Howell}, {Littlefair},
+  {Shporer}, \& {Steinfadt}}]{kaplan14}
+{Kaplan}, D.~L. {et~al.} 2014, \apj, 780, 167
+
+\bibitem[{{Kilic} {et~al.}(2011){Kilic}, {Brown}, {Allende Prieto},
+  {Ag{\"u}eros}, {Heinke}, \& {Kenyon}}]{ELMII}
+{Kilic}, M., {Brown}, W.~R., {Allende Prieto}, C., {Ag{\"u}eros}, M.~A.,
+  {Heinke}, C., \& {Kenyon}, S.~J. 2011, \apj, 727, 3
+
+\bibitem[{{Kilic} {et~al.}(2012){Kilic}, {Brown}, {Allende Prieto}, {Kenyon},
+  {Heinke}, {Ag{\"u}eros}, \& {Kleinman}}]{ELMIV}
+{Kilic}, M., {Brown}, W.~R., {Allende Prieto}, C., {Kenyon}, S.~J., {Heinke},
+  C.~O., {Ag{\"u}eros}, M.~A., \& {Kleinman}, S.~J. 2012, \apj, 751, 141
+
+\bibitem[{{Kilic} {et~al.}(2013){Kilic}, {Gianninas}, {Brown}, {Harris},
+  {Dahn}, {Ag{\"u}eros}, {Heinke}, {Kenyon}, {Panei}, \& {Camilo}}]{kilic13}
+{Kilic}, M. {et~al.} 2013, \mnras, 434, 3582
+
+\bibitem[{{Kilic} {et~al.}(2014){Kilic}, {Hermes}, {Gianninas}, {Brown},
+  {Heinke}, {Ag{\"u}eros}, {Chote}, {Sullivan}, {Bell}, \& {Harrold}}]{kilic14}
+---. 2014, \mnras, 438, L26
+
+\bibitem[{{Kilic} {et~al.}(2007){Kilic}, {Stanek}, \& {Pinsonneault}}]{kilic07}
+{Kilic}, M., {Stanek}, K.~Z., \& {Pinsonneault}, M.~H. 2007, \apj, 671, 761
+
+\bibitem[{{Kiziltan} {et~al.}(2013){Kiziltan}, {Kottas}, {De Yoreo}, \&
+  {Thorsett}}]{kiziltan13}
+{Kiziltan}, B., {Kottas}, A., {De Yoreo}, M., \& {Thorsett}, S.~E. 2013, \apj,
+  778, 66
+
+\bibitem[{{Kleinman} {et~al.}(2013){Kleinman}, {Kepler}, {Koester}, {Pelisoli},
+  {Pe{\c c}anha}, {Nitta}, {Costa}, {Krzesinski}, {Dufour}, {Lachapelle},
+  {Bergeron}, {Yip}, {Harris}, {Eisenstein}, {Althaus}, \&
+  {C{\'o}rsico}}]{kleinman13}
+{Kleinman}, S.~J. {et~al.} 2013, \apjs, 204, 5
+
+\bibitem[{{Liebert} {et~al.}(2005){Liebert}, {Bergeron}, \&
+  {Holberg}}]{liebert05}
+{Liebert}, J., {Bergeron}, P., \& {Holberg}, J.~B. 2005, \apjs, 156, 47
+
+\bibitem[{{Marsh} {et~al.}(1995){Marsh}, {Dhillon}, \& {Duck}}]{marsh95}
+{Marsh}, T.~R., {Dhillon}, V.~S., \& {Duck}, S.~R. 1995, \mnras, 275, 828
+
+\bibitem[{{Nelemans} {et~al.}(2000){Nelemans}, {Verbunt}, {Yungelson}, \&
+  {Portegies Zwart}}]{nelemans00}
+{Nelemans}, G., {Verbunt}, F., {Yungelson}, L.~R., \& {Portegies Zwart}, S.~F.
+  2000, \aap, 360, 1011
+
+\bibitem[{{Nelemans} {et~al.}(2001){Nelemans}, {Yungelson}, {Portegies Zwart},
+  \& {Verbunt}}]{nelemans01}
+{Nelemans}, G., {Yungelson}, L.~R., {Portegies Zwart}, S.~F., \& {Verbunt}, F.
+  2001, \aap, 365, 491
+
+\bibitem[{{{\"O}zel} {et~al.}(2012){{\"O}zel}, {Psaltis}, {Narayan}, \& {Santos
+  Villarreal}}]{ozel12}
+{{\"O}zel}, F., {Psaltis}, D., {Narayan}, R., \& {Santos Villarreal}, A. 2012,
+  \apj, 757, 55
+
+\bibitem[{{Smedley} {et~al.}(2014){Smedley}, {Tout}, {Ferrario}, \&
+  {Wickramasinghe}}]{smedley14}
+{Smedley}, S.~L., {Tout}, C.~A., {Ferrario}, L., \& {Wickramasinghe}, D.~T.
+  2014, \mnras, 437, 2217
+
+\bibitem[{{Toonen} {et~al.}(2012){Toonen}, {Nelemans}, \& {Portegies
+  Zwart}}]{toonen12}
+{Toonen}, S., {Nelemans}, G., \& {Portegies Zwart}, S. 2012, \aap, 546, A70
+
+\bibitem[{{van der Sluys} {et~al.}(2006){van der Sluys}, {Verbunt}, \&
+  {Pols}}]{vdSluys06}
+{van der Sluys}, M.~V., {Verbunt}, F., \& {Pols}, O.~R. 2006, \aap, 460, 209
+
+\bibitem[{{van Kerkwijk} {et~al.}(1996){van Kerkwijk}, {Bergeron}, \&
+  {Kulkarni}}]{vKerkwijk96}
+{van Kerkwijk}, M.~H., {Bergeron}, P., \& {Kulkarni}, S.~R. 1996, \apjl, 467,
+  L89
+
+\bibitem[{{van Leeuwen} {et~al.}(2007){van Leeuwen}, {Ferdman}, {Meyer}, \&
+  {Stairs}}]{vLeeuwen07}
+{van Leeuwen}, J., {Ferdman}, R.~D., {Meyer}, S., \& {Stairs}, I. 2007, \mnras,
+  374, 1437
+
+\bibitem[{{Woods} {et~al.}(2012){Woods}, {Ivanova}, {van der Sluys}, \&
+  {Chaichenets}}]{woods12}
+{Woods}, T.~E., {Ivanova}, N., {van der Sluys}, M.~V., \& {Chaichenets}, S.
+  2012, \apj, 744, 12
+
+%\bibliography{refs}
   
 \bibitem[Goodman~\&\ Weare(2010)]{goodman10}
 Goodman,~J. \& Weare,\ J.,
 2010, Comm.\ App.\ Math.\ Comp.\ Sci., 5, 65
 
+
+\end{thebibliography}
 
 
 
