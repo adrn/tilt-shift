@@ -182,7 +182,7 @@ and $\mathcal{N}$ is the (truncated, but properly normalized) normal distributio
 \end{align}
 based on indications that NSs in certain binaries may be somewhat more massive than the canonical NS mass of 1.35 \Msun~ \citep{kiziltan13,smedley14}. The probability of any particular system having a NS companion, $P_{\rm NS}$, can be computed for a given set of parameters for the companion mass distribution:
 \begin{equation}
-P_{\rm NS} = \frac{\int_{M_{2,{\rm min}}}^{\infty} dM_2~ f_{\rm NS}~ p_{\rm NS}~ h(M_2, \mf, M_1)}{\int_{M_{2,{\rm min}}}^{\infty} dM_2~ \left[ (1-f_{\rm NS})~p_{\rm WD} + f_{\rm NS}~p_{\rm NS} \right] ~ h(M_2, \mf, M_1)}\label{eq:P_NS}
+P_{\rm NS} = \frac{\int_{M_{2,{\rm min}}}^{\infty} dM_2~ f_{\rm NS}~ p_{\rm NS}~ h(M_2, \mf, M_1)}{p(\mf \given \bs{\theta})}\label{eq:P_NS}
 \end{equation}
 
 
@@ -235,7 +235,7 @@ To test the performance of this Gaussian mixture model, we first apply it to thr
 
 \begin{figure*}[h!]
 \begin{center}
-\includegraphics[width=0.95\textwidth]{many-panel.pdf}
+\includegraphics[width=0.95\textwidth]{many-panel.png}
 \caption{Results from the three tests described in Section~\ref{sec:tests}. The left-most column shows histograms of $M_2$ drawn from each of our test distributions. Overplotted as solid lines are the MAP models. The second column shows samples from the posterior distributions of $\mu_{\rm WD}$ and $\sigma_{\rm WD}$. The dashed lines in the top two panels show the true values that the sample systems were drawn from. Contours designate the 68\% and 95\% contours. Since the third model was not drawn from a Gaussian distribution, there is no true parameter set. The third panel shows posterior samples for $f_{\rm NS}$ and $\sigma_{\rm WD}$, again the dashed lines show the input values. Finally, the rightmost panels list the individual systems (ordered by increasing $\mf$) and show each of their corresponding NS probabilities. }
 \label{fig:tests}
 \end{center}
@@ -280,7 +280,7 @@ The other six systems in the ELM WD sample show no evidence of orbital motion, w
 
 \begin{figure*}[h!]
 \begin{center}
-\includegraphics[width=0.95\textwidth]{real-data.pdf}
+\includegraphics[width=0.95\textwidth]{real-data.png}
 \caption{Results from applying our model to the ELM WDs. The first panel shows the MAP $M_2$ distribution (solid black) and random samples from the posterior (grey lines). The second panel shows posterior samples of $\mu$ and $\sigma$; the MAP Gaussian model has $\mu_{\rm WD}= 0.71~\Msun$ and $\sigma_{\rm WD}= 0.26~\Msun$. The third panel shows posterior samples of $\mu$ and $f_{\rm NS}$. The last panel lists individual LMWDs in the ELM sample (ordered by increasing $\mf$) and shows each of their corresponding NS probabilities. The three systems with all $P_{\rm NS}$ values at 0\% are the three eclipsing systems with measured $M_2$.}
 \label{fig:ELM_post}
 \end{center}
@@ -296,10 +296,11 @@ The results from applying our model to the ELM sample are shown in Figure \ref{f
 Our results are independent of astrophysical expectations since they do not include any priors on $\mu_{\rm WD}$ and $\sigma_{\rm WD}$, apart from limits for $M_2$ of 0.2 \Msun\,(based on observations of LMWDs) and \wdupper~\Msun\,(based on the Chandrasekhar mass). In principle, priors could be added based on population synthesis models that suggest that there are two dominant companion populations to LMWDs, composed of CO and He core WDs \citep{han98}. The ratio and distribution of these two populations depends on the exact stellar evolution prescriptions assumed \citep[see discussion in, e.g., ][]{toonen12}. Our results here suggest the companion sample is composed mainly of CO WDs. Our model could be expanded to include a two Gaussian model --- one for each WD population. The ratio of these populations could potentially place an important constraint on population synthesis models. However, we have found that there is not enough data to motivate adding additional freedom to the model in the form of a second WD component.
 
 
-The third panel in Figure~\ref{fig:ELM_post} shows a NS fraction strongly peaked toward 0. However, there is a significant tail toward higher NS probabilities. Our model indicates $f_{\rm NS} <16\%$ at the 68\% confidence level, in agreement with independent constraints from \citet{vLeeuwen07} ($f_{\rm NS}<18\pm5$\%), based on the non-detection of radio emission from eight LMWD targets, and from \citet{agueros09b} ($f_{\rm NS}<10\substack{+4 \\ -2}~\%$), based on non-detections of radio emission from an expanded sample of 15 LMWD targets in the ELM WD sample. Because it may be radio quiet or beamed away from us, a NS companion to these LMWDs may not be detectable \citep{vLeeuwen07}. All NSs give off blackbody radiation peaked in X-ray wavelengths, so X-ray follow-up provides a more stringent test on the potential for a NS companion \citep{agueros09a}. Previous searches for LMWDs with X-ray counterparts have all been non-detections \citep{ELMII,ELMIV,kilic13,kilic14}. However, based on our model, all of those sources have a low probability of hosting a NS companion. 
+The third panel in Figure~\ref{fig:ELM_post} shows a NS fraction strongly peaked toward 0. However, there is a significant tail toward higher NS probabilities. Our model indicates $f_{\rm NS} <16\%$ at the 68\% confidence level, in agreement with independent constraints from \citet{vLeeuwen07} ($f_{\rm NS}<18\pm5$\%), based on the non-detection of radio emission from eight LMWD targets, and from \citet{agueros09b} ($f_{\rm NS}<10\substack{+4 \\ -2}~\%$), based on non-detections of radio emission from an expanded sample of 15 LMWD targets in the ELM WD sample. 
+% Because it may be radio quiet or beamed away from us, a NS companion to these LMWDs may not be detectable \citep{vLeeuwen07}. All NSs give off blackbody radiation peaked in X-ray wavelengths, so X-ray follow-up provides a more stringent test on the potential for a NS companion \citep{agueros09a}. Previous searches for LMWDs with X-ray counterparts have all been non-detections \citep{ELMII,ELMIV,kilic13,kilic14}. However, based on our model, all of those sources have a low probability of hosting a NS companion. 
 %If the two systems with the highest $P_{\rm NS}$, SDSS J081133.6$+$022556.8 and SDSS J174140.5$+$652638.7, also lack X-ray counterparts, then even more stringent constraints can be placed on $f_{\rm NS}$. 
 
-It is worth noting that systems with NS companions cannot necessarily be differentiated from those with WD companions through the mass function and LMWD mass alone. Therefore there is a non-negligible probability that {\it any} LMWD could host a NS companion. 
+% It is worth noting that systems with NS companions cannot necessarily be differentiated from those with WD companions through the mass function and LMWD mass alone. Therefore there is a non-negligible probability that {\it any} LMWD could host a NS companion. 
 
 %These systems are ideal candidates for radio and X-ray searches for NS companions. 
 %Radio observations of these objects are in progress, however 
