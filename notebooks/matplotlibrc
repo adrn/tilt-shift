@@ -56,4 +56,4 @@ grid.linewidth   :   0.75     # in points
 ### FIGURE
 figure.facecolor : white    # figure facecolor; 0.75 is scalar gray
 figure.edgecolor : white   # figure edgecolor
-pdf.fonttype       : 42         # Output Type 3 (Type3) or Type 42 (TrueType)
+pdf.fonttype       : 42         # Output Type 3x   (Type3) or Type 42 (TrueType)
