@@ -1,0 +1,207 @@
+
+
+Dear Dr. de Grijs
+
+We thank the two referees for their detailed comments. We have improved the paper, and included all the suggestions in the revised manuscript. Our response to the referees’ suggestions are below.
+
+Please let me know if further improvements are required.
+
+Sincerely,
+Jeff J Andrews
+
+
+
+
+>
+>========================================================
+>Report from Referee 1:
+>
+>The authors investigate the mass distribution of companions to
+>low-mass white dwarfs. For this purpose they have developed a
+>thorough statistical model, which has been applied to three mock data
+>sets as well as to the real ELM white dwarf sample. They find that the
+>companion mass distribution of the EML sample peaks at 0.71Msun (std
+>of 0.26Msun), and that the NS fraction seems to be very low.
+>
+>The paper is well-written, goes to the point, and is well
+>understood. Thus I highly recommend its publication in ApJ
+>letters. However, before this I consider there are some points the
+>authors should discuss/investigate further. 
+>
+>- Title. Since the sample of study is the ELM sample (defined as
+>Mwd<~0.3Msun), instead of the low-mass sample (defined as
+>Mwd<~0.45Msun), change the title to "The mass distribution of
+>companions to extremely low-mass white dwarfs".
+>
+>- Abstract. "We then apply this model to a sample of low mass white
+>dwarfs (LMWDs, M<~0.45 Msun)." Reading this gives the impression that
+>the sample is an observed (real) one, which is not the case. Specify
+>that the low-mass WD samples used are three, and that these are drawn
+>from mock data.
+>
+
+
+We have fixed this in the abstract. 
+
+
+>
+>- Introduction. The authors cite the seminal paper by Marsh et
+>al. (1995) that demonstrated that a large fraction of low-mass white
+>dwarfs are in binaries. However, several more and recent observational
+>efforts have been performed that prove to high extent that indeed
+>low-mass white dwarfs are formed due to binary interactions. Add 
+>citations to e.g. Maxted et al. 2000MNRAS,319,305M, Rebassa-Mansergas 
+>et al. 2011MNRAS,413,1121R.
+>
+
+
+These citations have been added to the introduction, along with a result from the SPY survey, searching for SN Ia progenitors, which identified two additional LMWDs in close binaries with unknown companions. 
+
+
+>
+>- Introduction. The authors should state more clearly why identifying
+>NS or WD companions to ELM white dwarfs is important. What important
+>problems will be solved or can be addressed by knowing that NS are or
+>are not likely to be the companions of ELM white dwarfs?
+>
+
+
+We have added a sentence explaining the importance of finding individual NS-LMWD systems in paragraph 2 in the introduction and a sentence explaining the importance of understanding the companion mass distribution to LMWDs in paragraph 4.
+
+
+>
+>- Section 2. Why using a logarithmic prior for sigma(WD)? 
+
+We choose a logarithmic prior for sigma(WD) since it is scale invariant. We have added this to the text. 
+
+
+>Why fixing sigma(NS) to 0.05Msun when sigma(WD) has a much wider range? Is it because the NS mass distribution peaks at ~1.35Msun with almost no tail towards lower and higher masses? 
+
+We wanted to build a simplistic model, with few parameters, therefore we set the NS distribution without allowing it to vary. From Kiziltan et al. (2013) and Smedley et al. (2014) it appears that NSs with WD companions may have a slightly higher mass tail, therefore we set the NS mass distribution higher than the canonical value of 1.35 Msun. 
+
+
+
+>According to the text, sigma(WD) ranges from 0.02-2Msun. However, in Table 1 I see sigma(WD) proportional to sigma^(-1), where 0.02 
+>- Table 1. The prior of mu(WD) is written as U(0.2,1), but should not it be U(0.2,1.4)?
+
+The prior on sigma(WD) should be U(0.2,2.0) and on mu(WD), 0.02 < mu < 1.0. Both the text and table have been fixed to reflect this. For the flexibility of our model, we allow sigma(WD) to vary greatly. We still truncate the mass distribution at [0.2,1.44], but we do not allow the center of the Gaussian to go above 1.0 Msun. 
+
+
+
+
+
+>
+>- Figure 1. Why not adding the number and label in the y axis? Top
+>left panel. It is interesting to see that the distribution is
+>bi-modal, and that there is a large number of massive (~1Msun) white
+>dwarfs. How realistic are the assumptions for this particular M2
+>distribution?
+>
+
+
+The distribution in Figure 1 was drawn from a Gaussian with mu(WD)=0.7 Msun and sigma(WD) = 0.2. We tested this by drawing other random samples; the bimodal distribution is due to the randomness of drawing 100 WD samples. In other randomly drawn samples, this distribution appears as a single Gaussian.
+
+
+>
+>- I consider testing the statistical model using three samples of mock
+>data is very useful. However, I believe the model should also be
+>tested with real data. The sample of close white dwarf-M dwarf
+>binaries with orbital periods and component masses measured is of the
+>same order as the ELM survey and can be used for this purpose (see
+>e.g. Nebot Gomez-Moran et al. 2011A&A,536A,43N; there are also several
+>known eclipsing systems: see the work by S.G. Parsons et al.). In this
+>case, K are known for the secondary stars so the distribution to test
+>with the statistical model would be the white dwarf mass
+>distribution. (Note that for this sample the spectral type of the
+>secondary stars are provided, which can be converted into mass
+>following a spectral type-mass relation: e.g. Baraffe & Chabrier
+>1996ApJ,461L,51B).
+>
+
+
+Based on your suggestion, we have added a fourth test where we derive the resulting WD mass distribution of companions to the post-common envelope binary sample from SDSS. The description of this test is included in Section 3.4, and the results are included in Figure 4.
+
+
+>
+>- Section 4.1. "Fitting the WDs' spectra to templates provides
+>precisely determined M1 values". I am not entirely convinced by this
+>sentence. This is definitely the case when one of the stars is
+>considerably more luminous than the other, but it might not be the
+>case otherwise. Lets consider a white dwarf which contributes 30% to
+>the total flux in the Hbeta to Hepsilon Balmer line regime (where the
+>line profile fitting takes place), the other white dwarf contributing
+>70%. The total flux will be the sum of the two flux contributions and
+>a fit to the resulting spectrum may not give the mass of the more
+>luminous white dwarf. I agree that assuming M1 to be the one obtained
+>from the template fit is the best way to proceed, however a note of
+>caution should be added in the text. A plausible way to check this
+>would be to compare the accurate masses of the eclipsing systems with
+>those provided from the spectral fitting, if available.
+>
+
+
+There is a distinct possibility that the companion WDs could contribute to the luminosity of the LMWD primaries in these systems. However, Gianninas et al. (2014) point out that because the systems are all single-lined spectra, they expect the companion’s “contribution to the observed spectra to be on the order of a few percent at most.” In investigating this possibility though, we found a bigger issue: For two of the three eclipsing systems, the spectroscopic mass measurements are in agreement with the expectation from the eclipse measurement. For the third system, NLTT 11748, there is a significant discrepancy. Gianninas et al. (2014) contribute this difference to the “high log g problem”, a manifestation of the problems with using 1-D WD atmospheric models. They suggest that only the spectroscopic masses of the seven WDs with temperatures below roughly 9500 K will be affected. We add a note of caution in the text to indicate there may be some unknown uncertainties in these mass measurements.
+
+
+>
+>- Section 4.2. "Our distribution is significantly wider (sigma ~ 0.26
+>Msun compared with sigma~0.1 Msun), possibly due to mass transfer
+>affecting the mass distribution of the unseen primary WDs as well." Do
+>the authors mean on-going mass transfer? If that is the case, should
+>we not see an accretion disk in the spectrum? It seems unlikely that a
+>large fraction of these systems are currently undergoing mass transfer
+>episodes. Or do the authors mean previous mass transfer episodes? When
+>specifically?
+>
+
+
+We expect that all these systems are detached due to the lack of emission lines in the spectra as would be expected from an accretion disk. The text has been updated to specify that the companion masses may be more massive due to previous mass transfer phases.
+
+
+>
+>- Section 4.2. Since the ELM sample contains primaries of M<~0.3Msun
+>and mu(WD)=0.71Msun, this seems to imply that the future mergers will
+>not produce type Ia supernovae. I consider the authors should add a
+>couple of sentences discussing this.
+>
+
+
+While most of these systems almost certainly have a combined mass less than 1.4 Msun, many of the combined masses of these systems are still ~1Msun. They may therefore evolve into underluminous supernova. We have included some discussion of this in Section 4.2. 
+
+
+>
+>- Inspection of figure 3 and the right panel of figure 4 reveals that
+>P(NS) increases with mf. Add an explanation why this is the case. Do
+>these figures imply that an observer looking for a NS in orbit with a
+>ELM white dwarf can focus specifically on targets with the highest mf?
+>If so, add a sentence stating this in the text.
+>
+
+Systems with higher mf values are more likely to have NS companions through Equation 1. We added a note about this in the text.
+
+
+
+>****
+>Report from Referee 2:
+>
+>I provide here comments only on the statistical methodology of this manuscript, not on any scientific aspects. I have not checked the equations (8)-(15) in detail. 
+>
+>The procedure in section 2 focuses on the question raised in the Introduction: "1. Can the population as a whole be modeled using a simple description of the companion masses?" The setup of the likelihood seems reasonable. The normal mixture model for white dwarf and neutron star secondaries is also reasonable. The inference that the secondary WDs have similar mass distributions as primary WDs is unsurprising and adds confidence that the calculation is reasonable. I have two comments:
+>
+>A. Bayes' rule is only needed if significant priors are introduced. Are equations (7) and (19)-(20) relevant prior distributions? If so, please label them accordingly. Indeed, the authors state in 4.2/par2 that the "results are independent of astrophysical expectations as they do not include informative priors on ..."; but the entire point of the Bayesian approach is to introduce meaningful priors. Since the authors seek the MAP solution, I suspect the calculation is equivalent to a constrained maximum likelihood calculation (e.g. http://link.springer.com/article/10.1023/A:1008669208700 http://faculty.washington.edu/rons/cmlinf/cmlinf.html). There is no difficulty in using an MCMC approach, and the results are unchanged, but the authors should clarify that the calculation can be viewed from either perspective. Fortunately the authors do not emphasize `Bayesian' in the title, abstract or conclusions. 
+>
+
+
+The prior in equation 7 comes from the fact that the inclination angle is random. One of the advantages to this sample is that there is (nearly) no observational bias on the inclination angle, therefore this prior is appropriate. The priors on our NS model, listed in Equations 19-20, are reasonable based on NS mass measurements derived elsewhere, in Kiziltan et al. (2013) and Smedley et al. (2014). 
+
+We agree that there is no difference between our method and a maximum likelihood calculation. We have added a sentence clarifying this in the first paragraph of Section 2.
+
+
+
+>
+>B. Concerning the statement in 4.2 "Our distribution is significantly wider ....[physical explanation]. Couldn't this be a statistical effect: Wouldn't the posterior distribution appear wider just because the sample is small and the spread is thus poorly constrained? This can be checked with simulations of different sample sizes.
+>
+>
+
+
+
