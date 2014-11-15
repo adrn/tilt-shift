@@ -288,7 +288,7 @@ The three systems in the bottom right panel, with all $P_{\rm NS}$ values at 0\%
 \end{figure*}
 
 \subsection{Results and Discussion}
-The results from applying our model to the ELM sample are shown in Figure~\ref{fig:ELM_post}. The MAP model gives $\mu_{\rm WD} = 0.74~\Msun$, $\sigma_{\rm WD} = 0.24~\Msun$, and $f_{\rm NS} = 0\%$. The marginal posterior over $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ has a tail toward larger $\sigma_{\rm WD}$, which could indicate that the true WD distribution may not be exactly Gaussian. It is interesting that the best fit Gaussian for the companions to the ELM WD sample is similar to that of the population of single DA WDs in SDSS, with a mean of 0.6 $\Msun$ \citep{kleinman13}. Our distribution is significantly wider ($\sigma \approx 0.26~\Msun$, compared with $\sigma \approx 0.1~\Msun$), possibly due to past mass transfer phases increasing the masses of the unseen primary WDs. The low combined mass in these systems indicates that, although several of them will merge within a Hubble time \citep{ELMV}, the majority of ELM WDs are unlikely to be type Ia supernova progenitors.
+The results from applying our model to the ELM sample are shown in Figure~\ref{fig:ELM_post}. The MAP model gives $\mu_{\rm WD} = 0.74~\Msun$, $\sigma_{\rm WD} = 0.24~\Msun$, and $f_{\rm NS} = 0\%$. The marginal posterior over $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ has a tail toward larger $\sigma_{\rm WD}$, which could indicate that the true WD distribution may not be exactly Gaussian. It is interesting that the best fit Gaussian for the companions to the ELM WD sample is similar to that of the population of single DA WDs in SDSS, with a mean of 0.6 $\Msun$ \citep{kleinman13}. Our distribution is significantly wider ($\sigma \approx 0.26~\Msun$, compared with $\sigma \approx 0.1~\Msun$), possibly due to past mass transfer phases increasing the masses of the unseen primary WDs. The low combined mass in these systems indicates that, although several of them will merge within a Hubble time \citep{ELMV}, the majority of ELM WDs are unlikely to be type Ia SN progenitors. We cannot limit the possibility that some individual LMWD binaries may be massive enough to produce type Ia SNe \citep{justham09}.
 %Several of these systems will merge within a Hubble time \citep{ELMV}, but their sub-Chandrasekhar combined mass would suggest that they are more likely to be underluminous type .Ia, rather than Ia, supernova progenitors. 
 %Our results are independent of astrophysical expectations, as they do not include informative priors on $\mu_{\rm WD}$ and $\sigma_{\rm WD}$, apart from limits for $M_2$ of 0.2 \Msun\,(based on observations of LMWDs) and \wdupper~\Msun\,(based on the Chandrasekhar mass). In principle, priors could be added based on 
 Our posterior distributions further suggest that the companions to LMWDs have predominantly CO cores. This is in contrast to population synthesis models which suggest that LMWDs should predominantly have He core WD companions \citep{toonen12}. With a larger sample, a more sophisticated LMWD companion model could place quantitative constraints on population synthesis predictions.
@@ -310,9 +310,7 @@ We then applied our model to the set of LMWDs from the ELM WD survey. It is enco
 To determine the probability of any particular LMWD hosting a NS, we make our model posteriors publicly available on fig{\bf share}.\footnote{\url{http://dx.doi.org/10.6084/m9.figshare.1206621}} We further provide a {\tt Python} script that calculates $P_{\rm NS}$ and the mass distribution for a WD companion for any LMWD with a measured $M_1$ and $\mf$. This script can be applied to newly discovered LMWDs as well as those already in the ELM sample.
 
 
-%Recently, \citet{hermes14} made high-speed photometric observations of 20 LMWDs in the ELM sample. Based on non-detection of eclipses and modeling of photometric variability, these authors set limits on the inclination angles of these systems, which could be included in our model. 
-
-There are several ways in which our model can be expanded. Based on modeling the photometric variability in these systems, \citet{hermes14} recently placed constraints on the inclination of 20 LMWDs in the ELM sample which could be included in our model. Furthermore, tighter constraints can be placed on $f_{\rm NS}$ by including radio and X-ray non-detection results. Finally, we plan to develop our method to quantitatively compare our model to the results of population synthesis codes, potentially constraining the formation of LMWDs.
+There are several ways in which our model can be expanded. By modeling photometric variability, \citet{hermes14} recently constrained the inclination of 20 LMWDs in the ELM sample which could be included in our model. Furthermore, our model can place tighter constraints on $f_{\rm NS}$ by including radio and X-ray non-detection results. Finally, we plan to develop our method to quantitatively compare our model to the results of population synthesis codes, potentially constraining the formation of LMWDs.
 
 
 
@@ -324,8 +322,7 @@ This research made use of Astropy, a community-developed core \texttt{Python} pa
 \bibliographystyle{apj}
 
 
-
-\begin{thebibliography}{41}
+\begin{thebibliography}{43}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ag{\"u}eros} {et~al.}(2009{\natexlab{a}}){Ag{\"u}eros}, {Camilo},
@@ -404,7 +401,7 @@ This research made use of Astropy, a community-developed core \texttt{Python} pa
   {Hermes}, J.~J. 2014, \apj, 794, 35
 
 \bibitem[Goodman~\&\ Weare(2010)]{goodman10}
-Goodman,~J. \& Weare,\ J.,
+Goodman,~J. \& Weare,\ J.
 2010, Comm.\ App.\ Math.\ Comp.\ Sci., 5, 65
 
 \bibitem[{{Han}(1998)}]{han98}
@@ -414,6 +411,11 @@ Goodman,~J. \& Weare,\ J.,
   {Chote}, {Sullivan}, {Winget}, {Bell}, {Falcon}, {Winget}, {Mason},
   {Harrold}, \& {Montgomery}}]{hermes14}
 {Hermes}, J.~J. {et~al.} 2014, \apj, 792, 39
+
+\bibitem[{{Justham} {et~al.}(2009){Justham}, {Wolf}, {Podsiadlowski}, \&
+  {Han}}]{justham09}
+{Justham}, S., {Wolf}, C., {Podsiadlowski}, P., \& {Han}, Z. 2009, \aap, 493,
+  1081
 
 \bibitem[{{Kaplan} {et~al.}(2014){Kaplan}, {Marsh}, {Walker}, {Bildsten},
   {Bours}, {Breedt}, {Copperwheat}, {Dhillon}, {Howell}, {Littlefair},
@@ -560,7 +562,7 @@ Goodman,~J. \& Weare,\ J.,
 %\bibliography{refs}
   
 %\bibitem[Goodman~\&\ Weare(2010)]{goodman10}
-%Goodman,~J. \& Weare,\ J.,
+%Goodman,~J. \& Weare,\ J.
 %2010, Comm.\ App.\ Math.\ Comp.\ Sci., 5, 65
 
 
