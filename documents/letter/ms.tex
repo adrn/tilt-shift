@@ -39,33 +39,38 @@
 Measuring the masses of companions to single-line spectroscopic binary stars is (in general) not possible because of the unknown orbital plane inclination.  Even when the mass of the visible star can be measured, only a lower limit can be placed on the mass of the unseen companion. However, since these inclination angles should be isotropically distributed, for a large enough, unbiased sample, the  companion mass distribution can be deconvolved from the distribution of observables. In this work, we construct a hierarchical probabilistic model to infer properties of unseen companion stars given observations of the orbital period and projected radial velocity of the primary star. 
 We then apply this model to three mock samples of low mass white dwarfs (LMWDs, $M\lesssim0.45~\Msun$) and a sample of post-common envelope binaries (PCEB). We use a mixture of two Gaussians to model the WD and neutron star (NS) companion mass distributions. Our model successfully recovers the initial parameters of these test data sets. 
 %We focus on low mass white dwarfs (LMWDs, $M\lesssim0.45~\Msun$), modeling the companion mass distribution with a mixture of two Gaussians to represent a WD and neutron star (NS) companion population. Our model successfully recovers the initial parameters of three mock samples of low mass white dwarfs (LMWDs, $M\lesssim0.45~\Msun$) and a test sample of post-common envelope binaries (PCEB). 
-We then apply our model to 55 WDs in the extremely low mass (ELM) WD Survey. Our maximum a posteriori model for the WD companion population has a mean mass, $\mu_{\rm WD}$, of $0.74~\Msun$ with a standard deviation, $\sigma_{\rm WD}$, of $0.24~\Msun$. Our model constrains the fraction of NS companions,  $f_{\rm NS}$, to be less than 0.16 at 68\% confidence. We make samples from the posterior distribution publicly available so that future observational efforts may compute the NS probability for newly discovered LMWDs.
+We then apply our model to 55 WDs in the extremely low mass (ELM) WD Survey. Our maximum a posteriori model for the WD companion population has a mean mass, $\mu_{\rm WD}$, of $0.74~\Msun$ with a standard deviation, $\sigma_{\rm WD}$, of $0.24~\Msun$. Our model constrains the NS companion fraction, $f_{\rm NS}$, $<16$\% at 68\% confidence. We make samples from the posterior distribution publicly available so that future observational efforts may compute the NS probability for newly discovered LMWDs.
 \end{abstract}
 
 \keywords{binaries: general --- binaries: spectroscopic --- methods: statistical --- white dwarfs} 
 
 \section{Introduction}
 
-Except in cases of extreme metallicity \citep{kilic07}, the Galaxy is not old enough to produce LMWDs ($M\lesssim0.45~ \Msun$) through single-star evolution. Instead, they form through interactions with another star and are expected to be in binary systems \citep{han98,nelemans00,nelemans01,vdSluys06,woods12}. 
+Except in cases of extreme metallicity \citep{kilic07}, the Galaxy is not old enough to produce LMWDs through single-star evolution. Instead, they form through interactions with another star and are expected to be in binary systems \citep{han98,nelemans00,nelemans01,vdSluys06,woods12}. 
 %In their seminal work, \citet{marsh95} discovered companions to five LMWDs, confirming these theoretical expectations. T
-Indeed, observationally, LMWDs have companions \citep{marsh95,maxted00,nelemans05,rebassa11}. Recently, the ELM WD Survey has searched for extremely LMWDs ($M\lesssim0.3~ \Msun$) in the Sloan Digital Sky Survey \citep[SDSS;][]{york00} and elsewhere \citep{ELMI,ELMII, ELMIII, ELMIV, ELMV}. Fifty-five of their 61 identified LMWDs have a measured radial velocity (RV) and orbital period ($\period$); we refer to these 55 systems as the ELM sample.
+Follow-up observations consistently find companions around LMWDs with few exceptions \citep{marsh95,maxted00,nelemans05,rebassa11}. Recently, the ELM WD Survey has searched for extremely LMWDs ($M\lesssim0.3~ \Msun$) in the Sloan Digital Sky Survey \citep[SDSS;][]{york00} and elsewhere \citep{ELMI,ELMII, ELMIII, ELMIV, ELMV}. Fifty-five of their 61 identified LMWDs have a measured radial velocity (RV) and orbital period ($\period$); we refer to these 55 systems as the ELM sample.
 % \citep{ELMI} identifies LMWDs in the Sloan Digital Sky Survey \citep[SDSS;][]{york00} and elsewhere for spectroscopic follow-up, focusing on extremely low mass WDs ($M\lesssim0.3~ \Msun$). After these authors' initial investigation found that 11 of 12 LMWDs had close binary companions, further spectroscopic follow-up has now brought the sample of ELM WDs to 61 systems, 55 of which have measured radial velocity amplitudes and orbital periods \citep{ELMII, ELMIII, ELMIV, ELMV}. We refer to these 55 systems as the ELM sample.
 
-RV and $\period$ measurements indicate that the LMWDs companions are most likely WDs. However, since inclination angle $i$ is unknown, LMWDs could have NS companions \citep{vLeeuwen07}. Indeed, LMWDs are observed as companions to millisecond pulsars \citep{vKerkwijk96,callanan98,bassa06,antoniadis12}. Finding even one NS companion to a spectroscopically characterized LMWD would be very valuable, since this system would constrain the NS mass.
+RV and $\period$ measurements indicate that the LMWDs companions are most likely WDs. However, since the inclination angle ($i$) is unknown, LMWDs could have NS companions \citep{vLeeuwen07}. Indeed, LMWDs are observed as companions to millisecond pulsars \citep{vKerkwijk96,callanan98,bassa06,antoniadis12}. Finding even one NS companion to a spectroscopically characterized LMWD would be very valuable, since this system would constrain the NS mass.
 % TO ADD?: Also allows constraints on MSP age, braking index
 However, radio and X-ray searches for NS companions to LMWDs have been unsuccessful \citep{agueros09b,agueros09a,kilic13}. 
 
-For each LMWD in the ELM sample, spectroscopy provides $\period$, the primary WD mass ($M_1$), and the projected orbital velocity ($K=v \sin i$). From Kepler's third law, we can write:
+For each LMWD in the ELM sample, spectroscopy provides $\period$, the primary WD mass ($M_1$), and the projected orbital velocity ($K=v \sin i$). From Kepler's third law, we can write (assuming circular orbits):
 \begin{equation}
 	\frac{(M_2 \sin i)^3}{\left(M_1+M_2\right)^2} = \frac{\period}{2\pi G} K^3. \label{eq:massfunc}
 \end{equation}
-The righthand side is the mass function $\mf$. The companion mass, $M_2$, is minimized for an edge-on orbit ($i = 90\degree$). Because of this dependence on $i$, the nature of the companion cannot usually be determined based on $\mf$ alone. Figure~\ref{fig:Porb-M1} shows that the population of LMWDs with pulsar companions occupies the same region in $M_1 - \period$ space as those with WD companions. Therefore, barring rare circumstances (such as an edge-on, eclipsing system), individual LMWDs with NS companions cannot be identified from optical observations alone.
+The righthand side is the mass function $\mf$. The companion mass, $M_2$, is minimized for an edge-on orbit ($i = 90\degree$). Because of this dependence on $i$, the nature of the companion cannot usually be determined based on $\mf$ alone. Figure~\ref{fig:Porb-M1} shows that the population of LMWDs with pulsar companions occupies the same region in $M_1 - \period$ space as those with WD companions. Therefore, barring rare circumstances (such as eclipsing systems), individual LMWDs with NS companions cannot be identified from optical observations alone.
 
-Even if no NS companions to LMWDs are found, constraints on the WD companion mass distribution to LMWDs provide observations for population synthesis studies to match. 
-% TO ADD?: constraints on mass transfer physics?
-The ELM sample is now large enough that the NS fraction and WD companion mass distribution can be statistically constrained. In this work, we develop a probabilistic model to infer parameters of an assumed form for the mass distribution of companions to LMWDs. Our method is similar to that employed by \citet{ozel12} and \citet{kiziltan13} to describe the mass distribution of NSs in binaries using post-Keplerian parameters. We focus on several specific questions: Can the population as a whole be modeled using a simple description of the companion masses? How does the companion mass distribution compare to predictions from population synthesis simulations?  What is the rate of NS-LMWD binaries implied by our model? What are the resulting distributions of NS probabilities for individual systems in the ELM sample? 
+
+
+The ELM sample is now large enough that $f_{\rm NS}$ and the companion mass distribution can be statistically constrained. These constraints provide important tests for population synthesis models.
+%Observational constraints on $f_{\rm NS}$ and the WD companion mass distribution make LMWDs an important benchmark population for population synthesis models. The ELM sample is now large enough these parameters can be statistically constrained.
+%Even if no NS companions to LMWDs are found, constraints on the WD companion mass distribution to LMWDs provide observations for population synthesis studies to match. The ELM sample is now large enough that the NS fraction and WD companion mass distribution can be statistically constrained. 
+In this work, we develop a probabilistic model to infer parameters of an assumed form for the mass distribution of companions to LMWDs. Our method is similar to that employed by \citet{ozel12} and \citet{kiziltan13} to describe the mass distribution of NSs in binaries using post-Keplerian parameters. We focus on several specific questions: Can the population as a whole be modeled using a simple description of the companion masses? How does the companion mass distribution compare to predictions from population synthesis simulations?  What is the rate of NS-LMWD binaries implied by our model? What are the resulting distributions of NS probabilities for individual systems in the ELM sample? 
+
 
 To answer these questions, we build the mathematical framework (Section 2), then test our resulting model (Section 3). We apply our model to the ELM WD sample (Section 4) before concluding (Section 5).
+
 
 \begin{figure}[h!]
 \begin{center}
@@ -77,7 +82,7 @@ To answer these questions, we build the mathematical framework (Section 2), then
 
 \section{Building our model}
 
-We construct a statistical model to constrain a parametric model for the distribution of LMWD companion masses, $p(M_2 \given \bs{\theta})$.\footnote{We represent vectors or sets of parameters or quantities by bold symbols.} For each system, we assume we have $K$, $T$, and $M_1$, and therefore know the value of $\mf$ (\eqn~\ref{eq:massfunc}). Our model is based on a Bayesian approach, but this problem could also be viewed from a maximum-likelihood perspective. We wish to derive posterior constraints on the model parameters, $\bs{\theta}$, that describe the distribution of companion masses, $p(M_2\given \bs{\theta})$, given the set of observed $\mf$, $\bs{m_f}$, by deconvolving the distribution of $\mf$ from the unobserved $i$. Using Bayes' rule,
+We construct a statistical model to constrain a parametric model for the distribution of LMWD companion masses, $p(M_2 \given \bs{\theta})$.\footnote{We represent vectors or sets of parameters or quantities by bold symbols.} For each system, we assume we have $K$, $T$, and $M_1$, and therefore know the value of $\mf$ (\eqn~\ref{eq:massfunc}). Our model is based on a Bayesian approach, but this problem could also be viewed from a maximum-likelihood perspective. We wish to derive posterior constraints on the model parameters, $\bs{\theta}$, that describe the distribution of companion masses, $p(M_2\given \bs{\theta})$, given the set of observed mass functions, $\bs{m_f}$, by deconvolving the distribution of $\mf$'s from the unobserved $i$'s. Using Bayes' rule,
 \begin{equation}
     p(\bs{\theta} \given \bs{\mf}) = \frac{1}{\mathcal{Z}}~p(\bs{\mf} \given \bs{\theta})~p(\bs{\theta}).
 \end{equation}
@@ -145,7 +150,7 @@ where
 	p_{\rm WD} &= \mathcal{N}(M_2 \given \mu_{\rm WD}, \sigma^2_{\rm WD}); ~0.2 < \frac{M_2}{\Msun} < \wdupper, \\
 	p_{\rm NS} &= \mathcal{N}(M_2 \given \mu_{\rm NS}, \sigma^2_{\rm NS}); ~1.3 < \frac{M_2}{\Msun} < 2,
 \end{align}
-where $\mathcal{N}$ is the (truncated, but properly normalized) normal distribution with mean $\mu$ and variance $\sigma^2$, and the distributions are limited to the ranges specified. To reduce the number of parameters in our model we fix $\mu_{\rm NS}$ and $\sigma_{\rm NS}$ to:
+where $\mathcal{N}$ is the (truncated, but properly normalized) normal distribution with mean $\mu$, variance $\sigma^2$, and $f_{\rm NS}$ is the NS fraction, and the distributions are limited to the ranges specified. To reduce the number of parameters in our model we fix $\mu_{\rm NS}$ and $\sigma_{\rm NS}$ to:
 \begin{align}
 	\mu_{\rm NS} &= 1.4~\Msun\\
 	\sigma_{\rm NS} &= 0.05~\Msun
@@ -155,7 +160,7 @@ based on indications that NSs in certain binaries may have be somewhat more mass
 P_{\rm NS} = \frac{\int_{M_{2,{\rm min}}}^{\infty} dM_2~ f_{\rm NS}~ p_{\rm NS}~ h(M_2, \mf, M_1)}{p(\mf \given \bs{\theta})}\label{eq:P_NS}
 \end{equation}
 
-Our companion mass model parameters are then $\bs{\theta} = (\mu_{\rm WD}, \sigma_{\rm WD}, f_{\rm NS})$. For $\mu_{\rm WD}$, we use a uniform prior from $0.2-1.0~\Msun$; we use a logarithmic (scale-invariant) prior for $\sigma_{\rm WD}$ over the range $0.02-2.0~\Msun$. Finally, we use a uniform prior over the dimensionless NS fraction, $f_{\rm NS}$, from $0-1$. The model parameters are summarized in Table~\ref{tbl:parameters}.
+Our companion mass model parameters are then $\bs{\theta} = (\mu_{\rm WD}, \sigma_{\rm WD}, f_{\rm NS})$. For $\mu_{\rm WD}$, we use a uniform prior from $0.2-1.0~\Msun$; we use a logarithmic (scale-invariant) prior for $\sigma_{\rm WD}$ over the range $0.02-2.0~\Msun$. Finally, we use a uniform prior over the dimensionless $f_{\rm NS}$ from $0-1$. The model parameters are summarized in Table~\ref{tbl:parameters}.
 
 \renewcommand{\arraystretch}{1.405}
 \begin{deluxetable}{ccccc}
@@ -203,47 +208,46 @@ We use a Markov Chain Monte Carlo algorithm \citep{goodman10} to draw samples fr
 \section{Testing Our Model} \label{sec:tests}
 We test the performance of this Gaussian mixture model on four separate data sets: three mock data sets and the sample of SDSS PCEBs from \citet{nebot11}. 
 Each of the 100 systems in our three mock data sets are generated by computing $\mf$'s from randomly drawn
-$M_1$'s (from a uniform distribution, $\mathcal{U}(0.2,0.4)~\Msun$), $M_2$'s (from the distributions described below), and $i$'s. 
+$M_1$'s (from a uniform distribution, $\mathcal{U}(0.2,0.4)~\Msun$), $M_2$'s (from the distributions described below), and isotropic $i$'s. 
 %the companion mass from the particular distributions described below, then using a randomly drawn $i$ and $M_1$ to compute $\mf$. We draw $M_1$ from a uniform distribution, $\mathcal{U}(0.2,0.4)~\Msun$. 
 We apply the same Gaussian mixture model to all four tests to infer the parameters of the WD mixture component and $f_{\rm NS}$.
 
 \begin{figure*}[h!]
 \begin{center}
-\includegraphics[width=0.75\textwidth]{f2.pdf}
-\caption{Results from testing the three mock data sets described in Section~\ref{sec:tests}. The leftmost column shows histograms of $M_2$ drawn from each of our test distributions. Overplotted as solid lines are the MAP models. The second column shows samples from the posterior distributions of $\mu_{\rm WD}$ and $\sigma_{\rm WD}$, and the third panel shows posterior samples for $f_{\rm NS}$ and $\sigma_{\rm WD}$. Contours designate the 68\% and 95\% confidence levels. Dashed lines in these panels show the true values from which the sample systems were drawn. Since the third model was drawn from a uniform distribution, there are no true $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ values. }
-\label{fig:tests}
+\includegraphics[width=0.95\textwidth]{f2.pdf}
+\caption{Results from testing our first two mock data sets described in Section~\ref{sec:tests}. The leftmost panels show the $M_2$'s (gray histogram) randomly drawn from each of our test distributions and our MAP models (black line). Panels in the second and third columns show samples from the posterior distributions of $\mu_{\rm WD}$ and $\sigma_{\rm WD}$, and $f_{\rm NS}$. Contours designate the 68\% and 95\% confidence levels. Dashed lines in these panels show the true values from which the sample systems were drawn. The fourth panel shows individual LMWD systems (ordered by increasing $\mf$) and their corresponding $P_{\rm NS}$ distribution. Tick marks along the bottom show those systems that are true NSs.}
+\label{fig:tests_1_2}
 \end{center}
 \end{figure*}
 
 \subsection{Test 1: Single Gaussian (WD)} \label{sec:exp1}
-We first generate $M_2$ by drawing from a single, truncated Gaussian with parameters given in Table~\ref{tbl:parameters}. This mock sample contains no NSs. In the top row of Figure~\ref{fig:tests}, the leftmost panel shows that our model finds a maximum a posteriori (MAP) $M_2$ distribution (black line) that qualitatively matches the input distribution (grey histogram). The second and third panels show samples from the posterior distributions and contours containing 68\% and 95\% of the samples for our three model parameters. The input values (dashed lines) lie cleanly within the inner contour in both panels, however $f_{\rm NS}$ has a tail up to $\approx$10\%.
+We first generate $M_2$'s by drawing from a single, truncated Gaussian with parameters given in Table~\ref{tbl:parameters}. This mock sample contains no NSs. In the top row of Figure~\ref{fig:tests_1_2}, the leftmost panel shows that our model finds a maximum a posteriori (MAP) $M_2$ distribution (black line) that qualitatively matches the input distribution (grey histogram). The second and third panels show samples from the posterior distributions and contours containing 68\% and 95\% of the samples for our three model parameters. The input values (dashed lines) lie cleanly within the inner contour in both panels, however $f_{\rm NS}$ has a tail up to $\approx$10\%.
 
 %The second panel shows samples from the posterior distribution and contours containing 68\% and 95\% of the samples. The input values lie cleanly within the inner contour in both projections of the posterior. 
 %the model preference toward higher masses and smaller standard deviations is due to statistical noise from our randomly generated mock sample. 
 %The third panel shows that, although the posterior $f_{\rm NS}$ distribution is consistent with 0\%, there is a tail up to $\approx$10\%. 
 
-Equation~\ref{eq:P_NS} gives the probability of an individual system hosting a NS. Using posterior samples, we can determine the distribution of $P_{\rm NS}$ for each system. The leftmost panel in Figure~\ref{fig:P_NS} includes all the individual systems, ordered by $\mf$, and shows the distributions of $P_{\rm NS}$ for each. For most systems, there is negligible probability above $P_{\rm NS}\sim 5\%$.
+Equation~\ref{eq:P_NS} gives the probability of an individual system hosting a NS. Using posterior samples, we can determine the distribution of $P_{\rm NS}$ for each system. The rightmost panel in Figure~\ref{fig:tests_1_2} includes all the individual systems, ordered by $\mf$, and shows the distributions of $P_{\rm NS}$ for each. For most systems, there is negligible probability above $P_{\rm NS}\sim 5\%$.
 
 \subsection{Test 2: Two Gaussians (WD + NS)} \label{sec:exp2}
-We use the same Gaussian distribution to generate companion masses for the WDs but add a NS component with $f_{\rm NS} = 10\%$. The middle row of Figure~\ref{fig:tests} shows that our model again recovers the input values for $\mu_{\rm WD}$ and $\sigma_{\rm WD}$. 
+We use the same Gaussian distribution to generate companion masses for the WDs but add a NS component with $f_{\rm NS} = 10\%$. The middle row of Figure~\ref{fig:tests_1_2} shows that our model again recovers the input values for $\mu_{\rm WD}$ and $\sigma_{\rm WD}$. 
 %As in Test 1, the model preference for higher $\mu_{\rm WD}$ and lower $\sigma_{\rm WD}$ is due to our randomly generated mass distribution. 
-Importantly, the third panel shows that our model also recovers $f_{\rm NS}$, although the posterior shows a substantial tail toward higher $f_{\rm NS}$. Tick marks in the middle panel of Figure~\ref{fig:P_NS} indicate ``true" NSs in our mock data. Our model correctly assigns high $P_{\rm NS}$ to roughly half of these. However, many systems with NS companions have $i$'s too low to be statistically differentiated from those with WD companions.
+Importantly, the third panel shows that our model also recovers $f_{\rm NS}$, although the posterior shows a substantial tail toward higher $f_{\rm NS}$. Tick marks in the rightmost panel of Figure~\ref{fig:tests_1_2} indicate ``true" NSs in our mock data. Our model correctly assigns high $P_{\rm NS}$ to roughly half of these. However, many systems with NS companions have $i$'s too low to be statistically differentiated from those with WD companions.
 
 \subsection{Test 3: Uniform (WD) + Gaussian (NS)} \label{sec:exp3}
-We generate companion masses for the WDs by sampling from a uniform distribution over $[0.2,1.2]~\Msun$, again with $f_{\rm NS}=$10\%. The bottom row of Figure~\ref{fig:tests} shows the results. The posterior distribution in the second panel indicates that $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ are not well constrained. The preference for larger $\sigma_{\rm WD}$ is expected as the model flattens the Gaussian model distribution to match it with the input uniform distribution. Interestingly, the third panel shows that despite having a non-Gaussian input distribution for $M_2$, and a poorly constrained $\sigma_{\rm WD}$, our model still recovers $f_{\rm NS}$ approximately as accurately as in Test 2. Furthermore, the rightmost panel of Figure~\ref{fig:P_NS} demonstrates that our model is effectively identifying which LMWDs host NS companions.
+We generate companion masses for the WDs by sampling from a uniform distribution over $[0.2,1.2]~\Msun$, again with $f_{\rm NS}=$10\%. The bottom row of Figure~\ref{fig:tests_3_4} shows the results. The posterior distribution in the second panel indicates that $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ are not well constrained. The preference for larger $\sigma_{\rm WD}$ is expected as the model flattens the Gaussian model distribution to match it with the input uniform distribution. Interestingly, the third panel shows that despite having a non-Gaussian input distribution for $M_2$, and a poorly constrained $\sigma_{\rm WD}$, our model still recovers $f_{\rm NS}$ approximately as accurately as in Test 2. Furthermore, the fourth panel of Figure~\ref{fig:tests_3_4} demonstrates that our model effectively identifies which LMWDs host NS companions.
 
 
 \subsection{Test 4: Post-common envelope binaries} \label{sec:PCEB}
-Composed of WDs in close binaries with main-sequence stars, PCEBs are an ideal test sample for our model. 
-We use a sample of 54 SDSS PCEBs with spectroscopically derived $K$'s, $\period$'s, and main sequence masses from \citep{nebot11}. Our model uses the measurements of these three parameters to try and recover this sample's WD mass distribution, which we can then compare to the spectroscopically-determined WD masses. 
+PCEBs are composed of WDs in close orbits with Main Sequence companions. The sample of 54 SDSS PCEBs from \citet{nebot11} with precisely determined $K$, $\period$, and Main Sequence masses are an ideal test sample for our model. Our model uses these parameters to try and recover this sample's WD mass distribution, which we can then compare to the spectroscopically-determined WD masses. 
 %Our model is ignorant of the spectroscopically measured WD masses and attempts to fit the WD mass distribution based on the measured main sequence mass, $K$, and $\period$. We use a sample of 54 SDSS PCEBs with spectroscopically derived $K$, $\period$, and main sequence masses \citep{nebot11}. 
-Our MAP distribution (black line) in the leftmost panel of Figure~\ref{fig:ELM_post} shows that our model qualitatively recovers the true $M_{\rm WD}$ distribution (gray histogram). The third panel shows that the posterior $f_{\rm NS}$ distribution is very low, as expected since there are no NS companions in the PCEB sample. This is further seen in the rightmost panel, where every PCEB in the sample has low $P_{\rm NS}$ values.
+Our MAP distribution (black line) in the leftmost panel of Figure~\ref{fig:tests_3_4} shows that our model qualitatively recovers the true $M_{\rm WD}$ distribution (gray histogram). The third panel shows that the posterior $f_{\rm NS}$ distribution is very low, as expected since there are no NS companions in the PCEB sample. This is further seen in the rightmost panel, where every PCEB in the sample has low $P_{\rm NS}$ values.
 
 \begin{figure*}[h!]
 \begin{center}
-\includegraphics[width=0.75\textwidth]{f3.pdf}
-\caption{ The individual LMWD systems (ordered by increasing $\mf$) and their corresponding $P_{\rm NS}$ for each of our three tests. Tick marks along the bottom show those systems that are true NSs.}
-\label{fig:P_NS}
+\includegraphics[width=0.95\textwidth]{f3.pdf}
+\caption{ The results of our model when applied to Test 3 and 4 in Section~\ref{sec:tests}. The panels are in the same format as those in Figure~\ref{fig:tests_1_2}.}
+\label{fig:tests_3_4}
 \end{center}
 \end{figure*}
 
@@ -271,11 +275,11 @@ The other six systems show no evidence of orbital motion, with RV upper limits o
 \begin{figure*}[h!]
 \begin{center}
 \includegraphics[width=0.95\textwidth]{f4.pdf}
-\caption{Results from applying our model to the PCEBs (top row) and ELM WDs (bottom row). 
-The panels are the same as in Figure~\ref{fig:tests} and Figure~\ref{fig:P_NS}. 
+\caption{Results from applying our model to the ELM WDs. 
+The panels are in the same form as in Figure~\ref{fig:tests_1_2} and Figure~\ref{fig:tests_3_4}. 
 %The leftmost panel of the top row shows that the MAP model $M_{\rm WD}$ distribution matches the histogram of true masses in the PCEB sample. 
 %The second and third panels show the posterior distributions for our model parameters, while the fourth panel shows the $P_{\rm NS}$ values for each of the PCEBs (ordered by increasing $\mf$). 
-Here, however, the leftmost panel of the ELM sample shows both the MAP $M_2$ distribution (solid black) and random samples from the posterior (grey lines). 
+Here, the leftmost panel shows both the MAP $M_2$ distribution (solid black) and random samples from the posterior (grey lines). 
 %The second panel shows that the MAP Gaussian model has $\mu_{\rm WD}= 0.71~\Msun$ and $\sigma_{\rm WD}= 0.26~\Msun$. The third panel shows posterior samples of $\mu$ and $f_{\rm NS}$. The last panel indicates that several LMWDs in the ELM sample have high $P_{\rm NS}$. 
 The three systems in the bottom right panel, with all $P_{\rm NS}$ values at 0\% are the three eclipsing systems with measured $M_2$.
 }
@@ -284,7 +288,7 @@ The three systems in the bottom right panel, with all $P_{\rm NS}$ values at 0\%
 \end{figure*}
 
 \subsection{Results and Discussion}
-The results from applying our model to the ELM sample are shown in Figure~\ref{fig:ELM_post}. The MAP model gives $\mu_{\rm WD} = 0.74~\Msun$, $\sigma_{\rm WD} = 0.24~\Msun$, and $f_{\rm NS} = 0\%$. The marginal posterior over $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ has a tail toward larger $\sigma_{\rm WD}$, which could indicate that the true WD distribution may not be exactly Gaussian. It is interesting that the best fit Gaussian for the companions to the ELM WD sample is similar to that of the population of single DA WDs in SDSS, with a mean of 0.6 $\Msun$ \citep{kleinman13}. Our distribution is significantly wider ($\sigma \approx 0.26~\Msun$, compared with $\sigma \approx 0.1~\Msun$), possibly due to past mass transfer phases increasing the masses of the unseen primary WDs. The low combined mass in these systems indicates that, although several of them will merge within a Hubble time \citep{ELMV}, the majority of ELM WDs are unlikely to be type Ia supernova progenitors.
+The results from applying our model to the ELM sample are shown in Figure~\ref{fig:ELM_post}. The MAP model gives $\mu_{\rm WD} = 0.74~\Msun$, $\sigma_{\rm WD} = 0.24~\Msun$, and $f_{\rm NS} = 0\%$. The marginal posterior over $\mu_{\rm WD}$ and $\sigma_{\rm WD}$ has a tail toward larger $\sigma_{\rm WD}$, which could indicate that the true WD distribution may not be exactly Gaussian. It is interesting that the best fit Gaussian for the companions to the ELM WD sample is similar to that of the population of single DA WDs in SDSS, with a mean of 0.6 $\Msun$ \citep{kleinman13}. Our distribution is significantly wider ($\sigma \approx 0.26~\Msun$, compared with $\sigma \approx 0.1~\Msun$), possibly due to past mass transfer phases increasing the masses of the unseen primary WDs. The low combined mass in these systems indicates that, although several of them will merge within a Hubble time \citep{ELMV}, the majority of ELM WDs are unlikely to be type Ia SN progenitors. We cannot limit the possibility that some individual LMWD binaries may be massive enough to produce type Ia SNe \citep{justham09}.
 %Several of these systems will merge within a Hubble time \citep{ELMV}, but their sub-Chandrasekhar combined mass would suggest that they are more likely to be underluminous type .Ia, rather than Ia, supernova progenitors. 
 %Our results are independent of astrophysical expectations, as they do not include informative priors on $\mu_{\rm WD}$ and $\sigma_{\rm WD}$, apart from limits for $M_2$ of 0.2 \Msun\,(based on observations of LMWDs) and \wdupper~\Msun\,(based on the Chandrasekhar mass). In principle, priors could be added based on 
 Our posterior distributions further suggest that the companions to LMWDs have predominantly CO cores. This is in contrast to population synthesis models which suggest that LMWDs should predominantly have He core WD companions \citep{toonen12}. With a larger sample, a more sophisticated LMWD companion model could place quantitative constraints on population synthesis predictions.
@@ -295,10 +299,10 @@ Our posterior distributions further suggest that the companions to LMWDs have pr
 
 The third panel in Figure~\ref{fig:ELM_post} shows a $f_{\rm NS}$ strongly peaked toward 0\%. However, there is a significant tail toward higher NS probabilities. Our model indicates $f_{\rm NS} <16\%$ at the 68\% confidence level, in agreement with independent constraints from \citet[][$f_{\rm NS}<18\pm5$\%]{vLeeuwen07} and \citet[][$f_{\rm NS}<10\substack{+4 \\ -2}~\%$]{agueros09b}, both based on radio non-detections of LMWDs.
 
-The rightmost panel in Figure~\ref{fig:ELM_post} indicates there are two LMWDs with substantial $P_{\rm NS}$: SDSS J081133.6$+$022556.8 and SDSS J174140.5$+$652638.7. However, X-ray non-detections of SDSS J174140.5$+$652638.7 indicate its companion is unlikely to be a NS \citep{kilic14}. Searches for radio and X-ray emission from SDSS J081133.6$+$022556.8 are on-going. We note that Figure~\ref{fig:ELM_post} shows a general trend that systems with higher $\mf$ have higher $P_{\rm NS}$ values and are therefore ideal targets to search for NS companions to LMWDs.
+The rightmost panel in Figure~\ref{fig:ELM_post} indicates there are two LMWDs with substantial $P_{\rm NS}$: SDSS J081133.6$+$022556.8 and SDSS J174140.5$+$652638.7. However, X-ray non-detections of SDSS J174140.5$+$652638.7 indicate its companion is unlikely to be a NS \citep{kilic14}. Searches for radio and X-ray emission from SDSS J081133.6$+$022556.8 are on-going. We note that the $P_{\rm NS}$ distributions in each of our samples show a general trend that systems with higher $\mf$ have higher $P_{\rm NS}$ values and are therefore ideal targets to search for NS companions to LMWDs.
 
 \section{Conclusions}
-We have developed a statistical model to infer the companion mass distribution for a sample of single-line, spectroscopic binaries. This model can be applied to any such sample with measured $M_1$ and $\mf$. When tested on three separate mock data sets with unseen WD and NS companions to LMWDs, our model recovers the input parameters. Even when the companion mass distribution is not drawn from a Gaussian distribution, our model still infers the input NS fraction to within a few percent. We further apply our model to the sample of PCEB's from \citet{nebot11}; our model qualitatively recovers the independent, spectroscopically measured $M_{\rm WD}$ distribution. 
+We have developed a statistical model to infer the companion mass distribution for a sample of single-line, spectroscopic binaries. This model can be applied to any such sample with measured $M_1$ and $\mf$. When tested on three separate mock data sets with unseen WD and NS companions to LMWDs, our model recovers the input parameters. Even when the companion mass distribution is not drawn from a Gaussian distribution, our model still infers the input NS fraction to within a few percent. We further apply our model to the sample of PCEB's from \citet{nebot11}, and our model qualitatively recovers the independent, spectroscopically measured $M_{\rm WD}$ distribution. 
 
 
 We then applied our model to the set of LMWDs from the ELM WD survey. It is encouraging that the resulting posterior distribution is qualitatively similar to our two-component Gaussian test case, suggesting that the companion mass distribution to the LMWDs in the ELM sample is well-described by our model. Our model indicates a MAP $\mu_{\rm WD}$ of 0.74 \Msun\ and $\sigma_{\rm WD}$ of 0.24 \Msun, suggesting that a majority of ELM WDs have CO-core WD companions. This is in contrast to predictions from population synthesis models, which find that the dominant companion population should be He-core WDs \citep[e.g.,][]{toonen12}. Our model further indicates that the fraction of ELM WDs with NS companions is consistent with 0\%, but could be as high as $\approx$16\% (within 1-$\sigma$). Finally, our model identifies SDSS J081133.6$+$022556.8 as having the highest median probability of hosting a NS companion.
@@ -306,9 +310,7 @@ We then applied our model to the set of LMWDs from the ELM WD survey. It is enco
 To determine the probability of any particular LMWD hosting a NS, we make our model posteriors publicly available on fig{\bf share}.\footnote{\url{http://dx.doi.org/10.6084/m9.figshare.1206621}} We further provide a {\tt Python} script that calculates $P_{\rm NS}$ and the mass distribution for a WD companion for any LMWD with a measured $M_1$ and $\mf$. This script can be applied to newly discovered LMWDs as well as those already in the ELM sample.
 
 
-%Recently, \citet{hermes14} made high-speed photometric observations of 20 LMWDs in the ELM sample. Based on non-detection of eclipses and modeling of photometric variability, these authors set limits on the inclination angles of these systems, which could be included in our model. 
-
-There are several ways in which our model can be expanded. Based on modeling the photometric variability in these systems, \citet{hermes14} recently placed constraints on the inclination of 20 LMWDs in the ELM sample which could be included in our model. Furthermore, tighter constraints can be placed on $f_{\rm NS}$ by including radio and X-ray non-detection results. Finally, we plan to develop our method to quantitatively compare our model to the results of population synthesis codes, potentially constraining the formation of LMWDs.
+There are several ways in which our model can be expanded. By modeling photometric variability, \citet{hermes14} recently constrained the inclination of 20 LMWDs in the ELM sample which could be included in our model. Furthermore, our model can place tighter constraints on $f_{\rm NS}$ by including radio and X-ray non-detection results. Finally, we plan to develop our method to quantitatively compare our model to the results of population synthesis codes, potentially constraining the formation of LMWDs.
 
 
 
@@ -320,8 +322,7 @@ This research made use of Astropy, a community-developed core \texttt{Python} pa
 \bibliographystyle{apj}
 
 
-
-\begin{thebibliography}{41}
+\begin{thebibliography}{43}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ag{\"u}eros} {et~al.}(2009{\natexlab{a}}){Ag{\"u}eros}, {Camilo},
@@ -400,7 +401,7 @@ This research made use of Astropy, a community-developed core \texttt{Python} pa
   {Hermes}, J.~J. 2014, \apj, 794, 35
 
 \bibitem[Goodman~\&\ Weare(2010)]{goodman10}
-Goodman,~J. \& Weare,\ J.,
+Goodman,~J. \& Weare,\ J.
 2010, Comm.\ App.\ Math.\ Comp.\ Sci., 5, 65
 
 \bibitem[{{Han}(1998)}]{han98}
@@ -410,6 +411,11 @@ Goodman,~J. \& Weare,\ J.,
   {Chote}, {Sullivan}, {Winget}, {Bell}, {Falcon}, {Winget}, {Mason},
   {Harrold}, \& {Montgomery}}]{hermes14}
 {Hermes}, J.~J. {et~al.} 2014, \apj, 792, 39
+
+\bibitem[{{Justham} {et~al.}(2009){Justham}, {Wolf}, {Podsiadlowski}, \&
+  {Han}}]{justham09}
+{Justham}, S., {Wolf}, C., {Podsiadlowski}, P., \& {Han}, Z. 2009, \aap, 493,
+  1081
 
 \bibitem[{{Kaplan} {et~al.}(2014){Kaplan}, {Marsh}, {Walker}, {Bildsten},
   {Bours}, {Breedt}, {Copperwheat}, {Dhillon}, {Howell}, {Littlefair},
@@ -556,7 +562,7 @@ Goodman,~J. \& Weare,\ J.,
 %\bibliography{refs}
   
 %\bibitem[Goodman~\&\ Weare(2010)]{goodman10}
-%Goodman,~J. \& Weare,\ J.,
+%Goodman,~J. \& Weare,\ J.
 %2010, Comm.\ App.\ Math.\ Comp.\ Sci., 5, 65
 
 
